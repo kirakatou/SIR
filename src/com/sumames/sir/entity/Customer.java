@@ -23,7 +23,6 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "customer", catalog = "sir", schema = "")
-
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,73 +31,52 @@ public class Customer implements Serializable {
     @Basic(optional = false)
     @Column(name = "record_id")
     private Integer recordId;
-    
     @Column(name = "no")
     private String no;
-    
     @Column(name = "name")
     private String name;
-    
     @Column(name = "address")
     private String address;
-    
     @Column(name = "telephone")
     private String telephone;
-    
     @Column(name = "email")
     private String email;
-    
     @Column(name = "birthplace")
     private String birthplace;
-    
     @Column(name = "birthdate")
     @Temporal(TemporalType.DATE)
     private Date birthdate;
-    
     @Column(name = "gender")
-    private String gender;
-    
+    private Integer gender;
     @Column(name = "point")
     private Integer point;
-    
     @Column(name = "void_status")
     private Boolean voidStatus;
-    
     @Column(name = "void_reason")
     private String voidReason;
-    
     @Column(name = "void_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date voidDatetime;
-    
     @Column(name = "void_by_user_record_id")
     private Integer voidByUserRecordId;
-    
     @Column(name = "create_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDatetime;
-    
     @Column(name = "create_by_user_Record_id")
     private Integer createbyuserRecordid;
-    
     @Column(name = "edit_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date editDatetime;
-    
     @Column(name = "edit_by_user_record_id")
     private Integer editByUserRecordId;
-    
     @Column(name = "authorize_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date authorizeDatetime;
-    
     @Column(name = "authorize_by_user_record_id")
     private Integer authorizeByUserRecordId;
-    
     @Column(name = "delete_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date deleteDatetime;
-    
     @Column(name = "delete_by_user_Record_id")
     private Integer deletebyuserRecordid;
 
@@ -120,7 +98,7 @@ public class Customer implements Serializable {
     public void setNo(String no) {
         this.no = no;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -169,11 +147,11 @@ public class Customer implements Serializable {
         this.birthdate = birthdate;
     }
 
-    public String getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 

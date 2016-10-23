@@ -20,7 +20,9 @@ public interface ServiceDao {
     
     public Customer getCustomerById(Integer id);
     
-    public List<Customer> getCustomers();           
+    public List<Customer> getCustomers();
+    
+    public List<Customer> getCustomersDeleted();
     
     public Car getCarById(Integer id);
     

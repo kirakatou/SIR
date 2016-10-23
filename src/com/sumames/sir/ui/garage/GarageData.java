@@ -118,6 +118,11 @@ public class GarageData extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbGarage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbGarageMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbGarage);
         if (tbGarage.getColumnModel().getColumnCount() > 0) {
             tbGarage.getColumnModel().getColumn(0).setMinWidth(0);
@@ -235,6 +240,15 @@ public class GarageData extends javax.swing.JPanel {
         Main.getFrame().getGlasspane().setVisible(true);
     }//GEN-LAST:event_btEditActionPerformed
 
+    private void tbGarageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbGarageMouseClicked
+        if (evt.getClickCount() == 2) {
+            if (tbGarage.getSelectedRow() >= 0) {
+                Main.getFrame().getGlasspane().showPanel(new CarData("EDIT", Integer.valueOf(tbGarage.getValueAt(tbGarage.getSelectedRow(), 0).toString()), this), new Dimension(400, 250));
+                Main.getFrame().getGlasspane().setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_tbGarageMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
@@ -264,6 +278,7 @@ public class GarageData extends javax.swing.JPanel {
                 AppUtil.getService().save(carData);
             }
             JOptionPane.showMessageDialog(null, " records, Done!");
+            Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
         }
         else if(getOption().equals("EDIT")){
             Garage garageData = new Garage();
@@ -271,6 +286,8 @@ public class GarageData extends javax.swing.JPanel {
             garageData.setName(tfName.getText());
             garageData.setDescription(tfDescription.getText());
             AppUtil.getService().save(garageData);
+            JOptionPane.showMessageDialog(null, " records, Done!");
+            Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
         }
     }
 
@@ -284,12 +301,16 @@ public class GarageData extends javax.swing.JPanel {
 
             tfName.setText(garage.getName());
             tfDescription.setText(garage.getDescription());
-            List<Car> list = AppUtil.getService().getListCarById(getRecordId());
+            refreshTable();
+        }
+    }
+    public void refreshTable(){
+        List<Car> list = AppUtil.getService().getListCarById(getRecordId());
             DefaultTableModel dtm = (DefaultTableModel) getTbGarage().getModel();
+            dtm.setRowCount(0);
             for (Car car : list) {
                 dtm.addRow(new Object[]{car.getRecordId(), car.getName(), car.getPlateNumber(), car.getPrice(), car.getAvailability()});
             }
-        }
     }
 
 }

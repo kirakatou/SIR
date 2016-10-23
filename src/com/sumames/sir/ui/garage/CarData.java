@@ -21,10 +21,12 @@ import javax.swing.table.DefaultTableModel;
  * @author Asus
  */
 public class CarData extends javax.swing.JPanel {
+
     private GarageData garage;
     private String option;
     private int recordId;
     private Car car;
+
     /**
      * Creates new form CarData
      */
@@ -51,10 +53,7 @@ public class CarData extends javax.swing.JPanel {
     public void setRecordId(int recordId) {
         this.recordId = recordId;
     }
-    
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -196,38 +195,52 @@ public class CarData extends javax.swing.JPanel {
     private javax.swing.JTextField tfPlateNumber;
     private javax.swing.JTextField tfPrice;
     // End of variables declaration//GEN-END:variables
-    public void saveCarData(){
+    public void saveCarData() {
 //        Car carData = new Car();
 //        carData.setName(tfCarName.getText());
 //        carData.setPlateNumber(tfPlateNumber.getText());
 //        carData.setPrice(Double.parseDouble(tfPrice.getText()));
-        if(garage.getOption().equals("NEW")){
+        if (garage.getOption().equals("NEW")) {
             DefaultTableModel dtm = (DefaultTableModel) garage.getTbGarage().getModel();
-            dtm.addRow(new Object[]{0,tfCarName.getText(), tfPlateNumber.getText(), tfPrice.getText(), true});
+            dtm.addRow(new Object[]{0, tfCarName.getText(), tfPlateNumber.getText(), tfPrice.getText(), true});
             Main.getFrame().getGlasspane().setVisible(false);
-        }else if(garage.getOption().equals("EDIT")){
-            Car carSave = new Car();
-            carSave.setRecordId(getRecordId());
-            carSave.setName(tfCarName.getText());
-            carSave.setPlateNumber(tfPlateNumber.getText());
-            carSave.setPrice(Double.parseDouble(tfPrice.getText()));
-            AppUtil.getService().save(carSave);
-            Main.getFrame().getGlasspane().setVisible(false);
+        } else if (garage.getOption().equals("EDIT")) {
+            if (getOption().equals("NEW")) {
+                Car carSave = new Car();
+                carSave.setCarGarageRecordId(garage.getRecordId());
+                carSave.setName(tfCarName.getText());
+                carSave.setPlateNumber(tfPlateNumber.getText());
+                carSave.setPrice(Double.parseDouble(tfPrice.getText()));
+                AppUtil.getService().save(carSave);
+                garage.refreshTable();
+                Main.getFrame().getGlasspane().setVisible(false);
+            } else if (getOption().equals("EDIT")) {
+                Car carSave = new Car();
+                carSave.setRecordId(getRecordId());
+                carSave.setCarGarageRecordId(garage.getRecordId());
+                carSave.setName(tfCarName.getText());
+                carSave.setPlateNumber(tfPlateNumber.getText());
+                carSave.setPrice(Double.parseDouble(tfPrice.getText()));
+                AppUtil.getService().save(carSave);
+                garage.refreshTable();
+                Main.getFrame().getGlasspane().setVisible(false);
+            }
+
         }
-        
+
     }
-    public void LoadingData(){
-        
-        if(getOption().equals("NEW")){
+
+    public void LoadingData() {
+
+        if (getOption().equals("NEW")) {
             tfCarName.setText("");
             tfPlateNumber.setText("");
             tfPrice.setText("");
-        }
-        else if(getOption().equals("EDIT")){
+        } else if (getOption().equals("EDIT")) {
             car = AppUtil.getService().getCarById(getRecordId());
             tfCarName.setText(car.getName());
             tfPlateNumber.setText(car.getPlateNumber());
-            tfPrice.setText(car.getPrice().toString()); 
+            tfPrice.setText(car.getPrice().toString());
         }
     }
 }

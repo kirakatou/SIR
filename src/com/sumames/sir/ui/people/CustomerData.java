@@ -9,11 +9,8 @@ import com.sumames.sir.Main;
 import com.sumames.sir.entity.Customer;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.AutoCompletion;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,43 +18,28 @@ import javax.swing.JOptionPane;
  * @author My pc
  */
 public class CustomerData extends javax.swing.JPanel {
+
     private String option;
     private int recordId;
     private Customer customer;
-    
-    public CustomerData(){
-        
+
+    public CustomerData() {
+
     }
-    
+
     /**
      * Creates new form CustomerInput
+     *
      * @param Option utk mengetahui form new / edit
      * @param recordId utk mengetahui record id jika edit
      */
     public CustomerData(String Option, int recordId) {
+        this.option = Option;
+        this.recordId = recordId;
         initComponents();
-        setOption(Option);
-        setRecordId(recordId);
         LoadingData();
     }
 
-    public String getOption() {
-        return option;
-    }
-
-    private void setOption(String option) {
-        this.option = option;
-    }
-
-    public int getRecordId() {
-        return recordId;
-    }
-
-    private void setRecordId(int recordId) {
-        this.recordId = recordId;
-    }
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,8 +59,6 @@ public class CustomerData extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         tfEmail = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        rbMale = new javax.swing.JRadioButton();
-        rbFemale = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -87,6 +67,7 @@ public class CustomerData extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         tfName = new javax.swing.JTextField();
         cbBirthplace = new javax.swing.JComboBox<>();
+        cbGender = new javax.swing.JComboBox<>();
 
         setOpaque(false);
 
@@ -121,18 +102,6 @@ public class CustomerData extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Gender :");
-
-        buttonGroup1.add(rbMale);
-        rbMale.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        rbMale.setForeground(new java.awt.Color(255, 255, 255));
-        rbMale.setText("Male");
-        rbMale.setPreferredSize(new java.awt.Dimension(100, 30));
-
-        buttonGroup1.add(rbFemale);
-        rbFemale.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
-        rbFemale.setForeground(new java.awt.Color(255, 255, 255));
-        rbFemale.setText("Female");
-        rbFemale.setPreferredSize(new java.awt.Dimension(100, 30));
 
         jLabel6.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -170,6 +139,10 @@ public class CustomerData extends javax.swing.JPanel {
         cbBirthplace.setPreferredSize(new java.awt.Dimension(56, 30));
         AutoCompletion.enable(cbBirthplace);
 
+        cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
+        cbGender.setMinimumSize(new java.awt.Dimension(150, 30));
+        cbGender.setPreferredSize(new java.awt.Dimension(150, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -190,24 +163,23 @@ public class CustomerData extends javax.swing.JPanel {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(44, 44, 44)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(rbMale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbFemale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfNoTelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbBirthplace, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dcBirthdate, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jButton1)
+                            .addGap(44, 44, 44)
+                            .addComponent(jButton2))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(1, 1, 1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tfEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfNoTelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbBirthplace, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(dcBirthdate, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -235,17 +207,16 @@ public class CustomerData extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel5)
-                    .addComponent(rbMale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbFemale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(cbGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -265,6 +236,7 @@ public class CustomerData extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbBirthplace;
+    private javax.swing.JComboBox<String> cbGender;
     private com.toedter.calendar.JDateChooser dcBirthdate;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -276,8 +248,6 @@ public class CustomerData extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton rbFemale;
-    private javax.swing.JRadioButton rbMale;
     private javax.swing.JTextArea taAddress;
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfID;
@@ -285,98 +255,94 @@ public class CustomerData extends javax.swing.JPanel {
     private javax.swing.JTextField tfNoTelp;
     // End of variables declaration//GEN-END:variables
     private void saveData() {
-        if(getOption().equals("NEW")){
-            Customer test = new Customer();
-            test.setNo(tfID.getText());
-            test.setName(tfName.getText());
-            String gender = "";
-            if(rbMale.isSelected()){
-                gender = "M";
+        if (option.equals("NEW")) {
+            formToObject();
+            customer.setCreateDatetime(new Date());
+            customer.setCreatebyuserRecordid(Main.getFrame().getLogin().getEmployeeRecordId());
+
+            if (AppUtil.getService().save(customer)) {
+                msg("Save Done!");
+                Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
+            } else {
+                msg("Save Failed!");
             }
-            else if (rbFemale.isSelected()){
-                gender = "F";
+
+        } else if (option.equals("EDIT")) {
+            formToObject();
+            customer.setRecordId(recordId);
+            customer.setEditByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
+            customer.setEditDatetime(new Date());
+            if (AppUtil.getService().save(customer)) {
+                msg("Save Done!");
+                Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
+            } else {
+                msg("Save Failed!");
             }
-            test.setGender(gender);
-            test.setAddress(taAddress.getText());
-            test.setTelephone(tfNoTelp.getText());
-            test.setBirthplace(cbBirthplace.getSelectedItem().toString());
-            test.setBirthdate(dcBirthdate.getDate());
-            test.setEmail(tfEmail.getText());
-            test.setPoint(0);
-            test.setVoidStatus(Boolean.TRUE);
-            AppUtil.getService().save(test);
-            JOptionPane.showMessageDialog(null, " records, Done!");
-            Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
-        }
-        else if(getOption().equals("EDIT")){
-            Customer test = new Customer();
-            test.setRecordId(getRecordId());
-            test.setNo(tfID.getText());
-            test.setName(tfName.getText());
-            String gender = "";
-            if(rbMale.isSelected()){
-                gender = "M";
-            }
-            else if (rbFemale.isSelected()){
-                gender = "F";
-            }
-            test.setGender(gender);
-            test.setAddress(taAddress.getText());
-            test.setTelephone(tfNoTelp.getText());
-            test.setBirthplace(cbBirthplace.getSelectedItem().toString());
-            test.setBirthdate(dcBirthdate.getDate());
-            test.setEmail(tfEmail.getText());
-            test.setPoint(0);
-            AppUtil.getService().save(test);
-            JOptionPane.showMessageDialog(null, " records, Done!");
         }
     }
-    
-    public void LoadingData(){
+
+    public void LoadingData() {
         cbBirthplace.removeAllItems();
         List<Customer> list = AppUtil.getService().getCustomers();
-        for (Customer customer : list) {
-            
-            if(cbBirthplace.getItemCount() == 0){
-                cbBirthplace.addItem(customer.getBirthplace());
-            }
-            else{
+        for (Customer customers : list) {
+
+            if (cbBirthplace.getItemCount() == 0) {
+                cbBirthplace.addItem(customers.getBirthplace());
+            } else {
                 int ketemu = 0;
-                for(int i = 0;i<cbBirthplace.getItemCount(); i++){
-                    if(!cbBirthplace.getItemAt(i).equals(customer.getBirthplace())){
+                for (int i = 0; i < cbBirthplace.getItemCount(); i++) {
+                    if (!cbBirthplace.getItemAt(i).equals(customers.getBirthplace())) {
                         ketemu = 1;
                     }
                 }
-                if(ketemu == 1){
-                    cbBirthplace.addItem(customer.getBirthplace());
+                if (ketemu == 1) {
+                    cbBirthplace.addItem(customers.getBirthplace());
                 }
             }
         }
-        if(getOption().equals("NEW")){
+        if (option.equals("NEW")) {
             tfID.setText("");
             tfName.setText("");
-            rbMale.setSelected(true);
             taAddress.setText("");
             tfNoTelp.setText("");
             cbBirthplace.setSelectedIndex(0);
             dcBirthdate.setDate(new Date());
             tfEmail.setText("");
+        } else if (option.equals("EDIT")) {
+            customer = AppUtil.getService().getCustomerById(recordId);
+            objectToForm();
         }
-        else if(getOption().equals("EDIT")){
-            customer = AppUtil.getService().getCustomerById(getRecordId());
+    }
+
+    public void formToObject() {
+        if (customer == null) {
+            customer = new Customer();
+        }
+        customer.setNo(tfID.getText());
+        customer.setName(tfName.getText());
+        customer.setGender(cbGender.getSelectedIndex());
+        customer.setAddress(taAddress.getText());
+        customer.setTelephone(tfNoTelp.getText());
+        customer.setBirthplace(cbBirthplace.getSelectedItem().toString());
+        customer.setBirthdate(dcBirthdate.getDate());
+        customer.setEmail(tfEmail.getText());
+    }
+
+    public void objectToForm() {
+        if (customer != null) {
             tfID.setText(customer.getNo());
             tfName.setText(customer.getName());
-            if(customer.getGender().equals("M")){
-                rbMale.setSelected(true);
-            }else {
-                rbFemale.setSelected(true);
-            }
+            cbGender.setSelectedIndex(customer.getGender());
             taAddress.setText(customer.getAddress());
             tfNoTelp.setText(customer.getTelephone());
             cbBirthplace.setSelectedItem(customer.getBirthplace());
             dcBirthdate.setDate(customer.getBirthdate());
             tfEmail.setText(customer.getEmail());
         }
+    }
+
+    private void msg(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
     }
 
 }

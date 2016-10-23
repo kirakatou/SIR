@@ -56,15 +56,21 @@ public class ServiceDaoImpl implements ServiceDao {
     }
 
     @Override
+    public List<Customer> getCustomersDeleted() {
+        List<Customer> list = getCurrentSession().createQuery("FROM Customer a where a.deleteDatetime IS NULL ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
     public Car getCarById(Integer id) {
         Car t = (Car) getCurrentSession().get(Car.class, id);
         return t;
     }
-    
+
     @Override
     public List<Car> getListCarById(int id) {
         List<Car> list = getCurrentSession().createQuery("from Car where car_garage_record_id=:id")
-            .setParameter("id", id).list();
+                .setParameter("id", id).list();
         return list;
     }
 
@@ -129,7 +135,5 @@ public class ServiceDaoImpl implements ServiceDao {
         List<LoginAccess> list = getCurrentSession().createQuery("FROM LoginAccess a ORDER BY a.recordId ASC").list();
         return list;
     }
-
-    
 
 }
