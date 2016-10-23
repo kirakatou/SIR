@@ -5,20 +5,6 @@
  */
 package com.sumames.sir;
 
-import com.sumames.sir.service.AccessDetailService;
-import com.sumames.sir.service.AccessService;
-import com.sumames.sir.service.CarService;
-import com.sumames.sir.service.CustomerService;
-import com.sumames.sir.service.EmployerService;
-import com.sumames.sir.service.GarageService;
-import com.sumames.sir.service.LoginService;
-import com.sumames.sir.service.impl.AccessDetailServiceImpl;
-import com.sumames.sir.service.impl.AccessServiceImpl;
-import com.sumames.sir.service.impl.CarServiceImpl;
-import com.sumames.sir.service.impl.CustomerServiceImpl;
-import com.sumames.sir.service.impl.EmployerServiceImpl;
-import com.sumames.sir.service.impl.GarageServiceImpl;
-import com.sumames.sir.service.impl.LoginServiceImpl;
 import com.sumames.sir.ui.MainFrame;
 
 /**
@@ -26,44 +12,7 @@ import com.sumames.sir.ui.MainFrame;
  * @author Asus
  */
 public class Main {
-    private static CustomerService customerService;
-    private static EmployerService employerService;
-    private static LoginService loginService;
-    private static GarageService garageService;
-    private static CarService carService;
-    private static AccessService accessService;
-    private static AccessDetailService accessDetailService;
     private static MainFrame frame;
-
-    public static CustomerService getCustomerService() {
-        return customerService;
-    }
-
-    public static EmployerService getEmployerService() {
-        return employerService;
-    }
-
-    public static LoginService getLoginService() {
-        return loginService;
-    }
-
-    public static AccessService getAccessService() {
-        return accessService;
-    }
-
-    public static AccessDetailService getAccessDetailService() {
-        return accessDetailService;
-    }
-
-    public static GarageService getGarageService() {
-        return garageService;
-    }
-
-    public static CarService getCarService() {
-        return carService;
-    }
-    
-    
     
     public static MainFrame getFrame() {
         return frame;
@@ -90,15 +39,6 @@ public class Main {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                ApplicationContext applicationContext =
-//                        new ClassPathXmlApplicationContext("applicationContext.xml");
-                customerService = new CustomerServiceImpl();
-                employerService = new EmployerServiceImpl();
-                loginService = new LoginServiceImpl();
-                accessService = new AccessServiceImpl();
-                accessDetailService = new AccessDetailServiceImpl();
-                garageService = new GarageServiceImpl();
-                carService = new CarServiceImpl();
                 frame = new MainFrame();
                 frame.setVisible(true);
             }

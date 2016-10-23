@@ -7,6 +7,7 @@ package com.sumames.sir.ui.garage;
 
 import com.sumames.sir.Main;
 import com.sumames.sir.entity.Garage;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.ComponentUtils;
 import com.sumames.sir.helper.Support;
 import java.awt.GridBagConstraints;
@@ -214,7 +215,7 @@ public class GarageList extends javax.swing.JPanel {
     private javax.swing.JTextField tfSearch;
     // End of variables declaration//GEN-END:variables
     private void refreshTable() {
-        garage = Main.getGarageService().getGarageAll();
+        garage = AppUtil.getService().getGarages();
         tbGarage.setModel(new AccessTableModel(garage));
         tbGarage.getColumnModel().getColumn(0).setMinWidth(0);
         tbGarage.getColumnModel().getColumn(0).setMaxWidth(0);

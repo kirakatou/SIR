@@ -7,6 +7,7 @@ package com.sumames.sir.ui.people;
 
 import com.sumames.sir.Main;
 import com.sumames.sir.entity.Customer;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.AutoCompletion;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +21,6 @@ import javax.swing.JOptionPane;
  * @author My pc
  */
 public class CustomerData extends javax.swing.JPanel {
-    private final SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
     private String option;
     private int recordId;
     private Customer customer;
@@ -304,7 +304,7 @@ public class CustomerData extends javax.swing.JPanel {
             test.setEmail(tfEmail.getText());
             test.setPoint(0);
             test.setVoidStatus(Boolean.TRUE);
-            Main.getCustomerService().save(test);
+            AppUtil.getService().save(test);
             JOptionPane.showMessageDialog(null, " records, Done!");
             Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
         }
@@ -327,14 +327,14 @@ public class CustomerData extends javax.swing.JPanel {
             test.setBirthdate(dcBirthdate.getDate());
             test.setEmail(tfEmail.getText());
             test.setPoint(0);
-            Main.getCustomerService().save(test);
+            AppUtil.getService().save(test);
             JOptionPane.showMessageDialog(null, " records, Done!");
         }
     }
     
     public void LoadingData(){
         cbBirthplace.removeAllItems();
-        List<Customer> list = Main.getCustomerService().getCustomerAll();
+        List<Customer> list = AppUtil.getService().getCustomers();
         for (Customer customer : list) {
             
             if(cbBirthplace.getItemCount() == 0){
@@ -363,7 +363,7 @@ public class CustomerData extends javax.swing.JPanel {
             tfEmail.setText("");
         }
         else if(getOption().equals("EDIT")){
-            customer = Main.getCustomerService().getById(getRecordId());
+            customer = AppUtil.getService().getCustomerById(getRecordId());
             tfID.setText(customer.getNo());
             tfName.setText(customer.getName());
             if(customer.getGender().equals("M")){

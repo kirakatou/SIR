@@ -9,14 +9,13 @@ import com.sumames.sir.Main;
 import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.Login;
 import com.sumames.sir.entity.LoginAccess;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.AutoCompletion;
-import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
-import org.hibernate.engine.spi.Status;
 
 /**
  *
@@ -326,13 +325,13 @@ public class EmployerData extends javax.swing.JPanel {
             test.setBirthplace(cbBirthplace.getSelectedItem().toString());
             test.setBirthdate(dcBirthdate.getDate());
             test.setEmail(tfEmail.getText());
-            Main.getEmployerService().save(test);
+            AppUtil.getService().save(test);
             Login login = new Login();
             login.setEmployeeRecordId(test.getRecordId());
             login.setUsername(tfName.getText());
             login.setPassword("employer" + dcBirthdate.getDate().getDay() + dcBirthdate.getDate().getMonth());
             login.setAccessRecordId(mapAccess.get(cbStatus.getSelectedItem().toString()));
-            Main.getLoginService().save(login);
+            AppUtil.getService().save(login);
             JOptionPane.showMessageDialog(null, " records, Done!");
             Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
         } else if (getOption().equals("EDIT")) {
@@ -352,7 +351,7 @@ public class EmployerData extends javax.swing.JPanel {
             test.setBirthplace(cbBirthplace.getSelectedItem().toString());
             test.setBirthdate(dcBirthdate.getDate());
             test.setEmail(tfEmail.getText());
-            Main.getEmployerService().save(test);
+            AppUtil.getService().save(test);
             JOptionPane.showMessageDialog(null, " records, Done!");
         }
     }
@@ -360,8 +359,8 @@ public class EmployerData extends javax.swing.JPanel {
     public void LoadingData() {
         cbBirthplace.removeAllItems();
         cbStatus.removeAllItems();
-        List<Employer> list = Main.getEmployerService().getEmployerAll();
-        List<LoginAccess> laList = Main.getAccessService().getAccessAll();
+        List<Employer> list = AppUtil.getService().getEmployers();
+        List<LoginAccess> laList = AppUtil.getService().getAccesses();
         for (Employer customer : list) {
 
             if (cbBirthplace.getItemCount() == 0) {
@@ -393,7 +392,7 @@ public class EmployerData extends javax.swing.JPanel {
             dcBirthdate.setDate(new Date());
             tfEmail.setText("");
         } else if (getOption().equals("EDIT")) {
-            employer = Main.getEmployerService().getById(getRecordId());
+            employer = AppUtil.getService().getEmployerById(getRecordId());
             tfID.setText(employer.getNo());
             tfName.setText(employer.getName());
             if (employer.getGender().equals("M")) {

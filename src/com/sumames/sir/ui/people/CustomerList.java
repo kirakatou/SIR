@@ -7,12 +7,10 @@ package com.sumames.sir.ui.people;
 
 import com.sumames.sir.Main;
 import com.sumames.sir.entity.Customer;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.ComponentUtils;
-import com.sumames.sir.ui.MainFrame;
 import com.sumames.sir.helper.Support;
-import com.sumames.sir.service.CustomerService;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -216,7 +214,7 @@ public class CustomerList extends javax.swing.JPanel {
     private javax.swing.JTextField tfSearch;
     // End of variables declaration//GEN-END:variables
     private void refreshTable() {
-        customers = Main.getCustomerService().getCustomerAll();
+        customers = AppUtil.getService().getCustomers();
         tbCustomer.setModel(new CustomerTableModel(customers));
         tbCustomer.getColumnModel().getColumn(0).setMinWidth(0);
         tbCustomer.getColumnModel().getColumn(0).setMaxWidth(0);

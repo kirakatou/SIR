@@ -7,13 +7,13 @@ package com.sumames.sir.ui.garage;
 
 import com.sumames.sir.Main;
 import com.sumames.sir.entity.Car;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.TextComponentUtils;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -211,7 +211,7 @@ public class CarData extends javax.swing.JPanel {
             carSave.setName(tfCarName.getText());
             carSave.setPlateNumber(tfPlateNumber.getText());
             carSave.setPrice(Double.parseDouble(tfPrice.getText()));
-            Main.getCarService().save(carSave);
+            AppUtil.getService().save(carSave);
             Main.getFrame().getGlasspane().setVisible(false);
         }
         
@@ -224,7 +224,7 @@ public class CarData extends javax.swing.JPanel {
             tfPrice.setText("");
         }
         else if(getOption().equals("EDIT")){
-            car = Main.getCarService().getById(getRecordId());
+            car = AppUtil.getService().getCarById(getRecordId());
             tfCarName.setText(car.getName());
             tfPlateNumber.setText(car.getPlateNumber());
             tfPrice.setText(car.getPrice().toString()); 

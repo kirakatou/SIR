@@ -8,6 +8,7 @@ package com.sumames.sir.ui.garage;
 import com.sumames.sir.Main;
 import com.sumames.sir.entity.Car;
 import com.sumames.sir.entity.Garage;
+import com.sumames.sir.helper.AppUtil;
 import java.awt.Dimension;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -253,14 +254,14 @@ public class GarageData extends javax.swing.JPanel {
             Garage garageData = new Garage();
             garageData.setName(tfName.getText());
             garageData.setDescription(tfDescription.getText());
-            Main.getGarageService().save(garageData);
+            AppUtil.getService().save(garageData);
             for (int i = 0; i < tbGarage.getRowCount(); i++) {
                 Car carData = new Car();
                 carData.setCarGarageRecordId(garageData.getRecordId());
                 carData.setName(tbGarage.getValueAt(i, 1).toString());
                 carData.setPlateNumber(tbGarage.getValueAt(i, 2).toString());
                 carData.setPrice(Double.parseDouble(tbGarage.getValueAt(i, 3).toString()));
-                Main.getCarService().save(carData);
+                AppUtil.getService().save(carData);
             }
             JOptionPane.showMessageDialog(null, " records, Done!");
         }
@@ -269,7 +270,7 @@ public class GarageData extends javax.swing.JPanel {
             garageData.setRecordId(getRecordId());
             garageData.setName(tfName.getText());
             garageData.setDescription(tfDescription.getText());
-            Main.getGarageService().save(garageData);
+            AppUtil.getService().save(garageData);
         }
     }
 
@@ -279,11 +280,11 @@ public class GarageData extends javax.swing.JPanel {
             tfName.setText("");
             tfDescription.setText("");
         } else if (getOption().equals("EDIT")) {
-            garage = Main.getGarageService().getById(getRecordId());
+            garage = AppUtil.getService().getGarageById(getRecordId());
 
             tfName.setText(garage.getName());
             tfDescription.setText(garage.getDescription());
-            List<Car> list = Main.getCarService().getByGarageId(getRecordId());
+            List<Car> list = AppUtil.getService().getListCarById(getRecordId());
             DefaultTableModel dtm = (DefaultTableModel) getTbGarage().getModel();
             for (Car car : list) {
                 dtm.addRow(new Object[]{car.getRecordId(), car.getName(), car.getPlateNumber(), car.getPrice(), car.getAvailability()});

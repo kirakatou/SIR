@@ -8,7 +8,7 @@ package com.sumames.sir.ui.access;
 import com.sumames.sir.Main;
 import com.sumames.sir.entity.LoginAccess;
 import com.sumames.sir.entity.LoginAccessDetail;
-import com.sumames.sir.service.HibernateUtil;
+import com.sumames.sir.helper.AppUtil;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -184,13 +184,12 @@ public class AccessData extends javax.swing.JPanel {
         la.setName(tfName.getText());
         la.setNote(tfDescription.getText());
         Main.getFrame().getLoadingBar().setValue(LoadingValue + 10);
-        Main.getAccessService().save(la);
+        AppUtil.getService().save(la);
         
         for (int i = 0; i < tbAccess.getRowCount(); i++) {
 
             LoginAccessDetail laDetail = new LoginAccessDetail();
             laDetail.setAccessRecordId(la.getRecordId());
-            HibernateUtil.close();
             laDetail.setNameMenu(tbAccess.getValueAt(i, 0).toString());
             laDetail.setViewData((Boolean) tbAccess.getValueAt(i, 1));
             laDetail.setAddData((Boolean) tbAccess.getValueAt(i, 2));
@@ -204,7 +203,7 @@ public class AccessData extends javax.swing.JPanel {
 //            laDetail.setDeleteData(Boolean.TRUE);
 //            laDetail.setPrint(Boolean.TRUE);
 //            laDetail.setExport(Boolean.TRUE);
-            Main.getAccessDetailService().save(laDetail);
+            AppUtil.getService().save(laDetail);
             Main.getFrame().getLoadingBar().setValue(LoadingValue + 10);
 
         }

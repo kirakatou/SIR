@@ -8,6 +8,7 @@ package com.sumames.sir.ui;
 import com.sumames.sir.ui.renderer.GlassPanePanel;
 import com.sumames.sir.Main;
 import com.sumames.sir.entity.Login;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.resources.image.LoadImages;
 import com.sumames.sir.ui.renderer.ClosableTabbedPane;
 import com.sumames.sir.ui.people.PeopleMenu;
@@ -639,7 +640,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btPasswordActionPerformed
 
     private void btLogin2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogin2ActionPerformed
-        Login l = Main.getLoginService().getByUsername(tfUsername.getText());
+        Login l = AppUtil.getService().getByUsername(tfUsername.getText());
         if (l == null) {
             JOptionPane.showMessageDialog(null, "Username or password wrong");
         } else if (l != null) {

@@ -7,6 +7,7 @@ package com.sumames.sir.ui.people;
 
 import com.sumames.sir.Main;
 import com.sumames.sir.entity.Employer;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.ComponentUtils;
 import com.sumames.sir.helper.Support;
 import java.util.List;
@@ -213,7 +214,7 @@ public class EmployerList extends javax.swing.JPanel {
     private javax.swing.JTextField tfSearch;
     // End of variables declaration//GEN-END:variables
     private void refreshTable() {
-        employers = Main.getEmployerService().getEmployerAll();
+        employers = AppUtil.getService().getEmployers();
         tbEmployer.setModel(new CustomerTableModel(employers));
         tbEmployer.getColumnModel().getColumn(0).setMinWidth(0);
         tbEmployer.getColumnModel().getColumn(0).setMaxWidth(0);

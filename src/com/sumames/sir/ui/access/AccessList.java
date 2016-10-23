@@ -7,6 +7,7 @@ package com.sumames.sir.ui.access;
 
 import com.sumames.sir.Main;
 import com.sumames.sir.entity.LoginAccess;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.ComponentUtils;
 import com.sumames.sir.helper.Support;
 import java.util.List;
@@ -213,7 +214,7 @@ public class AccessList extends javax.swing.JPanel {
     private javax.swing.JTextField tfSearch;
     // End of variables declaration//GEN-END:variables
     private void refreshTable() {
-        access = Main.getAccessService().getAccessAll();
+        access = AppUtil.getService().getAccesses();
         tbAccess.setModel(new AccessTableModel(access));
         tbAccess.getColumnModel().getColumn(0).setMinWidth(0);
         tbAccess.getColumnModel().getColumn(0).setMaxWidth(0);
