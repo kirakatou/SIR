@@ -147,7 +147,7 @@ private void setText(String text) {
 }
 
 private void highlightCompletedText(int start) {
-    editor.setCaretPosition(getLength());
+//    editor.setCaretPosition(getLength());
     editor.moveCaretPosition(start);
 }
 

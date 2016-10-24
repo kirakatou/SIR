@@ -56,7 +56,7 @@ public class ServiceDaoImpl implements ServiceDao {
     }
 
     @Override
-    public List<Customer> getCustomersDeleted() {
+    public List<Customer> getCustomersNotDeleted() {
         List<Customer> list = getCurrentSession().createQuery("FROM Customer a where a.deleteDatetime IS NULL ORDER BY a.recordId ASC").list();
         return list;
     }
@@ -89,6 +89,12 @@ public class ServiceDaoImpl implements ServiceDao {
     @Override
     public List<Employer> getEmployers() {
         List<Employer> list = getCurrentSession().createQuery("FROM Employer a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+    
+    @Override
+    public List<Employer> getEmployersNotDeleted() {
+        List<Employer> list = getCurrentSession().createQuery("FROM Employer a where a.deleteDatetime IS NULL ORDER BY a.recordId ASC").list();
         return list;
     }
 

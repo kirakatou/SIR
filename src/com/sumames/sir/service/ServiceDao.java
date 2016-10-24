@@ -22,7 +22,7 @@ public interface ServiceDao {
     
     public List<Customer> getCustomers();
     
-    public List<Customer> getCustomersDeleted();
+    public List<Customer> getCustomersNotDeleted();
     
     public Car getCarById(Integer id);
     
@@ -32,7 +32,9 @@ public interface ServiceDao {
     
     public Employer getEmployerById(Integer id);
     
-    public List<Employer> getEmployers();           
+    public List<Employer> getEmployers();   
+    
+    public List<Employer> getEmployersNotDeleted();
     
     public Garage getGarageById(Integer id);
     

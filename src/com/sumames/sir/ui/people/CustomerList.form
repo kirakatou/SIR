@@ -39,9 +39,9 @@
                       <Component id="btRefresh" min="-2" pref="54" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btAdd" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btEdit" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btDelete" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -53,20 +53,18 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="btSearch" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="btRefresh" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="btAdd" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="2" groupAlignment="0" attributes="0">
-                          <Component id="btEdit" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
-                          <Component id="btDelete" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
+              <Group type="103" groupAlignment="2" attributes="0">
+                  <Component id="btSearch" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="2" attributes="0">
                       <Component id="tfSearch" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="chkDelete" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="btRefresh" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Component id="btAdd" alignment="2" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="2" groupAlignment="0" attributes="0">
+                      <Component id="btEdit" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
+                      <Component id="btDelete" alignment="0" min="-2" pref="83" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>

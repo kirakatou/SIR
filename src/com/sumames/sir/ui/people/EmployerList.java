@@ -10,7 +10,10 @@ import com.sumames.sir.entity.Employer;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.ComponentUtils;
 import com.sumames.sir.helper.Support;
+import java.awt.Color;
+import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -46,6 +49,7 @@ public class EmployerList extends javax.swing.JPanel {
         btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
         btRefresh = new javax.swing.JButton();
+        chkDelete = new javax.swing.JCheckBox();
 
         setBackground(new java.awt.Color(255, 153, 0));
         setToolTipText("");
@@ -102,6 +106,11 @@ public class EmployerList extends javax.swing.JPanel {
         btDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
         btDelete.setBorder(null);
         btDelete.setContentAreaFilled(false);
+        btDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteActionPerformed(evt);
+            }
+        });
 
         btRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/5-01.png"))); // NOI18N
         btRefresh.setBorderPainted(false);
@@ -109,6 +118,15 @@ public class EmployerList extends javax.swing.JPanel {
         btRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btRefreshActionPerformed(evt);
+            }
+        });
+
+        chkDelete.setForeground(new java.awt.Color(255, 255, 255));
+        chkDelete.setText("Show Deleted");
+        chkDelete.setOpaque(false);
+        chkDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkDeleteActionPerformed(evt);
             }
         });
 
@@ -121,7 +139,9 @@ public class EmployerList extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chkDelete))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -137,22 +157,21 @@ public class EmployerList extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
+                    .addComponent(btDelete, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btEdit, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(btAdd)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(chkDelete))
                             .addComponent(btSearch)
-                            .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btRefresh)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btAdd))))
+                            .addComponent(btRefresh))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -202,6 +221,28 @@ public class EmployerList extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tfSearchKeyReleased
 
+    private void chkDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkDeleteActionPerformed
+        refreshTable();
+    }//GEN-LAST:event_chkDeleteActionPerformed
+
+    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+        if (tbEmployer.getSelectedRow() >= 0) {
+            Employer employer = AppUtil.getService().getEmployerById(Integer.valueOf(tbEmployer.getValueAt(tbEmployer.getSelectedRow(), 0).toString()));
+            if (employer != null) {
+                employer.setDeleteDatetime(new Date());
+                employer.setDeletebyuserRecordid(Main.getFrame().getLogin().getEmployeeRecordId());
+                if (AppUtil.getService().save(employer)) {
+                    msg("Delete Done!");
+                    refreshTable();
+                } else {
+                    msg("Delete Failed!");
+                }
+
+            }
+
+        }
+    }//GEN-LAST:event_btDeleteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAdd;
@@ -209,23 +250,31 @@ public class EmployerList extends javax.swing.JPanel {
     private javax.swing.JButton btEdit;
     private javax.swing.JButton btRefresh;
     private javax.swing.JButton btSearch;
+    private javax.swing.JCheckBox chkDelete;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbEmployer;
     private javax.swing.JTextField tfSearch;
     // End of variables declaration//GEN-END:variables
     private void refreshTable() {
-        employers = AppUtil.getService().getEmployers();
-        tbEmployer.setModel(new CustomerTableModel(employers));
-        tbEmployer.getColumnModel().getColumn(0).setMinWidth(0);
-        tbEmployer.getColumnModel().getColumn(0).setMaxWidth(0);
+        if (!chkDelete.isSelected()) {
+            employers = AppUtil.getService().getEmployersNotDeleted();
+            tbEmployer.setModel(new EmployerNotDeletedTableModel(employers));
+            tbEmployer.getColumnModel().getColumn(0).setMinWidth(0);
+            tbEmployer.getColumnModel().getColumn(0).setMaxWidth(0);
+        } else {
+            employers = AppUtil.getService().getEmployers();
+            tbEmployer.setModel(new EmployerTableModel(employers));
+            tbEmployer.getColumnModel().getColumn(0).setMinWidth(0);
+            tbEmployer.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
     }
 
-    private class CustomerTableModel extends AbstractTableModel {
+    private class EmployerNotDeletedTableModel extends AbstractTableModel {
 
         private List<Employer> listEmployers;
         private final String[] tableHeaders = {"Record Id", "No", "Name", "Address", "Telephone", "Email", "Gender"};
 
-        public CustomerTableModel(List<Employer> listEmployers) {
+        public EmployerNotDeletedTableModel(List<Employer> listEmployers) {
             this.listEmployers = listEmployers;
         }
 
@@ -263,6 +312,70 @@ public class EmployerList extends javax.swing.JPanel {
                     return "";
             }
         }
+    }
+
+    private class EmployerTableModel extends AbstractTableModel {
+
+        private List<Employer> listEmployers;
+        private final String[] tableHeaders = {"Record Id", "No", "Name", "Address", "Telephone", "Email", "Gender", "Delete Datetime", "Delete by user id"};
+
+        public EmployerTableModel(List<Employer> listEmployers) {
+            this.listEmployers = listEmployers;
+        }
+
+        public int getRowCount() {
+            return listEmployers.size();
+        }
+
+         public int getColumnCount() {
+            return 9;
+        }
+
+        @Override
+        public String getColumnName(int columnIndex) {
+            return tableHeaders[columnIndex];
+        }
+
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Employer p = employers.get(rowIndex);
+            if (p.getDeleteDatetime() != null) {
+                tbEmployer.setBackground(Color.red);
+            } else {
+                tbEmployer.setBackground(Color.white);
+            }
+            switch (columnIndex) {
+                case 0:
+                    return p.getRecordId();
+                case 1:
+                    return p.getNo();
+                case 2:
+                    return p.getName();
+                case 3:
+                    return p.getAddress();
+                case 4:
+                    return p.getTelephone();
+                case 5:
+                    return p.getEmail();
+                case 6:
+                    String gender = "";
+                    if (p.getGender() == 0) {
+                        gender = "Male";
+                    } else {
+                        gender = "Female";
+                    }
+                    return gender;
+                case 7:
+                    return p.getDeleteDatetime();
+                case 8:
+                    return p.getDeletebyuserRecordid();
+                default:
+                    return "";
+            }
+        }
+    }
+    
+    private void msg(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
     }
 
 }
