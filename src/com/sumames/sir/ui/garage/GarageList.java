@@ -11,7 +11,9 @@ import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.ComponentUtils;
 import com.sumames.sir.helper.Support;
 import java.awt.GridBagConstraints;
+import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -103,6 +105,11 @@ public class GarageList extends javax.swing.JPanel {
         btDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
         btDelete.setBorder(null);
         btDelete.setContentAreaFilled(false);
+        btDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteActionPerformed(evt);
+            }
+        });
 
         btRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/5-01.png"))); // NOI18N
         btRefresh.setBorderPainted(false);
@@ -158,7 +165,7 @@ public class GarageList extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
-        new Support().NewTab(Main.getFrame().getTab(), new GarageData(), "Garage Input");
+        new Support().NewTab(Main.getFrame().getTab(), new GarageData("NEW",0), "Garage Input");
     }//GEN-LAST:event_btAddActionPerformed
 
     private void tbGarageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbGarageMouseClicked
@@ -202,6 +209,24 @@ public class GarageList extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_tfSearchKeyReleased
+
+    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+        if (tbGarage.getSelectedRow() >= 0) {
+            Garage garage = AppUtil.getService().getGarageById(Integer.valueOf(tbGarage.getValueAt(tbGarage.getSelectedRow(), 0).toString()));
+            if (garage != null) {
+                garage.setDeleteDatetime(new Date());
+                garage.setDeletebyuserRecordid(Main.getFrame().getLogin().getEmployeeRecordId());
+                if (AppUtil.getService().save(garage)) {
+                    msg("Delete Done!");
+                    refreshTable();
+                } else {
+                    msg("Delete Failed!");
+                }
+
+            }
+
+        }
+    }//GEN-LAST:event_btDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -259,6 +284,10 @@ public class GarageList extends javax.swing.JPanel {
                     return "";
             }
         }
+    }
+    
+    private void msg(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
     }
 
 }

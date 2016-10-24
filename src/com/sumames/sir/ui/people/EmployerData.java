@@ -283,12 +283,17 @@ public class EmployerData extends javax.swing.JPanel {
     private void saveData() {
         if (option.equals("NEW")) {
             formToObject();
+            employer.setCreateDatetime(new Date());
+            employer.setCreatebyuserRecordid(Main.getFrame().getLogin().getEmployeeRecordId());
             if (AppUtil.getService().save(employer)) {
                 Login login = new Login();
                 login.setEmployeeRecordId(employer.getRecordId());
                 login.setUsername(tfName.getText());
-                login.setPassword("employer" + dcBirthdate.getDate().getDay() + dcBirthdate.getDate().getMonth());
+                int month = dcBirthdate.getDate().getMonth() + 1;
+                login.setPassword("employer" + dcBirthdate.getDate().getDate() + month);
                 login.setAccessRecordId(mapAccess.get(cbStatus.getSelectedItem().toString()));
+                login.setCreateDatetime(new Date());
+                login.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
                 if (AppUtil.getService().save(login)) {
                     msg("Save Done!");
                     Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
@@ -304,9 +309,14 @@ public class EmployerData extends javax.swing.JPanel {
 
         } else if (option.equals("EDIT")) {
             formToObject();
+            employer.setRecordId(recordId);
+            employer.setEditByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
+            employer.setEditDatetime(new Date());
             if (AppUtil.getService().save(employer)) {
                 Login login = AppUtil.getService().getByUsername(employer.getName());
                 login.setAccessRecordId(mapAccess.get(cbStatus.getSelectedItem().toString()));
+                login.setEditByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
+                login.setEditDatetime(new Date());
                 if (AppUtil.getService().save(login)) {
                     msg("Save Done!");
                     Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
@@ -319,8 +329,7 @@ public class EmployerData extends javax.swing.JPanel {
     }
 
     public void LoadingData() {
-        
-        
+
         List<Employer> list = AppUtil.getService().getEmployers();
         cbBirthplace.removeAllItems();
         for (Employer customer : list) {
