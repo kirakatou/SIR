@@ -76,7 +76,7 @@ public class ServiceDaoImpl implements ServiceDao {
 
     @Override
     public List<Car> getCars() {
-        List<Car> list = getCurrentSession().createQuery("FROM Customer a ORDER BY a.recordId ASC").list();
+        List<Car> list = getCurrentSession().createQuery("FROM Car a ORDER BY a.recordId ASC").list();
         return list;
     }
 

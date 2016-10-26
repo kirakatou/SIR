@@ -91,6 +91,11 @@ public class EmployerData extends javax.swing.JPanel {
 
         tfID.setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         tfID.setPreferredSize(new java.awt.Dimension(150, 30));
+        tfID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfIDActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancel");
 
@@ -256,6 +261,10 @@ public class EmployerData extends javax.swing.JPanel {
     private void tfNoTelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNoTelpActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfNoTelpActionPerformed
+
+    private void tfIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfIDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
