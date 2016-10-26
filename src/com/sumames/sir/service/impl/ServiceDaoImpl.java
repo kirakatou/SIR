@@ -6,6 +6,8 @@ import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.Garage;
 import com.sumames.sir.entity.Login;
 import com.sumames.sir.entity.LoginAccess;
+import com.sumames.sir.entity.Rent;
+import com.sumames.sir.entity.RentDetail;
 import com.sumames.sir.service.ServiceDao;
 import java.util.List;
 import org.hibernate.Session;
@@ -139,6 +141,37 @@ public class ServiceDaoImpl implements ServiceDao {
     @Override
     public List<LoginAccess> getAccesses() {
         List<LoginAccess> list = getCurrentSession().createQuery("FROM LoginAccess a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public Rent getRentById(Integer id) {
+        Rent t = (Rent) getCurrentSession().get(Rent.class, id);
+        return t;
+    }
+
+    @Override
+    public List<Rent> getRents() {
+        List<Rent> list = getCurrentSession().createQuery("FROM Rent a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public RentDetail getRentDetailById(Integer id) {
+        RentDetail t = (RentDetail) getCurrentSession().get(RentDetail.class, id);
+        return t;
+    }
+
+    @Override
+    public List<RentDetail> getRentDetails() {
+        List<RentDetail> list = getCurrentSession().createQuery("FROM RentDetail a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public List<RentDetail> getListRentById(int id) {
+        List<RentDetail> list = getCurrentSession().createQuery("from RentDetail where rent_record_id=:id")
+                .setParameter("id", id).list();
         return list;
     }
 

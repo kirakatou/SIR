@@ -6,6 +6,8 @@ import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.Garage;
 import com.sumames.sir.entity.Login;
 import com.sumames.sir.entity.LoginAccess;
+import com.sumames.sir.entity.Rent;
+import com.sumames.sir.entity.RentDetail;
 import java.util.List;
 
 /**
@@ -49,6 +51,16 @@ public interface ServiceDao {
     public LoginAccess getAccessById(Integer id);
     
     public List<LoginAccess> getAccesses();
+    
+    public Rent getRentById(Integer id);
+    
+    public List<Rent> getRents();
+    
+    public RentDetail getRentDetailById(Integer id);
+    
+    public List<RentDetail> getRentDetails();
+    
+    public List<RentDetail> getListRentById(int id);
 
     
     
