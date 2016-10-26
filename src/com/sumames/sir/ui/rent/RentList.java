@@ -5,6 +5,7 @@
  */
 package com.sumames.sir.ui.rent;
 
+import com.sumames.sir.Main;
 import com.sumames.sir.ui.MainFrame;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.helper.Support;
@@ -33,7 +34,7 @@ public class RentList extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbRent = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         btRefresh = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -48,7 +49,7 @@ public class RentList extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 153, 0));
         setOpaque(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbRent.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,7 +60,7 @@ public class RentList extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbRent);
 
         jTextField1.setPreferredSize(new java.awt.Dimension(6, 25));
 
@@ -84,6 +85,11 @@ public class RentList extends javax.swing.JPanel {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/3-01.png"))); // NOI18N
         jButton3.setBorder(null);
         jButton3.setContentAreaFilled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
         jButton4.setBorder(null);
@@ -173,8 +179,15 @@ public class RentList extends javax.swing.JPanel {
     }//GEN-LAST:event_btRefreshActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    new Support().NewTab(m.getTab(), new RentData(m), "Rent Input");    // TODO add your handling code here:
+        RentData cd = new RentData("NEW", 0);
+        new Support().NewTab(Main.getFrame().getTab(), cd, "Rent Data - New");
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        RentData cd = new RentData("EDIT", Integer.valueOf(tbRent.getValueAt(tbRent.getSelectedRow(), 0).toString()));
+        new Support().NewTab(Main.getFrame().getTab(), cd, "Rent Data - " + tbRent.getValueAt(tbRent.getSelectedRow(), 1).toString());
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -188,7 +201,7 @@ public class RentList extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tbRent;
     // End of variables declaration//GEN-END:variables
 }
