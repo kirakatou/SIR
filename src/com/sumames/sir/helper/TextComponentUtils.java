@@ -199,8 +199,8 @@ public class TextComponentUtils {
     }
 
     public static String formatNumber(String text){
-        char thousandsSeparator = '.';
-        char decimalSeparator = ',';
+        char thousandsSeparator = ',';
+        char decimalSeparator = '.';
         if(Locale.getDefault().equals(Locale.US)){
             thousandsSeparator = ',';
             decimalSeparator = '.';
