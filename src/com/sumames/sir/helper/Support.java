@@ -8,6 +8,7 @@ package com.sumames.sir.helper;
 import java.awt.Component;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
@@ -16,11 +17,12 @@ import javax.swing.JTabbedPane;
  * @author Asus
  */
 public class Support {
-    public Support(){
-        
+
+    public Support() {
+
     }
-    
-    public void NewTab(JTabbedPane tab, Component component, String TabName){
+
+    public void NewTab(JTabbedPane tab, Component component, String TabName) {
         int count = tab.getTabCount();
         int Yes = 0;
         if (count != 0) {
@@ -30,24 +32,31 @@ public class Support {
 
                     if (dialogResult == JOptionPane.YES_OPTION) {
                         Yes = 1;
-                        
-                    }
-                    else if (dialogResult == JOptionPane.NO_OPTION){
+
+                    } else if (dialogResult == JOptionPane.NO_OPTION) {
                         Yes = 0;
                         tab.setSelectedIndex(i);
                     }
                     break;
 
-                } 
-                else{
+                } else {
                     Yes = 1;
                 }
             }
-        } 
-        if (count == 0 || Yes == 1){
+        }
+        if (count == 0 || Yes == 1) {
             tab.add(component, TabName + "  ");
             tab.setSelectedIndex(tab.getTabCount() - 1);
         }
+    }
+
+    public static Object getKeyFromValue(Map hm, Object value) {
+        for (Object o : hm.keySet()) {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
     }
 //    public static String AutoNumber(String FieldName, String TableName, String Prefix, Boolean WithDateTime) {
 //        String AutoNumber = null;
