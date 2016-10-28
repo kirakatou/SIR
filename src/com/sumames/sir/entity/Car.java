@@ -75,15 +75,6 @@ public class Car implements Serializable {
     public Car() {
     }
 
-    public Car(Integer recordId) {
-        this.recordId = recordId;
-    }
-
-    public Car(Integer recordId, int carGarageRecordId) {
-        this.recordId = recordId;
-        this.carGarageRecordId = carGarageRecordId;
-    }
-
     public Integer getRecordId() {
         return recordId;
     }
@@ -212,29 +203,7 @@ public class Car implements Serializable {
         this.deletebyuserRecordid = deletebyuserRecordid;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (recordId != null ? recordId.hashCode() : 0);
-        return hash;
-    }
+    
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Car)) {
-            return false;
-        }
-        Car other = (Car) object;
-        if ((this.recordId == null && other.recordId != null) || (this.recordId != null && !this.recordId.equals(other.recordId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.sumames.sir.entity.Car[ recordId=" + recordId + " ]";
-    }
     
 }

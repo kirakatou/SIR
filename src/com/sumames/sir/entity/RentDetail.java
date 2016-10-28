@@ -33,79 +33,46 @@ public class RentDetail implements Serializable {
     @Basic(optional = false)
     @Column(name = "record_id")
     private Integer recordId;
-    
-    @Basic(optional = false)
     @Column(name = "rent_record_id")
-    private int rentRecordId;
-    
-    @Basic(optional = false)
+    private Integer rentRecordId;
     @Column(name = "car_record_id")
-    private int carRecordId;
-    
-    @Basic(optional = false)
+    private Integer carRecordId;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "price")
-    private double price;
-    
-    @Basic(optional = false)
+    private Double price;
     @Column(name = "period")
-    private int period;
-    
-    @Basic(optional = false)
+    private Integer period;
     @Column(name = "subtotal")
-    private double subtotal;
-    
-    @Basic(optional = false)
+    private Double subtotal;
     @Column(name = "void_status")
-    private boolean voidStatus;
-    
-    @Basic(optional = false)
+    private Boolean voidStatus;
     @Column(name = "void_reason")
     private String voidReason;
-    
-    @Basic(optional = false)
     @Column(name = "void_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date voidDatetime;
-    
-    @Basic(optional = false)
     @Column(name = "void_by_user_record_id")
-    private int voidByUserRecordId;
-    
-    @Basic(optional = false)
+    private Integer voidByUserRecordId;
     @Column(name = "create_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDatetime;
-    
-    @Basic(optional = false)
     @Column(name = "create_by_user_record_id")
-    private int createByUserRecordId;
-    
-    @Basic(optional = false)
+    private Integer createByUserRecordId;
     @Column(name = "edit_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date editDatetime;
-    
-    @Basic(optional = false)
     @Column(name = "edit_by_user_record_id")
-    private int editByUserRecordId;
-    
-    @Basic(optional = false)
+    private Integer editByUserRecordId;
     @Column(name = "authorize_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date authorizeDatetime;
-    
-    @Basic(optional = false)
     @Column(name = "authorize_by_user_record_id")
-    private int authorizeByUserRecordId;
-    
-    @Basic(optional = false)
+    private Integer authorizeByUserRecordId;
     @Column(name = "delete_datetime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date deleteDatetime;
-    
-    @Basic(optional = false)
     @Column(name = "delete_by_user_Record_id")
-    private int deletebyuserRecordid;
+    private Integer deletebyuserRecordid;
 
     public RentDetail() {
     }
@@ -118,51 +85,51 @@ public class RentDetail implements Serializable {
         this.recordId = recordId;
     }
 
-    public int getRentRecordId() {
+    public Integer getRentRecordId() {
         return rentRecordId;
     }
 
-    public void setRentRecordId(int rentRecordId) {
+    public void setRentRecordId(Integer rentRecordId) {
         this.rentRecordId = rentRecordId;
     }
 
-    public int getCarRecordId() {
+    public Integer getCarRecordId() {
         return carRecordId;
     }
 
-    public void setCarRecordId(int carRecordId) {
+    public void setCarRecordId(Integer carRecordId) {
         this.carRecordId = carRecordId;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public int getPeriod() {
+    public Integer getPeriod() {
         return period;
     }
 
-    public void setPeriod(int period) {
+    public void setPeriod(Integer period) {
         this.period = period;
     }
 
-    public double getSubtotal() {
+    public Double getSubtotal() {
         return subtotal;
     }
 
-    public void setSubtotal(double subtotal) {
+    public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
     }
 
-    public boolean isVoidStatus() {
+    public Boolean getVoidStatus() {
         return voidStatus;
     }
 
-    public void setVoidStatus(boolean voidStatus) {
+    public void setVoidStatus(Boolean voidStatus) {
         this.voidStatus = voidStatus;
     }
 
@@ -182,11 +149,11 @@ public class RentDetail implements Serializable {
         this.voidDatetime = voidDatetime;
     }
 
-    public int getVoidByUserRecordId() {
+    public Integer getVoidByUserRecordId() {
         return voidByUserRecordId;
     }
 
-    public void setVoidByUserRecordId(int voidByUserRecordId) {
+    public void setVoidByUserRecordId(Integer voidByUserRecordId) {
         this.voidByUserRecordId = voidByUserRecordId;
     }
 
@@ -198,11 +165,11 @@ public class RentDetail implements Serializable {
         this.createDatetime = createDatetime;
     }
 
-    public int getCreateByUserRecordId() {
+    public Integer getCreateByUserRecordId() {
         return createByUserRecordId;
     }
 
-    public void setCreateByUserRecordId(int createByUserRecordId) {
+    public void setCreateByUserRecordId(Integer createByUserRecordId) {
         this.createByUserRecordId = createByUserRecordId;
     }
 
@@ -214,11 +181,11 @@ public class RentDetail implements Serializable {
         this.editDatetime = editDatetime;
     }
 
-    public int getEditByUserRecordId() {
+    public Integer getEditByUserRecordId() {
         return editByUserRecordId;
     }
 
-    public void setEditByUserRecordId(int editByUserRecordId) {
+    public void setEditByUserRecordId(Integer editByUserRecordId) {
         this.editByUserRecordId = editByUserRecordId;
     }
 
@@ -230,11 +197,11 @@ public class RentDetail implements Serializable {
         this.authorizeDatetime = authorizeDatetime;
     }
 
-    public int getAuthorizeByUserRecordId() {
+    public Integer getAuthorizeByUserRecordId() {
         return authorizeByUserRecordId;
     }
 
-    public void setAuthorizeByUserRecordId(int authorizeByUserRecordId) {
+    public void setAuthorizeByUserRecordId(Integer authorizeByUserRecordId) {
         this.authorizeByUserRecordId = authorizeByUserRecordId;
     }
 
@@ -246,11 +213,11 @@ public class RentDetail implements Serializable {
         this.deleteDatetime = deleteDatetime;
     }
 
-    public int getDeletebyuserRecordid() {
+    public Integer getDeletebyuserRecordid() {
         return deletebyuserRecordid;
     }
 
-    public void setDeletebyuserRecordid(int deletebyuserRecordid) {
+    public void setDeletebyuserRecordid(Integer deletebyuserRecordid) {
         this.deletebyuserRecordid = deletebyuserRecordid;
     }
 

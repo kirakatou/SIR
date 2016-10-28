@@ -17,6 +17,7 @@ import com.sumames.sir.helper.TextComponentUtils;
 import com.sumames.sir.ui.renderer.TableCellListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.AbstractAction;
@@ -34,7 +35,7 @@ import javax.swing.table.DefaultTableModel;
  * @author My pc
  */
 public class RentData extends javax.swing.JPanel {
-
+    
     private String option;
     private int recordId;
     private Rent rent;
@@ -64,15 +65,13 @@ public class RentData extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btSave = new javax.swing.JButton();
         tfNo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbRent = new javax.swing.JTable();
-        btAdd = new javax.swing.JButton();
-        btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tfDesc = new javax.swing.JTextArea();
@@ -91,13 +90,13 @@ public class RentData extends javax.swing.JPanel {
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(844, 417));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/6-01.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setPreferredSize(new java.awt.Dimension(65, 23));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/6-01.png"))); // NOI18N
+        btSave.setBorderPainted(false);
+        btSave.setContentAreaFilled(false);
+        btSave.setPreferredSize(new java.awt.Dimension(65, 23));
+        btSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btSaveActionPerformed(evt);
             }
         });
 
@@ -156,6 +155,7 @@ public class RentData extends javax.swing.JPanel {
         TextComponentUtils.setNumericTextOnly(currentCell);
         cbCarName = new JComboBox<String>();
         cbCarPlate = new JComboBox<String>();
+
         tbRent.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(currentCell));
         tbRent.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cbCarName));
         tbRent.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(cbCarPlate));
@@ -169,19 +169,6 @@ public class RentData extends javax.swing.JPanel {
             tbRent.getColumnModel().getColumn(0).setMinWidth(0);
             tbRent.getColumnModel().getColumn(0).setMaxWidth(0);
         }
-
-        btAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/2-01.png"))); // NOI18N
-        btAdd.setBorder(null);
-        btAdd.setContentAreaFilled(false);
-        btAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAddActionPerformed(evt);
-            }
-        });
-
-        btEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/3-01.png"))); // NOI18N
-        btEdit.setBorder(null);
-        btEdit.setContentAreaFilled(false);
 
         btDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
         btDelete.setBorder(null);
@@ -307,13 +294,9 @@ public class RentData extends javax.swing.JPanel {
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btAdd)
-                        .addGap(10, 10, 10)
-                        .addComponent(btEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
+                        .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btDelete)))
                 .addContainerGap())
         );
@@ -357,16 +340,9 @@ public class RentData extends javax.swing.JPanel {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(11, 11, 11)
-                        .addComponent(btAdd))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)))))
+                            .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))
         );
@@ -382,7 +358,7 @@ public class RentData extends javax.swing.JPanel {
                         Car car = AppUtil.getService().getCarById(carID.get(tcl.getNewValue().toString()));
                         tbRent.setValueAt(car.getPlateNumber(), row, 2);
                         tbRent.setValueAt(car.getPrice(), row, 3);
-
+                        
                         if (tbRent.getModel().getValueAt(row, 4) != null) {
                             int a = Integer.parseInt(tbRent.getModel().getValueAt(row, 4).toString());
                             tbRent.setValueAt(car.getPrice() * a, row, 5);
@@ -397,7 +373,7 @@ public class RentData extends javax.swing.JPanel {
                         Car car = AppUtil.getService().getCarById(carPlateID.get(tcl.getNewValue().toString()));
                         tbRent.setValueAt(car.getName(), row, 1);
                         tbRent.setValueAt(car.getPrice(), row, 3);
-
+                        
                         if (tbRent.getModel().getValueAt(row, 4) != null) {
                             int a = Integer.parseInt(tbRent.getModel().getValueAt(row, 4).toString());
                             tbRent.setValueAt(car.getPrice() * a, row, 5);
@@ -436,13 +412,13 @@ public class RentData extends javax.swing.JPanel {
                 default:
                     break;
             }
-
+            
         }
     }
-
+    
     private AbstractAction saveAction() {
         AbstractAction save = new AbstractAction() {
-
+            
             @Override
             public void actionPerformed(ActionEvent e) {
 //                JOptionPane.showMessageDialog(RentData.this.tbRent, "Action Triggered.");
@@ -457,15 +433,11 @@ public class RentData extends javax.swing.JPanel {
         };
         return save;
     }
+    
 
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btAddActionPerformed
+    private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
+        saveData();
+    }//GEN-LAST:event_btSaveActionPerformed
 
     private void tbRentKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbRentKeyPressed
         if (evt.getID() == KeyEvent.KEY_PRESSED) {
@@ -502,13 +474,11 @@ public class RentData extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAdd;
     private javax.swing.JButton btDelete;
-    private javax.swing.JButton btEdit;
+    private javax.swing.JButton btSave;
     private javax.swing.JComboBox<String> cbCustomerName;
     private javax.swing.JComboBox<String> cbCustomerNo;
     private com.toedter.calendar.JDateChooser date;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel4;
@@ -530,9 +500,9 @@ public class RentData extends javax.swing.JPanel {
         if (model != null) {
             model.addRow(new Object[]{});
         }
-
+        
     }
-
+    
     public void loadingData() {
         cbCarName.removeAllItems();
         cbCustomerName.removeAllItems();
@@ -559,10 +529,11 @@ public class RentData extends javax.swing.JPanel {
         }
         if (option.equals("NEW")) {
             tfNo.setText("");
-            tfSubtotal.setText("0.00");
+            tfSubtotal.setText("0");
             tfDisc.setText("0");
-            tfTotal.setText("0.0");
+            tfTotal.setText("0");
             tfDesc.setText("");
+            date.setDate(new Date());
             addRow();
         } else if (option.equals("EDIT")) {
             rent = AppUtil.getService().getRentById(recordId);
@@ -570,7 +541,7 @@ public class RentData extends javax.swing.JPanel {
             refreshTable();
         }
     }
-
+    
     public void refreshTable() {
         List<RentDetail> list = AppUtil.getService().getListRentById(recordId);
         DefaultTableModel dtm = (DefaultTableModel) tbRent.getModel();
@@ -580,33 +551,43 @@ public class RentData extends javax.swing.JPanel {
             dtm.addRow(new Object[]{rd.getRecordId(), car.getName(), car.getPlateNumber(), rd.getPrice(), rd.getPeriod(), rd.getSubtotal()});
         }
     }
-
+    
     public void count() {
-        Double subtotal = 0.00;
-        for (int i = 0; i <= tbRent.getRowCount() - 1; i++) {
-            System.out.println("Value = " + tbRent.getModel().getValueAt(i, 5));
-            subtotal = subtotal + Double.parseDouble(tbRent.getModel().getValueAt(i, 5).toString());
-            System.out.println("Subtotal" + subtotal);
+        if (tbRent.getRowCount() > 0) {
+            Double subtotal = 0.00;
+            
+            for (int i = 0; i <= tbRent.getRowCount() - 1; i++) {
+                System.out.println("Value = " + tbRent.getModel().getValueAt(i, 5));
+                subtotal = subtotal + Double.parseDouble(tbRent.getModel().getValueAt(i, 5).toString());
+                System.out.println("Subtotal" + subtotal);
+            }
+            tfSubtotal.setText(subtotal.toString());
+//            System.out.println(tfDisc.getText());
+            int disc = Integer.parseInt(tfDisc.getText());
+            
+            subtotal = subtotal - disc;
+            tfTotal.setText(subtotal.toString());
         }
-        tfSubtotal.setText(subtotal.toString());
-
-        int disc = Integer.parseInt(TextComponentUtils.formatNumber(tfDisc.getText()));
-
-        subtotal = subtotal - disc;
-        tfTotal.setText(subtotal.toString());
     }
-
+    
     public void saveData() {
         if (option.equals("NEW")) {
             formToObject();
+            rent.setCreateDatetime(new Date());
+            rent.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
             if (AppUtil.getService().save(rent)) {
                 for (int i = 0; i < tbRent.getRowCount(); i++) {
-                    Car carData = new Car();
-                    carData.setCarGarageRecordId(rent.getRecordId());
-                    carData.setName(tbRent.getValueAt(i, 1).toString());
-                    carData.setPlateNumber(tbRent.getValueAt(i, 2).toString());
-                    carData.setPrice(Double.parseDouble(tbRent.getValueAt(i, 3).toString()));
-                    AppUtil.getService().save(carData);
+                    RentDetail rentDetail = new RentDetail();
+                    rentDetail.setRentRecordId(rent.getRecordId());
+                    System.out.println(tbRent.getValueAt(i, 2).toString());
+                    System.out.println(Support.getKeyFromValue(carPlateID, tbRent.getValueAt(i, 2).toString()));
+                    rentDetail.setCarRecordId(carPlateID.get(tbRent.getValueAt(i, 2).toString()));
+                    rentDetail.setPrice(Double.parseDouble(tbRent.getValueAt(i, 3).toString()));
+                    rentDetail.setPeriod(Integer.parseInt(tbRent.getValueAt(i, 4).toString()));
+                    rentDetail.setSubtotal(Double.parseDouble(tbRent.getValueAt(i, 5).toString()));
+                    rentDetail.setCreateDatetime(new Date());
+                    rentDetail.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
+                    AppUtil.getService().save(rentDetail);
                 }
                 msg("Save Done!");
                 Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
@@ -624,20 +605,21 @@ public class RentData extends javax.swing.JPanel {
             }
         }
     }
-
+    
     public void formToObject() {
         if (rent == null) {
             rent = new Rent();
         }
         rent.setNo(tfNo.getText());
-        rent.setCustomerProfilesRecordId(recordId);
+        rent.setCustomerProfilesRecordId(customerID.get(cbCustomerNo.getSelectedItem()));
         rent.setSubtotal(Double.parseDouble(tfSubtotal.getText()));
         rent.setDiscount(Double.parseDouble(tfDisc.getText()));
         rent.setTotal(Double.parseDouble(tfTotal.getText()));
         rent.setDescription(tfDesc.getText());
-
+        rent.setDate(date.getDate());
+        
     }
-
+    
     public void objectToForm() {
         if (rent != null) {
             tfNo.setText(rent.getNo());
@@ -646,10 +628,10 @@ public class RentData extends javax.swing.JPanel {
             tfTotal.setText(Double.toString(rent.getTotal()));
             tfDesc.setText(rent.getDescription());
             cbCustomerNo.setSelectedItem(Support.getKeyFromValue(customerID, rent.getCustomerProfilesRecordId()));
-
+            date.setDate(rent.getDate());
         }
     }
-
+    
     private void msg(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }

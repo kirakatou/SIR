@@ -282,6 +282,8 @@ public class GarageData extends javax.swing.JPanel {
     public void saveData() {
         if (option.equals("NEW")) {
             formToObject();
+            garage.setCreateDatetime(new Date());
+            garage.setCreatebyuserRecordid(Main.getFrame().getLogin().getEmployeeRecordId());
             if (AppUtil.getService().save(garage)) {
                 for (int i = 0; i < tbCar.getRowCount(); i++) {
                     Car carData = new Car();
@@ -289,6 +291,8 @@ public class GarageData extends javax.swing.JPanel {
                     carData.setName(tbCar.getValueAt(i, 1).toString());
                     carData.setPlateNumber(tbCar.getValueAt(i, 2).toString());
                     carData.setPrice(Double.parseDouble(tbCar.getValueAt(i, 3).toString()));
+//                    carData.setCreateDatetime(new Date());
+//            carData.setCreatebyuserRecordid(Main.getFrame().getLogin().getEmployeeRecordId());
                     AppUtil.getService().save(carData);
                 }
                 msg("Save Done!");
@@ -299,6 +303,8 @@ public class GarageData extends javax.swing.JPanel {
         } else if (option.equals("EDIT")) {
             formToObject();
             garage.setRecordId(recordId);
+            garage.setEditbyuserRecordid(Main.getFrame().getLogin().getEmployeeRecordId());
+            garage.setEditDatetime(new Date());
             if (AppUtil.getService().save(garage)) {
                 msg("Save Done!");
                 Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());

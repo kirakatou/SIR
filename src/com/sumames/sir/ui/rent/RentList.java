@@ -6,22 +6,31 @@
 package com.sumames.sir.ui.rent;
 
 import com.sumames.sir.Main;
+import com.sumames.sir.entity.Customer;
+import com.sumames.sir.entity.Rent;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.ui.MainFrame;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.helper.Support;
+import java.awt.Color;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author My pc
  */
 public class RentList extends javax.swing.JPanel {
-    private MainFrame m;
+
+    private List<Rent> rents;
+
     /**
      * Creates new form rent
      */
-    public RentList(MainFrame m) {
-        this.m = m;
+    public RentList() {
         initComponents();
+        refreshTable();
     }
 
     /**
@@ -107,7 +116,7 @@ public class RentList extends javax.swing.JPanel {
 
         cbOption.setBackground(new java.awt.Color(250, 174, 66));
         cbOption.setForeground(new java.awt.Color(255, 255, 255));
-        cbOption.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbOption.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LIST RENT", "LIST RENT UNRETURNED" }));
         cbOption.setPreferredSize(new java.awt.Dimension(56, 25));
         cbOption.setRenderer(new ComboBoxRenderer());
 
@@ -204,4 +213,81 @@ public class RentList extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tbRent;
     // End of variables declaration//GEN-END:variables
+        private void refreshTable() {
+        if (cbOption.getSelectedIndex() == 0) {
+            rents = AppUtil.getService().getRents();
+            tbRent.setModel(new RentTableModel(rents));
+            tbRent.getColumnModel().getColumn(0).setMinWidth(0);
+            tbRent.getColumnModel().getColumn(0).setMaxWidth(0);
+        } else {
+//            rents = AppUtil.getService().getRents();
+//            tbRent.setModel(new CustomerTableModel(rents));
+//            tbRent.getColumnModel().getColumn(0).setMinWidth(0);
+//            tbRent.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
+
+    }
+
+    private class RentTableModel extends AbstractTableModel {
+
+        private List<Rent> listRents;
+        private final String[] tableHeaders = {"Record Id", "No", "Name", "Address", "Telephone", "Email", "Gender", "Point"};
+
+        public RentTableModel(List<Rent> listRents) {
+            this.listRents = listRents;
+        }
+
+        public int getRowCount() {
+            return listRents.size();
+        }
+
+        public int getColumnCount() {
+            return 8;
+        }
+
+        @Override
+        public String getColumnName(int columnIndex) {
+            return tableHeaders[columnIndex];
+        }
+
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Rent p = rents.get(rowIndex);
+            tbRent.setBackground(Color.white);
+            Customer c = AppUtil.getService().getCustomerById(p.getCustomerProfilesRecordId());
+            switch (columnIndex) {
+                case 0:
+                    return p.getRecordId();
+                case 1:
+                    return p.getNo();
+                case 2:
+                    return p.getDate();
+                case 3:
+                    if (c == null) {
+                        return "";
+                    } else {
+                        return c.getNo();
+                    }
+
+                case 4:
+                    if (c == null) {
+                        return "";
+                    } else {
+                        return c.getName();
+                    }
+
+                case 5:
+                    return p.getSubtotal();
+                case 6:
+                    return p.getDiscount();
+                case 7:
+                    return p.getTotal();
+                default:
+                    return "";
+            }
+        }
+    }
+
+    private void msg(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
+    }
 }

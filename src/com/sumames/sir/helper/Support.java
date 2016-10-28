@@ -6,8 +6,8 @@
 package com.sumames.sir.helper;
 
 import java.awt.Component;
-import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -58,21 +58,20 @@ public class Support {
         }
         return null;
     }
-//    public static String AutoNumber(String FieldName, String TableName, String Prefix, Boolean WithDateTime) {
-//        String AutoNumber = null;
-//        String vTempNumber = null;
-//            sql = "SELECT " + FieldName + " FROM " + TableName
-//                    + " where " + FieldName + " like '%" + Prefix + "%'  "
-//                    + "ORDER BY " + FieldName + " ASC";
-//            
-//            while (rs.next()) {
-//                vTempNumber = String.format("%03d", Integer.parseInt(rs.getString(FieldName).substring(rs.getString(FieldName).length() - 3)) + 1);
+
+    public static String AutoNumber(java.util.List list) {
+//        , String Prefix, Boolean WithDateTime
+        String AutoNumber = null;
+        String vTempNumber = null;
+        List a = (List) list.get(list.size() - 1);
+        String b = (String) a.get(1);
+        return b;
+//            vTempNumber = String.format("%03d", a.getNo().substring(rs.getString(FieldName).length() - 3)) + 1);
 //
-//            }
-//            if (rs.isBeforeFirst()) {
-//                vTempNumber = "001";
-//                System.out.println("no data");
-//            }
+////            if (rs.isBeforeFirst()) {
+////                vTempNumber = "001";
+////                System.out.println("no data");
+////            }
 //            
 //        if (WithDateTime) {
 //            java.util.Date date = new java.util.Date();
@@ -85,8 +84,7 @@ public class Support {
 //        } else {
 //            AutoNumber = Prefix + "." + vTempNumber;
 //        }
-//        c.Disconnect();
 //
 //        return AutoNumber;
-//    }
+    }
 }
