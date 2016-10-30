@@ -5,7 +5,7 @@
  */
 package com.sumames.sir.ui.purchase;
 
-import com.sumames.sir.ui.MainFrame;
+import com.sumames.sir.Main;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.helper.Support;
 
@@ -14,12 +14,11 @@ import com.sumames.sir.helper.Support;
  * @author My pc
  */
 public class PurchaseRequestList extends javax.swing.JPanel {
-    private MainFrame m;
+
     /**
      * Creates new form rent
      */
-    public PurchaseRequestList(MainFrame m) {
-        this.m = m;
+    public PurchaseRequestList() {
         initComponents();
     }
 
@@ -173,7 +172,7 @@ public class PurchaseRequestList extends javax.swing.JPanel {
     }//GEN-LAST:event_btRefreshActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new Support().NewTab(m.getTab(), new PurchaseRequestData(m), "Request Data");
+        new Support().NewTab(Main.getFrame().getTab(), new PurchaseRequestData("NEW", 0), "Request Data");
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

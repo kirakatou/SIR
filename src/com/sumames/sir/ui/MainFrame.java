@@ -25,11 +25,14 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
-
+import java.util.Timer;
+import java.util.TimerTask;
 /**
  *
  * @author Sutandi
@@ -57,6 +60,16 @@ public class MainFrame extends javax.swing.JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width, screenSize.height);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                String string = new SimpleDateFormat("HH:mm:ss").format(new Date());
+                lblTime.setText(string);
+                String string2 = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+                lblDate.setText(string2);
+            }
+        }, 0, 1000);
 
     }
 
@@ -133,6 +146,8 @@ public class MainFrame extends javax.swing.JFrame {
         LoadingBar = new javax.swing.JProgressBar();
         lblUsername = new javax.swing.JLabel();
         username = new javax.swing.JLabel();
+        lblDate = new javax.swing.JLabel();
+        lblTime = new javax.swing.JLabel();
         ProgressPanel = new javax.swing.JPanel();
         MenuPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -343,7 +358,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(95, 95, 95))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SISTEM INFORMASI RENTAL");
         setMinimumSize(new java.awt.Dimension(400, 300));
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -473,6 +488,14 @@ public class MainFrame extends javax.swing.JFrame {
         username.setForeground(new java.awt.Color(255, 255, 255));
         username.setText("a");
 
+        lblDate.setFont(lblUsername.getFont());
+        lblDate.setForeground(new java.awt.Color(255, 255, 255));
+        lblDate.setText("jLabel3");
+
+        lblTime.setFont(lblUsername.getFont());
+        lblTime.setForeground(new java.awt.Color(255, 255, 255));
+        lblTime.setText("jLabel3");
+
         javax.swing.GroupLayout BodyPanelLayout = new javax.swing.GroupLayout(BodyPanel);
         BodyPanel.setLayout(BodyPanelLayout);
         BodyPanelLayout.setHorizontalGroup(
@@ -482,7 +505,11 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(lblUsername)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(username)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lblDate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTime)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addComponent(LoadingBar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -491,7 +518,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BodyPanelLayout.createSequentialGroup()
                 .addGroup(BodyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(username))
+                    .addComponent(username)
+                    .addComponent(lblDate)
+                    .addComponent(lblTime))
                 .addContainerGap())
             .addGroup(BodyPanelLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
@@ -743,7 +772,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblDate;
     private javax.swing.JLabel lblPasswordLogin;
+    private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JLabel lblUsernameLogin;
     private javax.swing.JLabel lbl_database;

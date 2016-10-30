@@ -116,7 +116,7 @@ public class RentList extends javax.swing.JPanel {
 
         cbOption.setBackground(new java.awt.Color(250, 174, 66));
         cbOption.setForeground(new java.awt.Color(255, 255, 255));
-        cbOption.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LIST RENT", "LIST RENT UNRETURNED" }));
+        cbOption.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LIST RENT", "LIST RENT UNRETURNED", "LIST RENT RETURNED" }));
         cbOption.setPreferredSize(new java.awt.Dimension(56, 25));
         cbOption.setRenderer(new ComboBoxRenderer());
 

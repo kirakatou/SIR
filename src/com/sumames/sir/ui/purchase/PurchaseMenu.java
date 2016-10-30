@@ -134,7 +134,7 @@ public class PurchaseMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_btRequestMouseExited
 
     private void btRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRequestActionPerformed
-        new Support().NewTab(m.getTab(), new PurchaseRequestList(m), "Request List");
+        new Support().NewTab(m.getTab(), new PurchaseRequestList(), "Request List");
     }//GEN-LAST:event_btRequestActionPerformed
 
 
