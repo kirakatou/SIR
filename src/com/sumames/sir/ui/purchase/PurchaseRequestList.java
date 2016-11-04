@@ -6,8 +6,16 @@
 package com.sumames.sir.ui.purchase;
 
 import com.sumames.sir.Main;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.helper.Support;
+import com.sumames.sir.entity.PurchaseRequest;
+import com.sumames.sir.entity.Rent;
+import com.sumames.sir.ui.rent.RentData;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
@@ -15,11 +23,15 @@ import com.sumames.sir.helper.Support;
  */
 public class PurchaseRequestList extends javax.swing.JPanel {
 
+    private List<PurchaseRequest> requestes;
+
     /**
      * Creates new form rent
      */
     public PurchaseRequestList() {
         initComponents();
+        System.out.println("1");
+        refreshTable();
     }
 
     /**
@@ -32,7 +44,7 @@ public class PurchaseRequestList extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbrequest = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         btRefresh = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -47,7 +59,7 @@ public class PurchaseRequestList extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 153, 0));
         setOpaque(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbrequest.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -58,7 +70,17 @@ public class PurchaseRequestList extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbrequest.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbrequestMouseClicked(evt);
+            }
+        });
+        tbrequest.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbrequestKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbrequest);
 
         jTextField1.setPreferredSize(new java.awt.Dimension(6, 25));
 
@@ -83,10 +105,20 @@ public class PurchaseRequestList extends javax.swing.JPanel {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/3-01.png"))); // NOI18N
         jButton3.setBorder(null);
         jButton3.setContentAreaFilled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
         jButton4.setBorder(null);
         jButton4.setContentAreaFilled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         dtEnd.setOpaque(false);
         dtEnd.setPreferredSize(new java.awt.Dimension(91, 25));
@@ -168,12 +200,47 @@ public class PurchaseRequestList extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRefreshActionPerformed
-        // TODO add your handling code here:
+        refreshTable();
     }//GEN-LAST:event_btRefreshActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new Support().NewTab(Main.getFrame().getTab(), new PurchaseRequestData("NEW", 0), "Request Data");
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tbrequestMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbrequestMouseClicked
+  if (evt.getClickCount() == 2) {
+            if (tbrequest.getSelectedRow() >= 0) {
+                PurchaseRequestData rd = new PurchaseRequestData("EDIT", Integer.valueOf(tbrequest.getValueAt(tbrequest.getSelectedRow(), 0).toString()));
+                new Support().NewTab(Main.getFrame().getTab(), rd, "Purchase Request Data - " + tbrequest.getValueAt(tbrequest.getSelectedRow(), 1).toString());
+            }}
+    }//GEN-LAST:event_tbrequestMouseClicked
+
+    private void tbrequestKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbrequestKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbrequestKeyPressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+PurchaseRequestData rd = new PurchaseRequestData("EDIT", Integer.valueOf(tbrequest.getValueAt(tbrequest.getSelectedRow(), 0).toString()));
+        new Support().NewTab(Main.getFrame().getTab(), rd, "Purchase Request Data - " + tbrequest.getValueAt(tbrequest.getSelectedRow(), 1).toString());
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+   if (tbrequest.getSelectedRow() >= 0) {
+            PurchaseRequest request = AppUtil.getService().getPurchaseRequestById(Integer.valueOf(tbrequest.getValueAt(tbrequest.getSelectedRow(), 0).toString()));
+            if (request != null) {
+                request.setDeleteDatetime(new Date());
+                request.setDeleteByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
+                if (AppUtil.getService().save(request)) {
+                    msg("Delete Done!");
+                    refreshTable();
+                } else {
+                    msg("Delete Failed!");
+                }
+
+            }
+
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -187,7 +254,67 @@ public class PurchaseRequestList extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tbrequest;
     // End of variables declaration//GEN-END:variables
+
+    private void refreshTable() {
+        requestes = AppUtil.getService().getRequest();
+        tbrequest.setModel(new CustomerTableModel(requestes));
+        tbrequest.getColumnModel().getColumn(0).setMinWidth(0);
+        tbrequest.getColumnModel().getColumn(0).setMaxWidth(0);
+    }
+
+    private class CustomerTableModel extends AbstractTableModel {
+
+        private List<PurchaseRequest> listRequest;
+        private final String[] tableHeaders = {"Record Id", "no", "date", "department", "request_by_record_id", "total", "date_needed", "note"};
+
+        public CustomerTableModel(List<PurchaseRequest> listRequest) {
+            this.listRequest = listRequest;
+        }
+
+        public int getRowCount() {
+            return listRequest.size();
+        }
+
+        public int getColumnCount() {
+            return 8;
+        }
+
+        @Override
+        public String getColumnName(int columnIndex) {
+            return tableHeaders[columnIndex];
+        }
+
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            PurchaseRequest p = requestes.get(rowIndex);
+
+            switch (columnIndex) {
+                case 0:
+                    return p.getRecordId();
+                case 1:
+                    return p.getNo();
+                case 2:
+                    return p.getDate();
+                case 3:
+                    return p.getDepartment();
+                case 4:
+                    return p.getRequestByRecordId();
+                case 5:
+                    return p.getTotal();
+                case 6:
+                    return p.getDateNeeded();
+                case 7:
+                    return p.getNote();
+                default:
+                    return "";
+            }
+        }
+    }
+
+    private void msg(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
+    }
+
 }

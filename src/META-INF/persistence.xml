@@ -11,6 +11,8 @@
     <class>com.sumames.sir.entity.Car</class>
     <class>com.sumames.sir.entity.RentDetail</class>
     <class>com.sumames.sir.entity.Rent</class>
+    <class>com.sumames.sir.entity.PurchaseOrderDetail</class>
+    <class>com.sumames.sir.entity.PurchaseOrder</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sir?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

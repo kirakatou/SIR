@@ -1,5 +1,6 @@
 package com.sumames.sir.ui.purchase;
 
+import com.sumames.sir.Main;
 import com.sumames.sir.ui.MainFrame;
 import com.sumames.sir.helper.Support;
 
@@ -14,12 +15,10 @@ import com.sumames.sir.helper.Support;
  * @author Sutandi
  */
 public class PurchaseMenu extends javax.swing.JPanel {
-    private MainFrame m;
     /**
      * Creates new form PeopleMenu
      */
-    public PurchaseMenu(MainFrame m) {
-        this.m = m;
+    public PurchaseMenu() {
         initComponents();
         
     }
@@ -118,11 +117,11 @@ public class PurchaseMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_btPaymentMouseExited
 
     private void btOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOrderActionPerformed
-        new Support().NewTab(m.getTab(), new PurchaseOrderList(m), "Order List");
+        new Support().NewTab(Main.getFrame().getTab(), new PurchaseOrderList(), "Order List");
     }//GEN-LAST:event_btOrderActionPerformed
 
     private void btPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPaymentActionPerformed
-        new Support().NewTab(m.getTab(), new PurchasePaymentList(m), "Payment List");
+        new Support().NewTab(Main.getFrame().getTab(), new PurchasePaymentList(), "Payment List");
     }//GEN-LAST:event_btPaymentActionPerformed
 
     private void btRequestMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btRequestMouseEntered
@@ -134,7 +133,7 @@ public class PurchaseMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_btRequestMouseExited
 
     private void btRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRequestActionPerformed
-        new Support().NewTab(m.getTab(), new PurchaseRequestList(), "Request List");
+        new Support().NewTab(Main.getFrame().getTab(), new PurchaseRequestList(), "Request List");
     }//GEN-LAST:event_btRequestActionPerformed
 
 

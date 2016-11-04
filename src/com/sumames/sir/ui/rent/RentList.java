@@ -9,10 +9,10 @@ import com.sumames.sir.Main;
 import com.sumames.sir.entity.Customer;
 import com.sumames.sir.entity.Rent;
 import com.sumames.sir.helper.AppUtil;
-import com.sumames.sir.ui.MainFrame;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.helper.Support;
 import java.awt.Color;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
@@ -30,6 +30,8 @@ public class RentList extends javax.swing.JPanel {
      */
     public RentList() {
         initComponents();
+        dtStart.setDate(new Date());
+        dtEnd.setDate(new Date());
         refreshTable();
     }
 
@@ -44,11 +46,11 @@ public class RentList extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tbRent = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        tfSearch = new javax.swing.JTextField();
         btRefresh = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btAdd = new javax.swing.JButton();
+        btEdit = new javax.swing.JButton();
+        btDelete = new javax.swing.JButton();
         dtEnd = new com.toedter.calendar.JDateChooser();
         dtStart = new com.toedter.calendar.JDateChooser();
         btSearch = new javax.swing.JButton();
@@ -69,9 +71,14 @@ public class RentList extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbRent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbRentMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbRent);
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(6, 25));
+        tfSearch.setPreferredSize(new java.awt.Dimension(6, 25));
 
         btRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/5-01.png"))); // NOI18N
         btRefresh.setBorderPainted(false);
@@ -82,33 +89,48 @@ public class RentList extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/2-01.png"))); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.setContentAreaFilled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/2-01.png"))); // NOI18N
+        btAdd.setBorder(null);
+        btAdd.setContentAreaFilled(false);
+        btAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btAddActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/3-01.png"))); // NOI18N
-        jButton3.setBorder(null);
-        jButton3.setContentAreaFilled(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/3-01.png"))); // NOI18N
+        btEdit.setBorder(null);
+        btEdit.setContentAreaFilled(false);
+        btEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btEditActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.setContentAreaFilled(false);
+        btDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
+        btDelete.setBorder(null);
+        btDelete.setContentAreaFilled(false);
+        btDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteActionPerformed(evt);
+            }
+        });
 
         dtEnd.setOpaque(false);
         dtEnd.setPreferredSize(new java.awt.Dimension(91, 25));
+        dtEnd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dtEndPropertyChange(evt);
+            }
+        });
 
         dtStart.setOpaque(false);
         dtStart.setPreferredSize(new java.awt.Dimension(91, 25));
+        dtStart.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dtStartPropertyChange(evt);
+            }
+        });
 
         btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/1-01.png"))); // NOI18N
         btSearch.setBorderPainted(false);
@@ -119,6 +141,11 @@ public class RentList extends javax.swing.JPanel {
         cbOption.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LIST RENT", "LIST RENT UNRETURNED", "LIST RENT RETURNED" }));
         cbOption.setPreferredSize(new java.awt.Dimension(56, 25));
         cbOption.setRenderer(new ComboBoxRenderer());
+        cbOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbOptionActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Alfa Slab One", 0, 11)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -144,17 +171,17 @@ public class RentList extends javax.swing.JPanel {
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(dtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(tfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(btAdd)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
+                        .addComponent(btEdit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)))
+                        .addComponent(btDelete)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -165,7 +192,7 @@ public class RentList extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cbOption, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -174,9 +201,9 @@ public class RentList extends javax.swing.JPanel {
                             .addComponent(dtStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btSearch)
                     .addComponent(btRefresh)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btDelete)
+                    .addComponent(btAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                 .addContainerGap())
@@ -184,46 +211,96 @@ public class RentList extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRefreshActionPerformed
-        // TODO add your handling code here:
+        refreshTable();
     }//GEN-LAST:event_btRefreshActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         RentData cd = new RentData("NEW", 0);
         new Support().NewTab(Main.getFrame().getTab(), cd, "Rent Data - New");
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btAddActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        RentData cd = new RentData("EDIT", Integer.valueOf(tbRent.getValueAt(tbRent.getSelectedRow(), 0).toString()));
-        new Support().NewTab(Main.getFrame().getTab(), cd, "Rent Data - " + tbRent.getValueAt(tbRent.getSelectedRow(), 1).toString());
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
+        if (tbRent.getSelectedRow() >= 0) {
+            RentData cd = new RentData("EDIT", Integer.valueOf(tbRent.getValueAt(tbRent.getSelectedRow(), 0).toString()));
+            new Support().NewTab(Main.getFrame().getTab(), cd, "Rent Data - " + tbRent.getValueAt(tbRent.getSelectedRow(), 1).toString());
+        }else {
+            msg("No Data is Selected");
+        }
+    }//GEN-LAST:event_btEditActionPerformed
+
+    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+        if (tbRent.getSelectedRow() >= 0) {
+            Rent rent = AppUtil.getService().getRentById(Integer.valueOf(tbRent.getValueAt(tbRent.getSelectedRow(), 0).toString()));
+            if (rent != null) {
+                rent.setDeleteDatetime(new Date());
+                rent.setDeleteByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
+                if (AppUtil.getService().save(rent)) {
+                    msg("Delete Done!");
+                    refreshTable();
+                } else {
+                    msg("Delete Failed!");
+                }
+
+            }
+
+        }
+    }//GEN-LAST:event_btDeleteActionPerformed
+
+    private void cbOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbOptionActionPerformed
+        refreshTable();
+    }//GEN-LAST:event_cbOptionActionPerformed
+
+    private void dtStartPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dtStartPropertyChange
+        refreshTable();
+    }//GEN-LAST:event_dtStartPropertyChange
+
+    private void dtEndPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dtEndPropertyChange
+        refreshTable();
+    }//GEN-LAST:event_dtEndPropertyChange
+
+    private void tbRentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRentMouseClicked
+        if (evt.getClickCount() == 2) {
+            if (tbRent.getSelectedRow() >= 0) {
+                RentData cd = new RentData("EDIT", Integer.valueOf(tbRent.getValueAt(tbRent.getSelectedRow(), 0).toString()));
+                new Support().NewTab(Main.getFrame().getTab(), cd, "Rent Data - " + tbRent.getValueAt(tbRent.getSelectedRow(), 1).toString());
+            }else {
+                msg("No Data is Selected");
+            }
+        }    
+    }//GEN-LAST:event_tbRentMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAdd;
+    private javax.swing.JButton btDelete;
+    private javax.swing.JButton btEdit;
     private javax.swing.JButton btRefresh;
     private javax.swing.JButton btSearch;
     private javax.swing.JComboBox<String> cbOption;
     private com.toedter.calendar.JDateChooser dtEnd;
     private com.toedter.calendar.JDateChooser dtStart;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tbRent;
+    private javax.swing.JTextField tfSearch;
     // End of variables declaration//GEN-END:variables
-        private void refreshTable() {
+    private void refreshTable() {
         if (cbOption.getSelectedIndex() == 0) {
-            rents = AppUtil.getService().getRents();
+            rents = AppUtil.getService().getRents(dtStart.getDate(), dtEnd.getDate());
+            tbRent.setModel(new RentTableModel(rents));
+            tbRent.getColumnModel().getColumn(0).setMinWidth(0);
+            tbRent.getColumnModel().getColumn(0).setMaxWidth(0);
+        } else if (cbOption.getSelectedIndex() == 1){
+            rents = AppUtil.getService().getRentsNotReturned(dtStart.getDate(), dtEnd.getDate());
             tbRent.setModel(new RentTableModel(rents));
             tbRent.getColumnModel().getColumn(0).setMinWidth(0);
             tbRent.getColumnModel().getColumn(0).setMaxWidth(0);
         } else {
-//            rents = AppUtil.getService().getRents();
-//            tbRent.setModel(new CustomerTableModel(rents));
-//            tbRent.getColumnModel().getColumn(0).setMinWidth(0);
-//            tbRent.getColumnModel().getColumn(0).setMaxWidth(0);
+            rents = AppUtil.getService().getRentsReturned(dtStart.getDate(), dtEnd.getDate());
+            tbRent.setModel(new RentTableModel(rents));
+            tbRent.getColumnModel().getColumn(0).setMinWidth(0);
+            tbRent.getColumnModel().getColumn(0).setMaxWidth(0);
         }
 
     }

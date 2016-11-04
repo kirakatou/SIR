@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,33 +24,39 @@ import javax.persistence.TemporalType;
  * @author Asus
  */
 @Entity
-@Table(name = "rent", catalog = "sir", schema = "")
-public class Rent implements Serializable {
+@Table(name = "purchase_request", catalog = "sir", schema = "")
+
+public class PurchaseRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "record_id")
     private Integer recordId;
-    @Basic(optional = false)
-    @Column(name = "customer_profiles_record_id")
-    private int customerProfilesRecordId;
     @Column(name = "no")
     private String no;
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
+    @Column(name = "department")
+    private String department;
+    @Column(name = "request_by_record_id")
+    private Integer requestByRecordId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "subtotal")
-    private Double subtotal;
-    @Column(name = "discount")
-    private Double discount;
     @Column(name = "total")
     private Double total;
-    @Column(name = "returned")
-    private Boolean returned;
-    @Column(name = "description")
-    private String description;
+    @Column(name = "date_needed")
+    @Temporal(TemporalType.DATE)
+    private Date dateNeeded;
+    @Column(name = "agreed_by_top_management")
+    private Boolean agreedByTopManagement;
+    @Column(name = "note")
+    private String note;
+    @Column(name = "record_version")
+    private Integer recordVersion;
+    @Column(name = "default_status")
+    private Boolean defaultStatus;
     @Column(name = "void_status")
     private Boolean voidStatus;
     @Column(name = "void_reason")
@@ -79,7 +87,11 @@ public class Rent implements Serializable {
     @Column(name = "delete_by_user_record_id")
     private Integer deleteByUserRecordId;
 
-    public Rent() {
+    public PurchaseRequest() {
+    }
+
+    public PurchaseRequest(Integer recordId) {
+        this.recordId = recordId;
     }
 
     public Integer getRecordId() {
@@ -88,14 +100,6 @@ public class Rent implements Serializable {
 
     public void setRecordId(Integer recordId) {
         this.recordId = recordId;
-    }
-
-    public int getCustomerProfilesRecordId() {
-        return customerProfilesRecordId;
-    }
-
-    public void setCustomerProfilesRecordId(int customerProfilesRecordId) {
-        this.customerProfilesRecordId = customerProfilesRecordId;
     }
 
     public String getNo() {
@@ -114,20 +118,20 @@ public class Rent implements Serializable {
         this.date = date;
     }
 
-    public Double getSubtotal() {
-        return subtotal;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
-    public Double getDiscount() {
-        return discount;
+    public Integer getRequestByRecordId() {
+        return requestByRecordId;
     }
 
-    public void setDiscount(Double discount) {
-        this.discount = discount;
+    public void setRequestByRecordId(Integer requestByRecordId) {
+        this.requestByRecordId = requestByRecordId;
     }
 
     public Double getTotal() {
@@ -138,20 +142,44 @@ public class Rent implements Serializable {
         this.total = total;
     }
 
-    public Boolean getReturned() {
-        return returned;
+    public Date getDateNeeded() {
+        return dateNeeded;
     }
 
-    public void setReturned(Boolean returned) {
-        this.returned = returned;
+    public void setDateNeeded(Date dateNeeded) {
+        this.dateNeeded = dateNeeded;
     }
 
-    public String getDescription() {
-        return description;
+    public Boolean getAgreedByTopManagement() {
+        return agreedByTopManagement;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAgreedByTopManagement(Boolean agreedByTopManagement) {
+        this.agreedByTopManagement = agreedByTopManagement;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Integer getRecordVersion() {
+        return recordVersion;
+    }
+
+    public void setRecordVersion(Integer recordVersion) {
+        this.recordVersion = recordVersion;
+    }
+
+    public Boolean getDefaultStatus() {
+        return defaultStatus;
+    }
+
+    public void setDefaultStatus(Boolean defaultStatus) {
+        this.defaultStatus = defaultStatus;
     }
 
     public Boolean getVoidStatus() {
@@ -250,6 +278,29 @@ public class Rent implements Serializable {
         this.deleteByUserRecordId = deleteByUserRecordId;
     }
 
-    
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (recordId != null ? recordId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof PurchaseRequest)) {
+            return false;
+        }
+        PurchaseRequest other = (PurchaseRequest) object;
+        if ((this.recordId == null && other.recordId != null) || (this.recordId != null && !this.recordId.equals(other.recordId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.sumames.sir.entity.PurchaseRequest[ recordId=" + recordId + " ]";
+    }
     
 }

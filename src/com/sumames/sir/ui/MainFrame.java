@@ -728,7 +728,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        new Support().NewTab(Main.getFrame().getTab(), new PurchaseMenu(this), "Purchase Menu");
+        new Support().NewTab(Main.getFrame().getTab(), new PurchaseMenu(), "Purchase Menu");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     public JTabbedPane getTab() {

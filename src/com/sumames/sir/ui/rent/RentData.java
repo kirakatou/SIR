@@ -29,6 +29,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -85,7 +90,7 @@ public class RentData extends javax.swing.JPanel {
         tfTotal = new javax.swing.JTextField();
         date = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        chReturn = new javax.swing.JCheckBox();
 
         setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         setOpaque(false);
@@ -250,11 +255,11 @@ public class RentData extends javax.swing.JPanel {
         jLabel10.setText("Date :");
         jLabel10.setPreferredSize(new java.awt.Dimension(40, 30));
 
-        jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setFont(getFont());
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("Returned");
-        jCheckBox1.setOpaque(false);
+        chReturn.setBackground(new java.awt.Color(255, 255, 255));
+        chReturn.setFont(getFont());
+        chReturn.setForeground(new java.awt.Color(255, 255, 255));
+        chReturn.setText("Returned");
+        chReturn.setOpaque(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -289,7 +294,7 @@ public class RentData extends javax.swing.JPanel {
                                     .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(tfTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox1))
+                                .addComponent(chReturn))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(39, 39, 39)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -326,7 +331,7 @@ public class RentData extends javax.swing.JPanel {
                                 .addGap(1, 1, 1)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCheckBox1))
+                                    .addComponent(chReturn))
                                 .addGap(0, 0, 0)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -489,8 +494,8 @@ public class RentData extends javax.swing.JPanel {
     private javax.swing.JButton btSave;
     private javax.swing.JComboBox<String> cbCustomerName;
     private javax.swing.JComboBox<String> cbCustomerNo;
+    private javax.swing.JCheckBox chReturn;
     private com.toedter.calendar.JDateChooser date;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel4;
@@ -546,8 +551,10 @@ public class RentData extends javax.swing.JPanel {
             tfTotal.setText("0");
             tfDesc.setText("");
             date.setDate(new Date());
+            chReturn.setVisible(false);
             addRow();
         } else if (option.equals("EDIT")) {
+            chReturn.setVisible(true);
             rent = AppUtil.getService().getRentById(recordId);
             objectToForm();
             refreshTable();
@@ -575,10 +582,26 @@ public class RentData extends javax.swing.JPanel {
             }
             tfSubtotal.setText(subtotal.toString());
 //            System.out.println(tfDisc.getText());
-            int disc = Integer.parseInt(tfDisc.getText());
-            
+            double disc = Double.parseDouble(tfDisc.getText());
             subtotal = subtotal - disc;
             tfTotal.setText(subtotal.toString());
+        }
+    }
+    
+    private void runReport() {
+        try {
+            List<RentDetail> tests = AppUtil.getService().getListRentById(recordId);
+            JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(tests);
+            HashMap param = new HashMap();
+            param.put("INVOICENO", tfNo.getText());
+            param.put("DESCRIPTION", tfDesc.getText());
+            JasperPrint jasperPrint = JasperFillManager.fillReport("SirInvoice.jasper", param, beanColDataSource);
+            JasperViewer.viewReport(jasperPrint, false);
+
+            // to directly popup save file
+            // JasperPrintManager.printReport(jasperPrint, false);
+        } catch (JRException ex) {
+            System.out.println("Error:\n" + ex.getLocalizedMessage());
         }
     }
     
@@ -591,8 +614,6 @@ public class RentData extends javax.swing.JPanel {
                 for (int i = 0; i < tbRent.getRowCount(); i++) {
                     RentDetail rentDetail = new RentDetail();
                     rentDetail.setRentRecordId(rent.getRecordId());
-                    System.out.println(tbRent.getValueAt(i, 2).toString());
-                    System.out.println(Support.getKeyFromValue(carPlateID, tbRent.getValueAt(i, 2).toString()));
                     rentDetail.setCarRecordId(carPlateID.get(tbRent.getValueAt(i, 2).toString()));
                     rentDetail.setPrice(Double.parseDouble(tbRent.getValueAt(i, 3).toString()));
                     rentDetail.setPeriod(Integer.parseInt(tbRent.getValueAt(i, 4).toString()));
@@ -610,6 +631,20 @@ public class RentData extends javax.swing.JPanel {
             formToObject();
             rent.setRecordId(recordId);
             if (AppUtil.getService().save(rent)) {
+                for (int i = 0; i < tbRent.getRowCount(); i++) {
+                    RentDetail rentDetail = new RentDetail();
+                    if(tbRent.getValueAt(i, 0) != null){
+                        rentDetail.setRecordId((Integer) tbRent.getValueAt(i, 0));
+                    }
+                    rentDetail.setRentRecordId(rent.getRecordId());
+                    rentDetail.setCarRecordId(carPlateID.get(tbRent.getValueAt(i, 2).toString()));
+                    rentDetail.setPrice(Double.parseDouble(tbRent.getValueAt(i, 3).toString()));
+                    rentDetail.setPeriod(Integer.parseInt(tbRent.getValueAt(i, 4).toString()));
+                    rentDetail.setSubtotal(Double.parseDouble(tbRent.getValueAt(i, 5).toString()));
+                    rentDetail.setCreateDatetime(new Date());
+                    rentDetail.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
+                    AppUtil.getService().save(rentDetail);
+                }
                 msg("Save Done!");
                 Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
             } else {
@@ -629,6 +664,7 @@ public class RentData extends javax.swing.JPanel {
         rent.setTotal(Double.parseDouble(tfTotal.getText()));
         rent.setDescription(tfDesc.getText());
         rent.setDate(date.getDate());
+        rent.setReturned(chReturn.isSelected());
         
     }
     
@@ -641,6 +677,7 @@ public class RentData extends javax.swing.JPanel {
             tfDesc.setText(rent.getDescription());
             cbCustomerNo.setSelectedItem(Support.getKeyFromValue(customerID, rent.getCustomerProfilesRecordId()));
             date.setDate(rent.getDate());
+            chReturn.setSelected(rent.getReturned());
         }
     }
     

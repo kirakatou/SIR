@@ -6,9 +6,14 @@ import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.Garage;
 import com.sumames.sir.entity.Login;
 import com.sumames.sir.entity.LoginAccess;
+import com.sumames.sir.entity.PurchaseOrder;
+import com.sumames.sir.entity.PurchaseOrderDetail;
+import com.sumames.sir.entity.PurchaseRequest;
+import com.sumames.sir.entity.PurchaseRequestDetail;
 import com.sumames.sir.entity.Rent;
 import com.sumames.sir.entity.RentDetail;
 import com.sumames.sir.service.ServiceDao;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -155,6 +160,27 @@ public class ServiceDaoImpl implements ServiceDao {
         List<Rent> list = getCurrentSession().createQuery("FROM Rent a ORDER BY a.recordId ASC").list();
         return list;
     }
+    
+     @Override
+    public List<Rent> getRents(Date start, Date end) {
+        List<Rent> list = getCurrentSession().createQuery("FROM Rent a WHERE date >= :start AND date <= :end ORDER BY a.recordId ASC")
+                .setParameter("start", start).setParameter("end", end).list();
+        return list;
+    }
+
+    @Override
+    public List<Rent> getRentsNotReturned(Date start, Date end) {
+        List<Rent> list = getCurrentSession().createQuery("FROM Rent a WHERE date >= :start AND date <= :end AND returned = 0 ORDER BY a.recordId ASC")
+                .setParameter("start", start).setParameter("end", end).list();
+        return list;
+    }
+
+    @Override
+    public List<Rent> getRentsReturned(Date start, Date end) {
+        List<Rent> list = getCurrentSession().createQuery("FROM Rent a WHERE date >= :start AND date <= :end AND returned = 1 ORDER BY a.recordId ASC")
+                .setParameter("start", start).setParameter("end", end).list();
+        return list;
+    }
 
     @Override
     public RentDetail getRentDetailById(Integer id) {
@@ -174,5 +200,80 @@ public class ServiceDaoImpl implements ServiceDao {
                 .setParameter("id", id).list();
         return list;
     }
+
+    @Override
+    public PurchaseRequest getPurchaseRequestById(Integer id) {
+         PurchaseRequest t = (PurchaseRequest) getCurrentSession().get(PurchaseRequest.class, id);
+        return t; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<PurchaseRequest> getListRequestById(int id) {
+      List<PurchaseRequest> list = getCurrentSession().createQuery("from PurchaseRequest where record_id=:id")
+                .setParameter("id", id).list();
+        return list;
+    }
+
+    @Override
+    public PurchaseRequestDetail getPurchaseRequestDetailById(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<PurchaseRequestDetail> getListRequestDetailById(int id) {
+      List<PurchaseRequestDetail> list = getCurrentSession().createQuery("from PurchaseRequestDetail where purchase_request_record_id=:id")
+                .setParameter("id", id).list();
+        return list;
+    }
+
+    @Override
+    public List<PurchaseRequest> getRequest() {
+      List<PurchaseRequest> list = getCurrentSession().createQuery("FROM PurchaseRequest a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public List<PurchaseRequestDetail> getRequestDetail() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PurchaseOrder getPurchaseOrderById(Integer id) {
+        PurchaseOrder t = (PurchaseOrder) getCurrentSession().get(PurchaseOrder.class, id);
+        return t; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<PurchaseOrder> getOrder() {
+      List<PurchaseOrder> list = getCurrentSession().createQuery("FROM PurchaseOrder a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public PurchaseOrderDetail getPurchaseOrderDetailById(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public List<PurchaseOrderDetail> getOrderDetail() {
+        List<PurchaseOrderDetail> list = getCurrentSession().createQuery("FROM PurchaseOrder a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public List<PurchaseOrderDetail> getListOrderDetailById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<PurchaseRequestDetail> getListRequestDetailByNo(int no) {
+        List<PurchaseRequestDetail> list = getCurrentSession().createQuery("from PurchaseRequestDetail where purchase_request_no=:no")
+                .setParameter("no", no).list();
+        return list;
+    }
+
+   
+
+  
 
 }

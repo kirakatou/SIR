@@ -5,21 +5,31 @@
  */
 package com.sumames.sir.ui.purchase;
 
+import com.sumames.sir.Main;
+import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.ui.MainFrame;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
+import com.sumames.sir.entity.PurchaseOrder;
+import com.sumames.sir.helper.Support;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author My pc
  */
 public class PurchaseOrderList extends javax.swing.JPanel {
-    private MainFrame m;
+
+    private List<PurchaseOrder> purchaseorder;
+
     /**
      * Creates new form rent
      */
-    public PurchaseOrderList(MainFrame m) {
-        this.m = m;
+    public PurchaseOrderList() {
         initComponents();
+        refreshTable();
     }
 
     /**
@@ -32,7 +42,7 @@ public class PurchaseOrderList extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbpurchaseorder = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         btRefresh = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -47,7 +57,7 @@ public class PurchaseOrderList extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 153, 0));
         setOpaque(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbpurchaseorder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -58,7 +68,7 @@ public class PurchaseOrderList extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbpurchaseorder);
 
         jTextField1.setPreferredSize(new java.awt.Dimension(6, 25));
 
@@ -83,10 +93,20 @@ public class PurchaseOrderList extends javax.swing.JPanel {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/3-01.png"))); // NOI18N
         jButton3.setBorder(null);
         jButton3.setContentAreaFilled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
         jButton4.setBorder(null);
         jButton4.setContentAreaFilled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         dtEnd.setOpaque(false);
         dtEnd.setPreferredSize(new java.awt.Dimension(91, 25));
@@ -168,12 +188,35 @@ public class PurchaseOrderList extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRefreshActionPerformed
-        // TODO add your handling code here:
+        refreshTable();
     }//GEN-LAST:event_btRefreshActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    
+        new Support().NewTab(Main.getFrame().getTab(), new PurchaseOrderData("NEW", 0), "Order Data");
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        PurchaseOrderData rd = new PurchaseOrderData("EDIT", Integer.valueOf(tbpurchaseorder.getValueAt(tbpurchaseorder.getSelectedRow(), 0).toString()));
+        new Support().NewTab(Main.getFrame().getTab(), rd, "Purchase Order Data - " + tbpurchaseorder.getValueAt(tbpurchaseorder.getSelectedRow(), 1).toString());
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (tbpurchaseorder.getSelectedRow() >= 0) {
+            PurchaseOrder order = AppUtil.getService().getPurchaseOrderById(Integer.valueOf(tbpurchaseorder.getValueAt(tbpurchaseorder.getSelectedRow(), 0).toString()));
+            if (order != null) {
+                order.setDeleteDatetime(new Date());
+                order.setDeleteByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
+                if (AppUtil.getService().save(order)) {
+                    msg("Delete Done!");
+                    refreshTable();
+                } else {
+                    msg("Delete Failed!");
+                }
+
+            }
+
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -187,7 +230,62 @@ public class PurchaseOrderList extends javax.swing.JPanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tbpurchaseorder;
     // End of variables declaration//GEN-END:variables
+    private void refreshTable() {
+        purchaseorder = AppUtil.getService().getOrder();
+        tbpurchaseorder.setModel(new PurchaseOrderList.CustomerTableModel(purchaseorder));
+        tbpurchaseorder.getColumnModel().getColumn(0).setMinWidth(0);
+        tbpurchaseorder.getColumnModel().getColumn(0).setMaxWidth(0);
+    }
+
+    private class CustomerTableModel extends AbstractTableModel {
+
+        private List<PurchaseOrder> listorder;
+        private final String[] tableHeaders = {"Record Id", "no", "date", "request_record_id", "total", "note"};
+
+        public CustomerTableModel(List<PurchaseOrder> listorder) {
+            this.listorder = listorder;
+        }
+
+        public int getRowCount() {
+            return listorder.size();
+        }
+
+        public int getColumnCount() {
+            return 6;
+        }
+
+        @Override
+        public String getColumnName(int columnIndex) {
+            return tableHeaders[columnIndex];
+        }
+
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            PurchaseOrder p = purchaseorder.get(rowIndex);
+
+            switch (columnIndex) {
+                case 0:
+                    return p.getRecordId();
+                case 1:
+                    return p.getNo();
+                case 2:
+                    return p.getDate();
+                case 3:
+                    return p.getRequestRecordId();
+                case 4:
+                    return p.getTotal();
+                case 5:
+                    return p.getNote();
+
+                default:
+                    return "";
+            }
+        }
+    }
+
+    private void msg(String msg) {
+        JOptionPane.showMessageDialog(null, msg);
+    }
 }

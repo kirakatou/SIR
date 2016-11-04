@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,33 +24,27 @@ import javax.persistence.TemporalType;
  * @author Asus
  */
 @Entity
-@Table(name = "rent", catalog = "sir", schema = "")
-public class Rent implements Serializable {
+@Table(name = "purchase_order_detail", catalog = "sir", schema = "")
+public class PurchaseOrderDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "record_id")
     private Integer recordId;
     @Basic(optional = false)
-    @Column(name = "customer_profiles_record_id")
-    private int customerProfilesRecordId;
-    @Column(name = "no")
-    private String no;
-    @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "subtotal")
-    private Double subtotal;
-    @Column(name = "discount")
-    private Double discount;
-    @Column(name = "total")
-    private Double total;
-    @Column(name = "returned")
-    private Boolean returned;
+    @Column(name = "purchase_order_record_id")
+    private int purchaseOrderRecordId;
     @Column(name = "description")
     private String description;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "price")
+    private Double price;
+    @Column(name = "qty")
+    private Double qty;
+    @Column(name = "subtotal")
+    private Double subtotal;
     @Column(name = "void_status")
     private Boolean voidStatus;
     @Column(name = "void_reason")
@@ -79,7 +75,7 @@ public class Rent implements Serializable {
     @Column(name = "delete_by_user_record_id")
     private Integer deleteByUserRecordId;
 
-    public Rent() {
+    public PurchaseOrderDetail() {
     }
 
     public Integer getRecordId() {
@@ -90,60 +86,12 @@ public class Rent implements Serializable {
         this.recordId = recordId;
     }
 
-    public int getCustomerProfilesRecordId() {
-        return customerProfilesRecordId;
+    public int getPurchaseOrderRecordId() {
+        return purchaseOrderRecordId;
     }
 
-    public void setCustomerProfilesRecordId(int customerProfilesRecordId) {
-        this.customerProfilesRecordId = customerProfilesRecordId;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Double getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public Double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Double discount) {
-        this.discount = discount;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-    public Boolean getReturned() {
-        return returned;
-    }
-
-    public void setReturned(Boolean returned) {
-        this.returned = returned;
+    public void setPurchaseOrderRecordId(int purchaseOrderRecordId) {
+        this.purchaseOrderRecordId = purchaseOrderRecordId;
     }
 
     public String getDescription() {
@@ -152,6 +100,30 @@ public class Rent implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getQty() {
+        return qty;
+    }
+
+    public void setQty(Double qty) {
+        this.qty = qty;
+    }
+
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
     }
 
     public Boolean getVoidStatus() {

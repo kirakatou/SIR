@@ -13,12 +13,11 @@ import com.sumames.sir.ui.renderer.ComboBoxRenderer;
  * @author My pc
  */
 public class PurchasePaymentList extends javax.swing.JPanel {
-    private MainFrame m;
     /**
      * Creates new form rent
      */
-    public PurchasePaymentList(MainFrame m) {
-        this.m = m;
+    public PurchasePaymentList() {
+
         initComponents();
     }
 
