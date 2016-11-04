@@ -6,8 +6,12 @@ import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.Garage;
 import com.sumames.sir.entity.Login;
 import com.sumames.sir.entity.LoginAccess;
+import com.sumames.sir.entity.PurchaseInvoice;
+import com.sumames.sir.entity.PurchaseInvoiceDetail;
 import com.sumames.sir.entity.PurchaseOrder;
 import com.sumames.sir.entity.PurchaseOrderDetail;
+import com.sumames.sir.entity.PurchasePayment;
+import com.sumames.sir.entity.PurchasePaymentInvoice;
 import com.sumames.sir.entity.PurchaseRequest;
 import com.sumames.sir.entity.PurchaseRequestDetail;
 import com.sumames.sir.entity.Rent;
@@ -96,4 +100,24 @@ public interface ServiceDao {
     public List<PurchaseOrderDetail> getOrderDetail();
 
     public List<PurchaseOrderDetail> getListOrderDetailById(int id);
+    
+    public PurchaseInvoice getInvoiceById(Integer id);
+
+    public List<PurchaseInvoice> getInvoices();
+
+    public List<PurchaseInvoice> getInvoices(Date start, Date end);
+
+    public PurchaseInvoiceDetail getInvoiceDetailById(Integer id);
+
+    public List<PurchaseInvoiceDetail> getInvoiceDetails();
+    
+    public PurchasePayment getPaymentById(Integer id);
+
+    public List<PurchasePayment> getPayments();
+
+    public List<PurchasePayment> getPayments(Date start, Date end);
+
+    public PurchasePaymentInvoice getPaymentInvoiceById(Integer id);
+
+    public List<PurchasePaymentInvoice> getPaymentInvoices();
 }

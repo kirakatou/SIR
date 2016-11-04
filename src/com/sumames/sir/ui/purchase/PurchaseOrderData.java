@@ -42,9 +42,7 @@ public class PurchaseOrderData extends javax.swing.JPanel {
     private Employer employe;
     private HashMap<String, Integer> requestno;
     private HashMap<String, Integer> employerID;
-    private PurchaseRequestDetail requestdetail;
     private PurchaseOrder purchaseorder;
-    private PurchaseOrderDetail orderdetail;
 
     /**
      * Creates new form Purchase Request Input
@@ -412,7 +410,6 @@ public class PurchaseOrderData extends javax.swing.JPanel {
     public void formToObject() {
         if (purchaseorder == null) {
             purchaseorder = new PurchaseOrder();
-            orderdetail = new PurchaseOrderDetail();
         }
         purchaseorder.setNo(tfNo.getText());
         purchaseorder.setDate(date.getDate());

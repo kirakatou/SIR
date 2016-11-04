@@ -6,8 +6,12 @@ import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.Garage;
 import com.sumames.sir.entity.Login;
 import com.sumames.sir.entity.LoginAccess;
+import com.sumames.sir.entity.PurchaseInvoice;
+import com.sumames.sir.entity.PurchaseInvoiceDetail;
 import com.sumames.sir.entity.PurchaseOrder;
 import com.sumames.sir.entity.PurchaseOrderDetail;
+import com.sumames.sir.entity.PurchasePayment;
+import com.sumames.sir.entity.PurchasePaymentInvoice;
 import com.sumames.sir.entity.PurchaseRequest;
 import com.sumames.sir.entity.PurchaseRequestDetail;
 import com.sumames.sir.entity.Rent;
@@ -98,7 +102,7 @@ public class ServiceDaoImpl implements ServiceDao {
         List<Employer> list = getCurrentSession().createQuery("FROM Employer a ORDER BY a.recordId ASC").list();
         return list;
     }
-    
+
     @Override
     public List<Employer> getEmployersNotDeleted() {
         List<Employer> list = getCurrentSession().createQuery("FROM Employer a where a.deleteDatetime IS NULL ORDER BY a.recordId ASC").list();
@@ -160,8 +164,8 @@ public class ServiceDaoImpl implements ServiceDao {
         List<Rent> list = getCurrentSession().createQuery("FROM Rent a ORDER BY a.recordId ASC").list();
         return list;
     }
-    
-     @Override
+
+    @Override
     public List<Rent> getRents(Date start, Date end) {
         List<Rent> list = getCurrentSession().createQuery("FROM Rent a WHERE date >= :start AND date <= :end ORDER BY a.recordId ASC")
                 .setParameter("start", start).setParameter("end", end).list();
@@ -203,13 +207,13 @@ public class ServiceDaoImpl implements ServiceDao {
 
     @Override
     public PurchaseRequest getPurchaseRequestById(Integer id) {
-         PurchaseRequest t = (PurchaseRequest) getCurrentSession().get(PurchaseRequest.class, id);
+        PurchaseRequest t = (PurchaseRequest) getCurrentSession().get(PurchaseRequest.class, id);
         return t; //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<PurchaseRequest> getListRequestById(int id) {
-      List<PurchaseRequest> list = getCurrentSession().createQuery("from PurchaseRequest where record_id=:id")
+        List<PurchaseRequest> list = getCurrentSession().createQuery("from PurchaseRequest where record_id=:id")
                 .setParameter("id", id).list();
         return list;
     }
@@ -221,20 +225,28 @@ public class ServiceDaoImpl implements ServiceDao {
 
     @Override
     public List<PurchaseRequestDetail> getListRequestDetailById(int id) {
-      List<PurchaseRequestDetail> list = getCurrentSession().createQuery("from PurchaseRequestDetail where purchase_request_record_id=:id")
+        List<PurchaseRequestDetail> list = getCurrentSession().createQuery("from PurchaseRequestDetail where purchase_request_record_id=:id")
                 .setParameter("id", id).list();
         return list;
     }
 
     @Override
     public List<PurchaseRequest> getRequest() {
-      List<PurchaseRequest> list = getCurrentSession().createQuery("FROM PurchaseRequest a ORDER BY a.recordId ASC").list();
+        List<PurchaseRequest> list = getCurrentSession().createQuery("FROM PurchaseRequest a ORDER BY a.recordId ASC").list();
         return list;
     }
 
     @Override
     public List<PurchaseRequestDetail> getRequestDetail() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<PurchaseRequestDetail> list = getCurrentSession().createQuery("FROM PurchaseRequestDetail a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public List<PurchaseRequestDetail> getListRequestDetailByNo(int no) {
+        List<PurchaseRequestDetail> list = getCurrentSession().createQuery("from PurchaseRequestDetail where purchase_request_no=:no")
+                .setParameter("no", no).list();
+        return list;
     }
 
     @Override
@@ -245,15 +257,16 @@ public class ServiceDaoImpl implements ServiceDao {
 
     @Override
     public List<PurchaseOrder> getOrder() {
-      List<PurchaseOrder> list = getCurrentSession().createQuery("FROM PurchaseOrder a ORDER BY a.recordId ASC").list();
+        List<PurchaseOrder> list = getCurrentSession().createQuery("FROM PurchaseOrder a ORDER BY a.recordId ASC").list();
         return list;
     }
 
     @Override
     public PurchaseOrderDetail getPurchaseOrderDetailById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PurchaseOrderDetail t = (PurchaseOrderDetail) getCurrentSession().get(PurchaseOrderDetail.class, id);
+        return t; //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public List<PurchaseOrderDetail> getOrderDetail() {
         List<PurchaseOrderDetail> list = getCurrentSession().createQuery("FROM PurchaseOrder a ORDER BY a.recordId ASC").list();
@@ -262,18 +275,71 @@ public class ServiceDaoImpl implements ServiceDao {
 
     @Override
     public List<PurchaseOrderDetail> getListOrderDetailById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<PurchaseRequestDetail> getListRequestDetailByNo(int no) {
-        List<PurchaseRequestDetail> list = getCurrentSession().createQuery("from PurchaseRequestDetail where purchase_request_no=:no")
-                .setParameter("no", no).list();
+        List<PurchaseOrderDetail> list = getCurrentSession().createQuery("from PurchaseOrderDetail where purchase_order_record_id=:id")
+                .setParameter("id", id).list();
         return list;
     }
 
-   
+    @Override
+    public PurchaseInvoice getInvoiceById(Integer id) {
+        PurchaseInvoice t = (PurchaseInvoice) getCurrentSession().get(PurchaseInvoice.class, id);
+        return t; //To change body of generated methods, choose Tools | Templates.
+    }
 
-  
+    @Override
+    public List<PurchaseInvoice> getInvoices() {
+        List<PurchaseInvoice> list = getCurrentSession().createQuery("FROM PurchaseInvoice a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public List<PurchaseInvoice> getInvoices(Date start, Date end) {
+        List<PurchaseInvoice> list = getCurrentSession().createQuery("FROM PurchaseInvoice a WHERE date >= :start AND date <= :end ORDER BY a.recordId ASC")
+                .setParameter("start", start).setParameter("end", end).list();
+        return list;
+    }
+
+    @Override
+    public PurchaseInvoiceDetail getInvoiceDetailById(Integer id) {
+        PurchaseInvoiceDetail t = (PurchaseInvoiceDetail) getCurrentSession().get(PurchaseInvoiceDetail.class, id);
+        return t; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<PurchaseInvoiceDetail> getInvoiceDetails() {
+        List<PurchaseInvoiceDetail> list = getCurrentSession().createQuery("FROM PurchaseInvoiceDetail a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+    
+    @Override
+    public PurchasePayment getPaymentById(Integer id) {
+        PurchasePayment t = (PurchasePayment) getCurrentSession().get(PurchasePayment.class, id);
+        return t; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<PurchasePayment> getPayments() {
+        List<PurchasePayment> list = getCurrentSession().createQuery("FROM PurchasePayment a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public List<PurchasePayment> getPayments(Date start, Date end) {
+        List<PurchasePayment> list = getCurrentSession().createQuery("FROM PurchasePayment a WHERE date >= :start AND date <= :end ORDER BY a.recordId ASC")
+                .setParameter("start", start).setParameter("end", end).list();
+        return list;
+    }
+
+    @Override
+    public PurchasePaymentInvoice getPaymentInvoiceById(Integer id) {
+        PurchasePaymentInvoice t = (PurchasePaymentInvoice) getCurrentSession().get(PurchasePaymentInvoice.class, id);
+        return t; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<PurchasePaymentInvoice> getPaymentInvoices() {
+        List<PurchasePaymentInvoice> list = getCurrentSession().createQuery("FROM PurchasePaymentInvoice a ORDER BY a.recordId ASC").list();
+        return list;
+    }
 
 }

@@ -10,7 +10,9 @@ import com.sumames.sir.entity.Employer;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.helper.Support;
-import com.sumames.sir.entity.PurchasePayment;
+import com.sumames.sir.entity.PurchaseInvoice;
+import com.sumames.sir.entity.Rent;
+import com.sumames.sir.ui.rent.RentData;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -20,14 +22,14 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author My pc
  */
-public class PurchasePaymentList extends javax.swing.JPanel {
+public class PurchaseInvoiceList extends javax.swing.JPanel {
 
-    private List<PurchasePayment> payments;
+    private List<PurchaseInvoice> invoices;
 
     /**
      * Creates new form rent
      */
-    public PurchasePaymentList() {
+    public PurchaseInvoiceList() {
         initComponents();
         System.out.println("1");
         refreshTable();
@@ -43,7 +45,7 @@ public class PurchasePaymentList extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbPayment = new javax.swing.JTable();
+        tbInvoice = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         btRefresh = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -58,7 +60,7 @@ public class PurchasePaymentList extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 153, 0));
         setOpaque(false);
 
-        tbPayment.setModel(new javax.swing.table.DefaultTableModel(
+        tbInvoice.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -69,17 +71,17 @@ public class PurchasePaymentList extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tbPayment.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbInvoice.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbPaymentMouseClicked(evt);
+                tbInvoiceMouseClicked(evt);
             }
         });
-        tbPayment.addKeyListener(new java.awt.event.KeyAdapter() {
+        tbInvoice.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                tbPaymentKeyPressed(evt);
+                tbInvoiceKeyPressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tbPayment);
+        jScrollPane1.setViewportView(tbInvoice);
 
         jTextField1.setPreferredSize(new java.awt.Dimension(6, 25));
 
@@ -203,34 +205,34 @@ public class PurchasePaymentList extends javax.swing.JPanel {
     }//GEN-LAST:event_btRefreshActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new Support().NewTab(Main.getFrame().getTab(), new PurchasePaymentData("NEW", 0), "Payment Data");
+        new Support().NewTab(Main.getFrame().getTab(), new PurchaseInvoiceData("NEW", 0), "Invoice Data");
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void tbPaymentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPaymentMouseClicked
+    private void tbInvoiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbInvoiceMouseClicked
         if (evt.getClickCount() == 2) {
-            if (tbPayment.getSelectedRow() >= 0) {
-                PurchasePaymentData rd = new PurchasePaymentData("EDIT", Integer.valueOf(tbPayment.getValueAt(tbPayment.getSelectedRow(), 0).toString()));
-                new Support().NewTab(Main.getFrame().getTab(), rd, "Purchase Payment Data - " + tbPayment.getValueAt(tbPayment.getSelectedRow(), 1).toString());
+            if (tbInvoice.getSelectedRow() >= 0) {
+                PurchaseInvoiceData rd = new PurchaseInvoiceData("EDIT", Integer.valueOf(tbInvoice.getValueAt(tbInvoice.getSelectedRow(), 0).toString()));
+                new Support().NewTab(Main.getFrame().getTab(), rd, "Purchase Invoice Data - " + tbInvoice.getValueAt(tbInvoice.getSelectedRow(), 1).toString());
             }
         }
-    }//GEN-LAST:event_tbPaymentMouseClicked
+    }//GEN-LAST:event_tbInvoiceMouseClicked
 
-    private void tbPaymentKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbPaymentKeyPressed
+    private void tbInvoiceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbInvoiceKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbPaymentKeyPressed
+    }//GEN-LAST:event_tbInvoiceKeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        PurchasePaymentData rd = new PurchasePaymentData("EDIT", Integer.valueOf(tbPayment.getValueAt(tbPayment.getSelectedRow(), 0).toString()));
-        new Support().NewTab(Main.getFrame().getTab(), rd, "Purchase Payment Data - " + tbPayment.getValueAt(tbPayment.getSelectedRow(), 1).toString());
+        PurchaseInvoiceData rd = new PurchaseInvoiceData("EDIT", Integer.valueOf(tbInvoice.getValueAt(tbInvoice.getSelectedRow(), 0).toString()));
+        new Support().NewTab(Main.getFrame().getTab(), rd, "Purchase Invoice Data - " + tbInvoice.getValueAt(tbInvoice.getSelectedRow(), 1).toString());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if (tbPayment.getSelectedRow() >= 0) {
-            PurchasePayment Payment = AppUtil.getService().getPaymentById(Integer.valueOf(tbPayment.getValueAt(tbPayment.getSelectedRow(), 0).toString()));
-            if (Payment != null) {
-                Payment.setDeleteDatetime(new Date());
-                Payment.setDeleteByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
-                if (AppUtil.getService().save(Payment)) {
+        if (tbInvoice.getSelectedRow() >= 0) {
+            PurchaseInvoice invoice = AppUtil.getService().getInvoiceById(Integer.valueOf(tbInvoice.getValueAt(tbInvoice.getSelectedRow(), 0).toString()));
+            if (invoice != null) {
+                invoice.setDeleteDatetime(new Date());
+                invoice.setDeleteByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
+                if (AppUtil.getService().save(invoice)) {
                     msg("Delete Done!");
                     refreshTable();
                 } else {
@@ -255,27 +257,27 @@ public class PurchasePaymentList extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTable tbPayment;
+    private javax.swing.JTable tbInvoice;
     // End of variables declaration//GEN-END:variables
 
     private void refreshTable() {
-        payments = AppUtil.getService().getPayments();
-        tbPayment.setModel(new CustomerTableModel(payments));
-        tbPayment.getColumnModel().getColumn(0).setMinWidth(0);
-        tbPayment.getColumnModel().getColumn(0).setMaxWidth(0);
+//        invoices = AppUtil.getService().getInvoice();
+        tbInvoice.setModel(new CustomerTableModel(invoices));
+        tbInvoice.getColumnModel().getColumn(0).setMinWidth(0);
+        tbInvoice.getColumnModel().getColumn(0).setMaxWidth(0);
     }
 
     private class CustomerTableModel extends AbstractTableModel {
 
-        private List<PurchasePayment> listPayment;
-        private final String[] tableHeaders = {"Record Id", "no", "date", "department", "Payment_by_record_id", "total", "date_needed", "note"};
+        private List<PurchaseInvoice> listInvoice;
+        private final String[] tableHeaders = {"Record Id", "no", "date", "department", "Invoice_by_record_id", "total", "date_needed", "note"};
 
-        public CustomerTableModel(List<PurchasePayment> listPayment) {
-            this.listPayment = listPayment;
+        public CustomerTableModel(List<PurchaseInvoice> listInvoice) {
+            this.listInvoice = listInvoice;
         }
 
         public int getRowCount() {
-            return listPayment.size();
+            return listInvoice.size();
         }
 
         public int getColumnCount() {
@@ -288,7 +290,7 @@ public class PurchasePaymentList extends javax.swing.JPanel {
         }
 
         public Object getValueAt(int rowIndex, int columnIndex) {
-            PurchasePayment p = payments.get(rowIndex);
+            PurchaseInvoice p = invoices.get(rowIndex);
             switch (columnIndex) {
                 case 0:
                     return p.getRecordId();

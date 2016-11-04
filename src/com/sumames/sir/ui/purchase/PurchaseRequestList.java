@@ -6,12 +6,11 @@
 package com.sumames.sir.ui.purchase;
 
 import com.sumames.sir.Main;
+import com.sumames.sir.entity.Employer;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.helper.Support;
 import com.sumames.sir.entity.PurchaseRequest;
-import com.sumames.sir.entity.Rent;
-import com.sumames.sir.ui.rent.RentData;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -30,7 +29,6 @@ public class PurchaseRequestList extends javax.swing.JPanel {
      */
     public PurchaseRequestList() {
         initComponents();
-        System.out.println("1");
         refreshTable();
     }
 
@@ -289,7 +287,7 @@ PurchaseRequestData rd = new PurchaseRequestData("EDIT", Integer.valueOf(tbreque
 
         public Object getValueAt(int rowIndex, int columnIndex) {
             PurchaseRequest p = requestes.get(rowIndex);
-
+            Employer e = AppUtil.getService().getEmployerById(p.getRequestByRecordId());
             switch (columnIndex) {
                 case 0:
                     return p.getRecordId();
@@ -300,7 +298,7 @@ PurchaseRequestData rd = new PurchaseRequestData("EDIT", Integer.valueOf(tbreque
                 case 3:
                     return p.getDepartment();
                 case 4:
-                    return p.getRequestByRecordId();
+                    return e.getName();
                 case 5:
                     return p.getTotal();
                 case 6:

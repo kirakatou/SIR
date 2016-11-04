@@ -13,6 +13,10 @@
     <class>com.sumames.sir.entity.Rent</class>
     <class>com.sumames.sir.entity.PurchaseOrderDetail</class>
     <class>com.sumames.sir.entity.PurchaseOrder</class>
+    <class>com.sumames.sir.entity.PurchasePaymentInvoice</class>
+    <class>com.sumames.sir.entity.PurchaseInvoice</class>
+    <class>com.sumames.sir.entity.PurchasePayment</class>
+    <class>com.sumames.sir.entity.PurchaseInvoiceDetail</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sir?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

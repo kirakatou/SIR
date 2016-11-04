@@ -6,10 +6,12 @@
 package com.sumames.sir.ui.purchase;
 
 import com.sumames.sir.Main;
+import com.sumames.sir.entity.Employer;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.ui.MainFrame;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.entity.PurchaseOrder;
+import com.sumames.sir.entity.PurchaseRequest;
 import com.sumames.sir.helper.Support;
 import java.util.Date;
 import java.util.List;
@@ -273,12 +275,14 @@ public class PurchaseOrderList extends javax.swing.JPanel {
                 case 2:
                     return p.getDate();
                 case 3:
-                    return p.getRequestRecordId();
+
+                    PurchaseRequest e = AppUtil.getService().getPurchaseRequestById(p.getRequestRecordId());
+                    return p.getNo();
+
                 case 4:
                     return p.getTotal();
                 case 5:
                     return p.getNote();
-
                 default:
                     return "";
             }

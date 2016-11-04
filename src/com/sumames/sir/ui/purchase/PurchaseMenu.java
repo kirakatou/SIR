@@ -32,16 +32,13 @@ public class PurchaseMenu extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         btRequest = new javax.swing.JButton();
         btOrder = new javax.swing.JButton();
+        btInvoice = new javax.swing.JButton();
         btPayment = new javax.swing.JButton();
 
         setOpaque(false);
-        setLayout(new java.awt.GridLayout(1, 0));
-
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.GridLayout(2, 0));
+        setLayout(new java.awt.GridLayout(2, 0));
 
         btRequest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/purchase/1-01-01.png"))); // NOI18N
         btRequest.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
@@ -59,7 +56,7 @@ public class PurchaseMenu extends javax.swing.JPanel {
                 btRequestActionPerformed(evt);
             }
         });
-        jPanel1.add(btRequest);
+        add(btRequest);
 
         btOrder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/purchase/2-01-01.png"))); // NOI18N
         btOrder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
@@ -77,11 +74,27 @@ public class PurchaseMenu extends javax.swing.JPanel {
                 btOrderActionPerformed(evt);
             }
         });
-        jPanel1.add(btOrder);
+        add(btOrder);
 
-        add(jPanel1);
+        btInvoice.setText("Invoice");
+        btInvoice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        btInvoice.setContentAreaFilled(false);
+        btInvoice.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btInvoiceMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btInvoiceMouseExited(evt);
+            }
+        });
+        btInvoice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btInvoiceActionPerformed(evt);
+            }
+        });
+        add(btInvoice);
 
-        btPayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/purchase/3-01.png"))); // NOI18N
+        btPayment.setText("Payment");
         btPayment.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         btPayment.setContentAreaFilled(false);
         btPayment.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -136,11 +149,23 @@ public class PurchaseMenu extends javax.swing.JPanel {
         new Support().NewTab(Main.getFrame().getTab(), new PurchaseRequestList(), "Request List");
     }//GEN-LAST:event_btRequestActionPerformed
 
+    private void btInvoiceMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btInvoiceMouseEntered
+        btInvoice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(247, 90, 43), 4));
+    }//GEN-LAST:event_btInvoiceMouseEntered
+
+    private void btInvoiceMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btInvoiceMouseExited
+        btInvoice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+    }//GEN-LAST:event_btInvoiceMouseExited
+
+    private void btInvoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btInvoiceActionPerformed
+        new Support().NewTab(Main.getFrame().getTab(), new PurchaseInvoiceList(), "Invoice List");
+    }//GEN-LAST:event_btInvoiceActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btInvoice;
     private javax.swing.JButton btOrder;
     private javax.swing.JButton btPayment;
     private javax.swing.JButton btRequest;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
