@@ -17,6 +17,7 @@ import com.sumames.sir.ui.garage.GarageList;
 import com.sumames.sir.ui.purchase.PurchaseMenu;
 import com.sumames.sir.helper.Support;
 import com.sumames.sir.ui.access.AccessList;
+import com.sumames.sir.ui.report.ReportMenu;
 import java.awt.AlphaComposite;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -599,6 +600,11 @@ public class MainFrame extends javax.swing.JFrame {
         jButton4.setBorderPainted(false);
         jButton4.setContentAreaFilled(false);
         jButton4.setPreferredSize(new java.awt.Dimension(140, 50));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -730,6 +736,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         new Support().NewTab(Main.getFrame().getTab(), new PurchaseMenu(), "Purchase Menu");
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        new Support().NewTab(Main.getFrame().getTab(), new ReportMenu(), "Report Menu");
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public JTabbedPane getTab() {
         return tab;

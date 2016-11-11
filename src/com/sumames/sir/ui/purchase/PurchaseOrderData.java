@@ -1,4 +1,4 @@
-/*
+   /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -52,7 +52,7 @@ public class PurchaseOrderData extends javax.swing.JPanel {
         this.recordId = recordId;
         initComponents();
         loadingData();
-        refreshTable();
+       
     }
 
     /**
@@ -390,7 +390,7 @@ public class PurchaseOrderData extends javax.swing.JPanel {
                     if (tbPurchaseOrder.getValueAt(i, 0) != null) {
                         orderdetail.setPurchaseOrderRecordId((Integer) tbPurchaseOrder.getValueAt(i, 0));
                     }
-                    orderdetail.setPurchaseOrderRecordId(recordId);
+                   orderdetail.setRecordId(Integer.parseInt(tbPurchaseOrder.getValueAt(i, 0).toString()));
                     orderdetail.setDescription(tbPurchaseOrder.getValueAt(i, 1).toString());
                     orderdetail.setPrice(Double.parseDouble(tbPurchaseOrder.getValueAt(i, 2).toString()));
                     orderdetail.setQty(Double.parseDouble(tbPurchaseOrder.getValueAt(i, 3).toString()));
@@ -430,6 +430,8 @@ public class PurchaseOrderData extends javax.swing.JPanel {
 
         }
     }
+    
+    
 
     private void abstractActionPerformed(java.awt.event.ActionEvent evt) {
         TableCellListener tcl = (TableCellListener) evt.getSource();
@@ -437,11 +439,11 @@ public class PurchaseOrderData extends javax.swing.JPanel {
         if (tbPurchaseOrder.getSelectedRow() >= 0) {
             switch (tcl.getColumn()) {
                 case 2: {
-                    int a;
+                    double a;
                     if (tbPurchaseOrder.getModel().getValueAt(row, 3) == null) {
-                        a = 0;
+                        a = 0.00;
                     } else {
-                        a = Integer.parseInt(tbPurchaseOrder.getModel().getValueAt(row, 3).toString());
+                        a = Double.parseDouble(tbPurchaseOrder.getModel().getValueAt(row, 3).toString());
                     }
                     Double b = (Double) tcl.getNewValue();
                     Double subtotal = a * b;
@@ -503,6 +505,15 @@ public class PurchaseOrderData extends javax.swing.JPanel {
             dtm.addRow(new Object[]{rd.getRecordId(), rd.getDescription(), rd.getEstPrice(), rd.getQty(), rd.getSubtotal()});
         }
     }
+    
+    public void refreshTable2(){
+        List<PurchaseOrderDetail> list = AppUtil.getService().getListOrderDetailById(recordId);
+        DefaultTableModel tm = (DefaultTableModel) tbPurchaseOrder.getModel();
+        tm.setRowCount(0);
+        for (PurchaseOrderDetail od : list){
+            tm.addRow(new Object[]{od.getRecordId(),od.getDescription(), od.getPrice(),od.getQty(),od.getSubtotal()});
+        }
+    }
 
     public void count() {
         if (tbPurchaseOrder.getRowCount() > 0) {
@@ -540,7 +551,12 @@ public class PurchaseOrderData extends javax.swing.JPanel {
         } else if (option.equals("EDIT")) {
             purchaseorder = AppUtil.getService().getPurchaseOrderById(recordId);
             objectToForm();
-            refreshTable();
+            cbrequestnoActionPerformed(null);
+            cbrequestnoItemStateChanged(null);
+            cbrequestno.setEditable(false);
+            cbrequestno.setEnabled(false);
+            refreshTable2();
+            
         }
     }
 

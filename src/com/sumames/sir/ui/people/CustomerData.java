@@ -305,7 +305,6 @@ public class CustomerData extends javax.swing.JPanel {
             tfName.setText("");
             taAddress.setText("");
             tfNoTelp.setText("");
-            cbBirthplace.setSelectedIndex(0);
             dcBirthdate.setDate(new Date());
             tfEmail.setText("");
         } else if (option.equals("EDIT")) {

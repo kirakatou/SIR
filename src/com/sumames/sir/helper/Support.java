@@ -59,32 +59,29 @@ public class Support {
         return null;
     }
 
-    public static String AutoNumber(java.util.List list) {
+    public static String AutoNumber(String LastNumber, String Prefix, Boolean WithDateTime) {
 //        , String Prefix, Boolean WithDateTime
         String AutoNumber = null;
         String vTempNumber = null;
-        List a = (List) list.get(list.size() - 1);
-        String b = (String) a.get(1);
-        return b;
-//            vTempNumber = String.format("%03d", a.getNo().substring(rs.getString(FieldName).length() - 3)) + 1);
-//
-////            if (rs.isBeforeFirst()) {
-////                vTempNumber = "001";
-////                System.out.println("no data");
-////            }
-//            
-//        if (WithDateTime) {
-//            java.util.Date date = new java.util.Date();
-//            Calendar cal = Calendar.getInstance();
-//            cal.setTime(date);
-//            String MonthData = String.format("%02d", cal.get(Calendar.MONTH) + 1);
-//            String YearData = Integer.toString(cal.get(Calendar.YEAR)).substring(2);
-//
-//            AutoNumber = Prefix + "." + MonthData + YearData + "." + vTempNumber;
-//        } else {
-//            AutoNumber = Prefix + "." + vTempNumber;
-//        }
-//
-//        return AutoNumber;
+        if(LastNumber.isEmpty()){
+            vTempNumber = "001";
+        }else {
+            vTempNumber = String.format("%03d",Integer.parseInt(LastNumber) + 1);
+        }
+        
+
+        if (WithDateTime) {
+            java.util.Date date = new java.util.Date();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            String MonthData = String.format("%02d", cal.get(Calendar.MONTH) + 1);
+            String YearData = Integer.toString(cal.get(Calendar.YEAR)).substring(2);
+
+            AutoNumber = Prefix + "." + MonthData + YearData + "." + vTempNumber;
+        } else {
+            AutoNumber = Prefix + "." + vTempNumber;
+        }
+
+        return AutoNumber;
     }
 }

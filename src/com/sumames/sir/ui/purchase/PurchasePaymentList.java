@@ -6,7 +6,6 @@
 package com.sumames.sir.ui.purchase;
 
 import com.sumames.sir.Main;
-import com.sumames.sir.entity.Employer;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.helper.Support;
@@ -29,7 +28,7 @@ public class PurchasePaymentList extends javax.swing.JPanel {
      */
     public PurchasePaymentList() {
         initComponents();
-        System.out.println("1");
+        
         refreshTable();
     }
 
@@ -46,9 +45,9 @@ public class PurchasePaymentList extends javax.swing.JPanel {
         tbPayment = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         btRefresh = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        Add = new javax.swing.JButton();
+        edit = new javax.swing.JButton();
+        delete = new javax.swing.JButton();
         dtEnd = new com.toedter.calendar.JDateChooser();
         dtStart = new com.toedter.calendar.JDateChooser();
         btSearch = new javax.swing.JButton();
@@ -92,30 +91,30 @@ public class PurchasePaymentList extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/2-01.png"))); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.setContentAreaFilled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/2-01.png"))); // NOI18N
+        Add.setBorder(null);
+        Add.setContentAreaFilled(false);
+        Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                AddActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/3-01.png"))); // NOI18N
-        jButton3.setBorder(null);
-        jButton3.setContentAreaFilled(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/3-01.png"))); // NOI18N
+        edit.setBorder(null);
+        edit.setContentAreaFilled(false);
+        edit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                editActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.setContentAreaFilled(false);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
+        delete.setBorder(null);
+        delete.setContentAreaFilled(false);
+        delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                deleteActionPerformed(evt);
             }
         });
 
@@ -165,11 +164,11 @@ public class PurchasePaymentList extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(Add)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
+                        .addComponent(edit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)))
+                        .addComponent(delete)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -189,9 +188,9 @@ public class PurchasePaymentList extends javax.swing.JPanel {
                             .addComponent(dtStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btSearch)
                     .addComponent(btRefresh)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edit, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delete)
+                    .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                 .addContainerGap())
@@ -202,9 +201,9 @@ public class PurchasePaymentList extends javax.swing.JPanel {
         refreshTable();
     }//GEN-LAST:event_btRefreshActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         new Support().NewTab(Main.getFrame().getTab(), new PurchasePaymentData("NEW", 0), "Payment Data");
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_AddActionPerformed
 
     private void tbPaymentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPaymentMouseClicked
         if (evt.getClickCount() == 2) {
@@ -219,12 +218,12 @@ public class PurchasePaymentList extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tbPaymentKeyPressed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
         PurchasePaymentData rd = new PurchasePaymentData("EDIT", Integer.valueOf(tbPayment.getValueAt(tbPayment.getSelectedRow(), 0).toString()));
         new Support().NewTab(Main.getFrame().getTab(), rd, "Purchase Payment Data - " + tbPayment.getValueAt(tbPayment.getSelectedRow(), 1).toString());
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_editActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
         if (tbPayment.getSelectedRow() >= 0) {
             PurchasePayment Payment = AppUtil.getService().getPaymentById(Integer.valueOf(tbPayment.getValueAt(tbPayment.getSelectedRow(), 0).toString()));
             if (Payment != null) {
@@ -240,18 +239,18 @@ public class PurchasePaymentList extends javax.swing.JPanel {
             }
 
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_deleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Add;
     private javax.swing.JButton btRefresh;
     private javax.swing.JButton btSearch;
     private javax.swing.JComboBox<String> cbOption;
+    private javax.swing.JButton delete;
     private com.toedter.calendar.JDateChooser dtEnd;
     private com.toedter.calendar.JDateChooser dtStart;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton edit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
@@ -268,7 +267,7 @@ public class PurchasePaymentList extends javax.swing.JPanel {
     private class CustomerTableModel extends AbstractTableModel {
 
         private List<PurchasePayment> listPayment;
-        private final String[] tableHeaders = {"Record Id", "no", "date", "department", "Payment_by_record_id", "total", "date_needed", "note"};
+        private final String[] tableHeaders = {"Record Id", "Paymentno","invoiceNo", "date", "SupplierName", "total", "note"};
 
         public CustomerTableModel(List<PurchasePayment> listPayment) {
             this.listPayment = listPayment;
@@ -279,7 +278,7 @@ public class PurchasePaymentList extends javax.swing.JPanel {
         }
 
         public int getColumnCount() {
-            return 8;
+            return 7;
         }
 
         @Override
@@ -295,16 +294,14 @@ public class PurchasePaymentList extends javax.swing.JPanel {
                 case 1:
                     return p.getNo();
                 case 2:
-                    return p.getDate();
+                    return p.getVoucherRecordId();
                 case 3:
-//                    return p.getDepartment();
+                     return p.getDate();
                 case 4:
-//                    return e.getName();
+                    return p.getSupplierName();
                 case 5:
-//                    return p.getTotal();
+                    return p.getTotalPaymentBase();
                 case 6:
-//                    return p.getDateNeeded();
-                case 7:
                     return p.getNote();
                 default:
                     return "";

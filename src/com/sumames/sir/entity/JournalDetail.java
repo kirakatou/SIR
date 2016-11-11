@@ -24,8 +24,8 @@ import javax.persistence.TemporalType;
  * @author Asus
  */
 @Entity
-@Table(name = "rent", catalog = "sir", schema = "")
-public class Rent implements Serializable {
+@Table(name = "journal_detail", catalog = "sir", schema = "")
+public class JournalDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,24 +34,19 @@ public class Rent implements Serializable {
     @Column(name = "record_id")
     private Integer recordId;
     @Basic(optional = false)
-    @Column(name = "customer_profiles_record_id")
-    private int customerProfilesRecordId;
-    @Column(name = "no")
-    private String no;
-    @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    @Column(name = "journal_record_id")
+    private int journalRecordId;
+    @Column(name = "account_chart_record_id")
+    private Integer accountChartRecordId;
+    @Column(name = "relation")
+    private String relation;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "subtotal")
-    private Double subtotal;
-    @Column(name = "discount")
-    private Double discount;
-    @Column(name = "total")
-    private Double total;
-    @Column(name = "returned")
-    private Boolean returned;
-    @Column(name = "description")
-    private String description;
+    @Column(name = "debet_transaction")
+    private Double debetTransaction;
+    @Column(name = "credit_transaction")
+    private Double creditTransaction;
+    @Column(name = "note")
+    private String note;
     @Column(name = "void_status")
     private Boolean voidStatus;
     @Column(name = "void_reason")
@@ -82,9 +77,9 @@ public class Rent implements Serializable {
     @Column(name = "delete_by_user_record_id")
     private Integer deleteByUserRecordId;
 
-    public Rent() {
+    public JournalDetail() {
     }
-    
+
     public Integer getRecordId() {
         return recordId;
     }
@@ -93,68 +88,52 @@ public class Rent implements Serializable {
         this.recordId = recordId;
     }
 
-    public int getCustomerProfilesRecordId() {
-        return customerProfilesRecordId;
+    public int getJournalRecordId() {
+        return journalRecordId;
     }
 
-    public void setCustomerProfilesRecordId(int customerProfilesRecordId) {
-        this.customerProfilesRecordId = customerProfilesRecordId;
+    public void setJournalRecordId(int journalRecordId) {
+        this.journalRecordId = journalRecordId;
     }
 
-    public String getNo() {
-        return no;
+    public Integer getAccountChartRecordId() {
+        return accountChartRecordId;
     }
 
-    public void setNo(String no) {
-        this.no = no;
+    public void setAccountChartRecordId(Integer accountChartRecordId) {
+        this.accountChartRecordId = accountChartRecordId;
     }
 
-    public Date getDate() {
-        return date;
+    public String getRelation() {
+        return relation;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setRelation(String relation) {
+        this.relation = relation;
     }
 
-    public Double getSubtotal() {
-        return subtotal;
+    public Double getDebetTransaction() {
+        return debetTransaction;
     }
 
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
+    public void setDebetTransaction(Double debetTransaction) {
+        this.debetTransaction = debetTransaction;
     }
 
-    public Double getDiscount() {
-        return discount;
+    public Double getCreditTransaction() {
+        return creditTransaction;
     }
 
-    public void setDiscount(Double discount) {
-        this.discount = discount;
+    public void setCreditTransaction(Double creditTransaction) {
+        this.creditTransaction = creditTransaction;
     }
 
-    public Double getTotal() {
-        return total;
+    public String getNote() {
+        return note;
     }
 
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-    public Boolean getReturned() {
-        return returned;
-    }
-
-    public void setReturned(Boolean returned) {
-        this.returned = returned;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Boolean getVoidStatus() {

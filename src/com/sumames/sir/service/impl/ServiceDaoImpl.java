@@ -1,9 +1,13 @@
 package com.sumames.sir.service.impl;
 
+import com.sumames.sir.entity.AccountChart;
+import com.sumames.sir.entity.AccountGroup;
 import com.sumames.sir.entity.Car;
 import com.sumames.sir.entity.Customer;
 import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.Garage;
+import com.sumames.sir.entity.Journal;
+import com.sumames.sir.entity.Ledger;
 import com.sumames.sir.entity.Login;
 import com.sumames.sir.entity.LoginAccess;
 import com.sumames.sir.entity.PurchaseInvoice;
@@ -16,9 +20,12 @@ import com.sumames.sir.entity.PurchaseRequest;
 import com.sumames.sir.entity.PurchaseRequestDetail;
 import com.sumames.sir.entity.Rent;
 import com.sumames.sir.entity.RentDetail;
+import com.sumames.sir.entity.RentInvoice;
+import com.sumames.sir.entity.RentInvoice2;
 import com.sumames.sir.service.ServiceDao;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +60,7 @@ public class ServiceDaoImpl implements ServiceDao {
         getCurrentSession().delete(obj);
         return true;
     }
+//    =================Customer==================
 
     @Override
     public Customer getCustomerById(Integer id) {
@@ -71,6 +79,7 @@ public class ServiceDaoImpl implements ServiceDao {
         List<Customer> list = getCurrentSession().createQuery("FROM Customer a where a.deleteDatetime IS NULL ORDER BY a.recordId ASC").list();
         return list;
     }
+//    =================Car==================
 
     @Override
     public Car getCarById(Integer id) {
@@ -90,6 +99,7 @@ public class ServiceDaoImpl implements ServiceDao {
         List<Car> list = getCurrentSession().createQuery("FROM Car a ORDER BY a.recordId ASC").list();
         return list;
     }
+//    =================Employer==================
 
     @Override
     public Employer getEmployerById(Integer id) {
@@ -108,6 +118,7 @@ public class ServiceDaoImpl implements ServiceDao {
         List<Employer> list = getCurrentSession().createQuery("FROM Employer a where a.deleteDatetime IS NULL ORDER BY a.recordId ASC").list();
         return list;
     }
+//    =================Garage==================
 
     @Override
     public Garage getGarageById(Integer id) {
@@ -120,6 +131,7 @@ public class ServiceDaoImpl implements ServiceDao {
         List<Garage> list = getCurrentSession().createQuery("FROM Garage a ORDER BY a.recordId ASC").list();
         return list;
     }
+//    =================Login==================
 
     @Override
     public Login getLoginById(Integer id) {
@@ -140,6 +152,7 @@ public class ServiceDaoImpl implements ServiceDao {
                 .uniqueResult();
         return login;
     }
+//    =================Access==================
 
     @Override
     public LoginAccess getAccessById(Integer id) {
@@ -152,6 +165,7 @@ public class ServiceDaoImpl implements ServiceDao {
         List<LoginAccess> list = getCurrentSession().createQuery("FROM LoginAccess a ORDER BY a.recordId ASC").list();
         return list;
     }
+//    ======================Rent=======================
 
     @Override
     public Rent getRentById(Integer id) {
@@ -206,6 +220,16 @@ public class ServiceDaoImpl implements ServiceDao {
     }
 
     @Override
+    public List<RentInvoice2> getListRentInvoice2ById(int id) {
+        List<RentInvoice2> list = getCurrentSession().createSQLQuery("SELECT rent_detail.record_id as recordId, rent_record_id as rentRecordId, car.record_id as carRecordId,car.name as carName, car.plate_number as carPlate, rent_detail.price as price , period, subtotal from rent_detail left join car on car.record_id = rent_detail.car_record_id where rent_record_id=:id ")
+                .addEntity(RentInvoice2.class)
+                .setParameter("id", id).list();
+        System.out.println(list + "1");
+        return list;
+    }
+//    =================Purchase Request==================
+
+    @Override
     public PurchaseRequest getPurchaseRequestById(Integer id) {
         PurchaseRequest t = (PurchaseRequest) getCurrentSession().get(PurchaseRequest.class, id);
         return t; //To change body of generated methods, choose Tools | Templates.
@@ -248,6 +272,7 @@ public class ServiceDaoImpl implements ServiceDao {
                 .setParameter("no", no).list();
         return list;
     }
+//    =================Purchase Order==================
 
     @Override
     public PurchaseOrder getPurchaseOrderById(Integer id) {
@@ -279,6 +304,7 @@ public class ServiceDaoImpl implements ServiceDao {
                 .setParameter("id", id).list();
         return list;
     }
+//    =================Purchase Invoice==================
 
     @Override
     public PurchaseInvoice getInvoiceById(Integer id) {
@@ -310,7 +336,15 @@ public class ServiceDaoImpl implements ServiceDao {
         List<PurchaseInvoiceDetail> list = getCurrentSession().createQuery("FROM PurchaseInvoiceDetail a ORDER BY a.recordId ASC").list();
         return list;
     }
-    
+
+    @Override
+    public List<PurchaseInvoiceDetail> getListInvoiceDetailById(Integer id) {
+        List<PurchaseInvoiceDetail> list = getCurrentSession().createQuery("from PurchaseInvoiceDetail where purchase_Invoice_record_id=:id")
+                .setParameter("id", id).list();
+        return list;
+    }
+//    =================Purchase Payment==================
+
     @Override
     public PurchasePayment getPaymentById(Integer id) {
         PurchasePayment t = (PurchasePayment) getCurrentSession().get(PurchasePayment.class, id);
@@ -329,6 +363,22 @@ public class ServiceDaoImpl implements ServiceDao {
                 .setParameter("start", start).setParameter("end", end).list();
         return list;
     }
+//  =====================Payment Invoice===================
+
+    @Override
+    public List<PurchasePaymentInvoice> getListPaymentInvoiceById(Integer id) {
+        List<PurchasePaymentInvoice> list = getCurrentSession().createQuery("from PurchasePaymentInvoice where purchase_Payment_record_id=:id")
+                .setParameter("id", id).list();
+        return list;
+    }
+//    =================Purchase Invoice==================
+
+    @Override
+    public List<PurchaseInvoice> getListPurchaseInvoiceById(Integer id) {
+        List<PurchaseInvoice> list = getCurrentSession().createQuery("from PurchaseInvoice where record_id=:id")
+                .setParameter("id", id).list();
+        return list;
+    }
 
     @Override
     public PurchasePaymentInvoice getPaymentInvoiceById(Integer id) {
@@ -340,6 +390,132 @@ public class ServiceDaoImpl implements ServiceDao {
     public List<PurchasePaymentInvoice> getPaymentInvoices() {
         List<PurchasePaymentInvoice> list = getCurrentSession().createQuery("FROM PurchasePaymentInvoice a ORDER BY a.recordId ASC").list();
         return list;
+    }
+
+//    =================Account Group==================
+    @Override
+    public AccountGroup getAccountGroupById(Integer id) {
+        AccountGroup t = (AccountGroup) getCurrentSession().get(AccountGroup.class, id);
+        return t;
+    }
+
+    @Override
+    public List<AccountGroup> getAccountGroups() {
+        List<AccountGroup> list = getCurrentSession().createQuery("FROM AccountGroup a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+//    =================Account Chart==================    
+    @Override
+    public AccountChart getAccountChartById(Integer id) {
+        AccountChart t = (AccountChart) getCurrentSession().get(AccountChart.class, id);
+        return t;
+    }
+
+    @Override
+    public List<AccountChart> getAccountCharts() {
+        List<AccountChart> list = getCurrentSession().createQuery("FROM AccountChart a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+//    =================Rent Invoice==================
+    @Override
+    public List<RentInvoice> getRentInvoices() {
+        List<RentInvoice> list = getCurrentSession().createQuery("FROM RentInvoice a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public List<RentInvoice> getListRentInvoiceById(int id) {
+        List<RentInvoice> list = getCurrentSession().createQuery("from RentInvoice where rent_record_id=:id")
+                .setParameter("id", id).list();
+        return list;
+    }
+//    =================Journal==================    
+
+    @Override
+    public Journal getJournalById(Integer id) {
+        Journal t = (Journal) getCurrentSession().get(Journal.class, id);
+        return t;
+    }
+
+    @Override
+    public Journal getJournalByTransactionId(Integer from, Integer id) {
+        Journal t = (Journal) getCurrentSession().createQuery("from Journal a where a.transactionFrom=:tf AND a.transactionRecordId=:id")
+                .setParameter("tf", from)
+                .setParameter("id", id)
+                .uniqueResult();
+        return t;
+    }
+
+    @Override
+    public List<Journal> getJournals() {
+        List<Journal> list = getCurrentSession().createQuery("FROM Journal a ORDER BY a.recordId ASC").list();
+        return list;
+    }
+
+    @Override
+    public Double getJournalDebit(Integer id) {
+        System.out.println(id + "debit");
+        Double debit = (Double) getCurrentSession().createQuery("Select SUM(a.debetTransaction) FROM JournalDetail a where journal_record_id =:id GROUP BY journal_record_id")
+                .setParameter("id", id)
+                .uniqueResult();
+        System.out.println(debit + "debit");
+        return debit;
+    }
+
+    @Override
+    public Double getJournalCredit(Integer id) {
+        System.out.println(id + "credit");
+        Double credit = (Double) getCurrentSession().createQuery("Select SUM(a.creditTransaction) FROM JournalDetail a where journal_record_id =:id GROUP BY journal_record_id")
+                .setParameter("id", id)
+                .uniqueResult();
+        System.out.println(credit + "credit");
+        return credit;
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public boolean deleteJournalDetail(Integer id) {
+        Query query = getCurrentSession().createQuery("delete from JournalDetail where journal_record_id =:id")
+                .setParameter("id", id);
+        int result = query.executeUpdate();
+        if (result > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+//    =================Ledger==================
+    @Override
+    public List<Ledger> getLedgerByAccId(Date start, Date end, Integer id){
+        List<Ledger> list = getCurrentSession().createQuery("FROM Ledger a WHERE date >= :start AND date <= :end and account_record_id =:id ORDER BY a.recordId ASC")
+                .setParameter("start", start)
+                .setParameter("end", end)
+                .setParameter("id", id).list();
+        return list;
+    }
+
+//    =================Auto Number==================
+    @Override
+    public String getRentLast() {
+        Rent last = (Rent) getCurrentSession().createQuery("from Rent a order by a.no ASC").setMaxResults(1).uniqueResult();
+        String format;
+        format = String.format("%03d", Integer.parseInt(last.getNo().substring(last.getNo().length() - 3)));
+        return format;
+    }
+
+    @Override
+    public String getJournalLast() {
+        Journal last = (Journal) getCurrentSession().createQuery("from Journal a order by a.no ASC").setMaxResults(1).uniqueResult();
+        String format;
+
+        if (last == null) {
+            format = "";
+        } else {
+            format = String.format("%03d", Integer.parseInt(last.getNo().substring(last.getNo().length() - 3)));
+        }
+        return format;
     }
 
 }

@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sumames.sir.ui.rent;
+package com.sumames.sir.ui.report;
 
+import com.sumames.sir.ui.rent.*;
 import com.sumames.sir.Main;
 import com.sumames.sir.entity.Car;
 import com.sumames.sir.entity.Customer;
-import com.sumames.sir.entity.Journal;
-import com.sumames.sir.entity.JournalDetail;
 import com.sumames.sir.entity.Rent;
 import com.sumames.sir.entity.RentDetail;
-import com.sumames.sir.entity.RentInvoice;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.AutoCompletion;
 import com.sumames.sir.helper.Support;
@@ -20,7 +18,6 @@ import com.sumames.sir.helper.TextComponentUtils;
 import com.sumames.sir.ui.renderer.TableCellListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +40,7 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author My pc
  */
-public class RentData extends javax.swing.JPanel {
+public class JournalData extends javax.swing.JPanel {
     
     private String option;
     private int recordId;
@@ -58,7 +55,7 @@ public class RentData extends javax.swing.JPanel {
     /**
      * Creates new form EmployerInput
      */
-    public RentData(String option, int recordId) {
+    public JournalData(String option, int recordId) {
         this.option = option;
         this.recordId = recordId;
         initComponents();
@@ -85,6 +82,7 @@ public class RentData extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tfDesc = new javax.swing.JTextArea();
         cbCustomerName = new javax.swing.JComboBox<>();
+        cbCustomerNo = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         tfSubtotal = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -94,8 +92,6 @@ public class RentData extends javax.swing.JPanel {
         date = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
         chReturn = new javax.swing.JCheckBox();
-        btPrint = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setFont(new java.awt.Font("Noto Serif", 0, 14)); // NOI18N
         setOpaque(false);
@@ -203,6 +199,15 @@ public class RentData extends javax.swing.JPanel {
             }
         });
 
+        cbCustomerNo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCustomerNo.setSelectedIndex(1);
+        cbCustomerNo.setPreferredSize(new java.awt.Dimension(100, 30));
+        cbCustomerNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCustomerNoActionPerformed(evt);
+            }
+        });
+
         jLabel7.setFont(getFont());
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Sub Total :");
@@ -257,23 +262,6 @@ public class RentData extends javax.swing.JPanel {
         chReturn.setText("Returned");
         chReturn.setOpaque(false);
 
-        btPrint.setText("Print");
-        btPrint.setBorderPainted(false);
-        btPrint.setContentAreaFilled(false);
-        btPrint.setPreferredSize(new java.awt.Dimension(65, 23));
-        btPrint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btPrintActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("...");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -292,9 +280,12 @@ public class RentData extends javax.swing.JPanel {
                                         .addGap(65, 65, 65)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfNo, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(cbCustomerNo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tfNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(45, 45, 45)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -308,23 +299,18 @@ public class RentData extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(39, 39, 39)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(tfSubtotal, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                                            .addComponent(tfDisc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfSubtotal, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                                    .addComponent(tfDisc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btDelete)))
                 .addContainerGap())
@@ -349,13 +335,12 @@ public class RentData extends javax.swing.JPanel {
                                     .addComponent(chReturn))
                                 .addGap(0, 0, 0)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbCustomerNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cbCustomerName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -374,14 +359,10 @@ public class RentData extends javax.swing.JPanel {
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbCustomerName, jButton1});
-
     }// </editor-fold>//GEN-END:initComponents
 
     private void abstractActionPerformed(java.awt.event.ActionEvent evt) {
@@ -495,46 +476,27 @@ public class RentData extends javax.swing.JPanel {
     }//GEN-LAST:event_tfDiscActionPerformed
 
     private void cbCustomerNameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbCustomerNameItemStateChanged
+//        System.out.println(cbCustomerNo.getSelectedIndex() + " != "  + cbCustomerName.getSelectedIndex());
+//        if(cbCustomerNo.getSelectedIndex() != cbCustomerName.getSelectedIndex()){
+        cbCustomerNo.setSelectedIndex(cbCustomerName.getSelectedIndex());
+//        }else {
 
+//        }
     }//GEN-LAST:event_cbCustomerNameItemStateChanged
 
-    private void btPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPrintActionPerformed
-        try {
-            List<RentInvoice> tests = AppUtil.getService().getListRentInvoiceById(recordId);
-            JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(tests);
-            HashMap param = new HashMap();
-            Customer c = AppUtil.getService().getCustomerById(customerID.get(cbCustomerName.getSelectedItem()));
-            param.put("COMPANYNAME", c.getName());
-            param.put("COMPANYADDRESS", c.getAddress());
-            param.put("INVOICENO", tfNo.getText());
-            param.put("DESCRIPTION", tfDesc.getText());
-            param.put("TOTAL", tfTotal.getText());
-            JasperPrint jasperPrint = JasperFillManager.fillReport("SirInvoice.jasper", param, beanColDataSource);
-            JasperViewer.viewReport(jasperPrint, false);
-
-            // to directly popup save file
-            // JasperPrintManager.printReport(jasperPrint, false);
-        } catch (JRException ex) {
-            System.out.println("Error:\n" + ex.getLocalizedMessage());
-        }
-    }//GEN-LAST:event_btPrintActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Customer c = new CustomerLookupDialog().getCustomer();
-        if (c != null) {
-            cbCustomerName.setSelectedItem(c.getName());
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void cbCustomerNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCustomerNoActionPerformed
+//        System.out.println(cbCustomerNo.getSelectedIndex() + " 1");
+//        cbCustomerName.setSelectedIndex(cbCustomerNo.getSelectedIndex());
+    }//GEN-LAST:event_cbCustomerNoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btDelete;
-    private javax.swing.JButton btPrint;
     private javax.swing.JButton btSave;
     private javax.swing.JComboBox<String> cbCustomerName;
+    private javax.swing.JComboBox<String> cbCustomerNo;
     private javax.swing.JCheckBox chReturn;
     private com.toedter.calendar.JDateChooser date;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel4;
@@ -562,10 +524,11 @@ public class RentData extends javax.swing.JPanel {
     public void loadingData() {
         cbCarName.removeAllItems();
         cbCustomerName.removeAllItems();
-        
+        cbCustomerNo.removeAllItems();
         AutoCompletion.enable(cbCarName);
         AutoCompletion.enable(cbCarPlate);
         AutoCompletion.enable(cbCustomerName);
+        AutoCompletion.enable(cbCustomerNo);
         carID = new HashMap();
         carPlateID = new HashMap();
         customerID = new HashMap();
@@ -578,22 +541,21 @@ public class RentData extends javax.swing.JPanel {
         }
         List<Customer> customerList = AppUtil.getService().getCustomers();
         for (Customer customers : customerList) {
-            customerID.put(customers.getName(), customers.getRecordId());
+            customerID.put(customers.getNo(), customers.getRecordId());
+            cbCustomerNo.addItem(customers.getNo());
             cbCustomerName.addItem(customers.getName());
         }
         if (option.equals("NEW")) {
-            tfNo.setText(Support.AutoNumber(AppUtil.getService().getRentLast(), "R", Boolean.TRUE));
+            tfNo.setText("");
             tfSubtotal.setText("0");
             tfDisc.setText("0");
             tfTotal.setText("0");
             tfDesc.setText("");
             date.setDate(new Date());
             chReturn.setVisible(false);
-            btPrint.setVisible(false);
             addRow();
         } else if (option.equals("EDIT")) {
             chReturn.setVisible(true);
-            btPrint.setVisible(true);
             rent = AppUtil.getService().getRentById(recordId);
             objectToForm();
             refreshTable();
@@ -626,7 +588,23 @@ public class RentData extends javax.swing.JPanel {
             tfTotal.setText(subtotal.toString());
         }
     }
+    
+    private void runReport() {
+        try {
+            List<RentDetail> tests = AppUtil.getService().getListRentById(recordId);
+            JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(tests);
+            HashMap param = new HashMap();
+            param.put("INVOICENO", tfNo.getText());
+            param.put("DESCRIPTION", tfDesc.getText());
+            JasperPrint jasperPrint = JasperFillManager.fillReport("SirInvoice.jasper", param, beanColDataSource);
+            JasperViewer.viewReport(jasperPrint, false);
 
+            // to directly popup save file
+            // JasperPrintManager.printReport(jasperPrint, false);
+        } catch (JRException ex) {
+            System.out.println("Error:\n" + ex.getLocalizedMessage());
+        }
+    }
     
     public void saveData() {
         if (option.equals("NEW")) {
@@ -634,15 +612,9 @@ public class RentData extends javax.swing.JPanel {
             rent.setCreateDatetime(new Date());
             rent.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
             if (AppUtil.getService().save(rent)) {
-                this.recordId = rent.getRecordId();
-                String car = "";
                 for (int i = 0; i < tbRent.getRowCount(); i++) {
                     RentDetail rentDetail = new RentDetail();
                     rentDetail.setRentRecordId(rent.getRecordId());
-                    car += tbRent.getValueAt(i, 2).toString();
-                    if(i != (tbRent.getRowCount() - 1)){
-                        car += ", ";
-                    }
                     rentDetail.setCarRecordId(carPlateID.get(tbRent.getValueAt(i, 2).toString()));
                     rentDetail.setPrice(Double.parseDouble(tbRent.getValueAt(i, 3).toString()));
                     rentDetail.setPeriod(Integer.parseInt(tbRent.getValueAt(i, 4).toString()));
@@ -650,32 +622,6 @@ public class RentData extends javax.swing.JPanel {
                     rentDetail.setCreateDatetime(new Date());
                     rentDetail.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
                     AppUtil.getService().save(rentDetail);
-                }
-                Journal jurnal = new Journal();
-                jurnal.setNo(Support.AutoNumber(AppUtil.getService().getJournalLast(), "J", Boolean.TRUE));
-                jurnal.setDate(new Date());
-                jurnal.setTransactionFrom(0);
-                jurnal.setTransactionRecordId(recordId);
-                jurnal.setCreateDatetime(new Date());
-                jurnal.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
-                if(AppUtil.getService().save(jurnal)){
-                    JournalDetail jd = new JournalDetail();
-                    jd.setJournalRecordId(jurnal.getRecordId());
-                    jd.setAccountChartRecordId(10);
-                    jd.setRelation(cbCustomerName.getSelectedItem().toString());
-                    jd.setDebetTransaction(Double.parseDouble(tfTotal.getText()));
-                    jd.setCreditTransaction(0D);
-                    AppUtil.getService().save(jd);
-                    JournalDetail jd2 = new JournalDetail();
-                    jd2.setJournalRecordId(jurnal.getRecordId());
-                    jd2.setAccountChartRecordId(33);
-                    jd2.setRelation(car);
-                    jd2.setDebetTransaction(0D);
-                    jd2.setCreditTransaction(Double.parseDouble(tfTotal.getText()));
-                    AppUtil.getService().save(jd2);
-                    jurnal.setDebetBase(jd.getDebetTransaction());
-                    jurnal.setCreditBase(jd2.getCreditTransaction());
-                    AppUtil.getService().save(jurnal);
                 }
                 msg("Save Done!");
                 Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
@@ -700,42 +646,6 @@ public class RentData extends javax.swing.JPanel {
                     rentDetail.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
                     AppUtil.getService().save(rentDetail);
                 }
-                Journal jurnal = AppUtil.getService().getJournalByTransactionId(0, recordId);
-                if(AppUtil.getService().deleteJournalDetail(jurnal.getRecordId())){
-                    JournalDetail jd = new JournalDetail();
-                    jd.setJournalRecordId(jurnal.getRecordId());
-                    jd.setAccountChartRecordId(10);
-                    jd.setDebetTransaction(Double.parseDouble(tfTotal.getText()));
-                    jd.setCreditTransaction(0D);
-                    AppUtil.getService().save(jd);
-                    JournalDetail jd2 = new JournalDetail();
-                    jd2.setJournalRecordId(jurnal.getRecordId());
-                    jd2.setAccountChartRecordId(33);
-                    jd2.setDebetTransaction(0D);
-                    jd2.setCreditTransaction(Double.parseDouble(tfTotal.getText()));
-                    AppUtil.getService().save(jd2);
-                    jurnal.setDebetBase(jd.getDebetTransaction());
-                    jurnal.setCreditBase(jd2.getCreditTransaction());
-                    AppUtil.getService().save(jurnal);
-                    if(chReturn.isSelected()){
-                        JournalDetail jd3 = new JournalDetail();
-                        jd3.setJournalRecordId(jurnal.getRecordId());
-                        jd3.setAccountChartRecordId(2);
-                        jd3.setDebetTransaction(Double.parseDouble(tfTotal.getText()));
-                        jd3.setCreditTransaction(0D);
-                        AppUtil.getService().save(jd3);
-                        JournalDetail jd4 = new JournalDetail();
-                        jd4.setJournalRecordId(jurnal.getRecordId());
-                        jd4.setAccountChartRecordId(10);
-                        jd4.setDebetTransaction(0D);
-                        jd4.setCreditTransaction(Double.parseDouble(tfTotal.getText()));
-                        AppUtil.getService().save(jd4);
-                        jurnal.setDebetBase(AppUtil.getService().getJournalDebit(jurnal.getRecordId()));
-                        jurnal.setCreditBase(AppUtil.getService().getJournalCredit(jurnal.getRecordId()));
-                        AppUtil.getService().save(jurnal);
-                    }
-                }
-                
                 msg("Save Done!");
                 Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
             } else {
@@ -749,7 +659,7 @@ public class RentData extends javax.swing.JPanel {
             rent = new Rent();
         }
         rent.setNo(tfNo.getText());
-        rent.setCustomerProfilesRecordId(customerID.get(cbCustomerName.getSelectedItem()));
+        rent.setCustomerProfilesRecordId(customerID.get(cbCustomerNo.getSelectedItem()));
         rent.setSubtotal(Double.parseDouble(tfSubtotal.getText()));
         rent.setDiscount(Double.parseDouble(tfDisc.getText()));
         rent.setTotal(Double.parseDouble(tfTotal.getText()));
@@ -766,7 +676,7 @@ public class RentData extends javax.swing.JPanel {
             tfDisc.setText(Double.toString(rent.getDiscount()));
             tfTotal.setText(Double.toString(rent.getTotal()));
             tfDesc.setText(rent.getDescription());
-            cbCustomerName.setSelectedItem(Support.getKeyFromValue(customerID, rent.getCustomerProfilesRecordId()));
+            cbCustomerNo.setSelectedItem(Support.getKeyFromValue(customerID, rent.getCustomerProfilesRecordId()));
             date.setDate(rent.getDate());
             chReturn.setSelected(rent.getReturned());
         }

@@ -11,9 +11,12 @@ import com.sumames.sir.entity.PurchaseRequestDetail;
 import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.PurchaseInvoice;
 import com.sumames.sir.entity.PurchaseInvoiceDetail;
+import com.sumames.sir.entity.PurchaseOrder;
+import com.sumames.sir.entity.PurchaseOrderDetail;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.AutoCompletion;
 import com.sumames.sir.helper.Support;
+import com.sumames.sir.helper.TextComponentUtils;
 import com.sumames.sir.ui.renderer.TableCellListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -35,16 +38,16 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
 
     private String option;
     private int recordId;
-    private int prRecordId;
+    private int orRecordId;
     private Action action;
     private HashMap<String, Integer> mapAccess;
     private PurchaseRequest purchaserequest;
     private Employer employe;
-    private HashMap<String, Integer> requestno;
+    private HashMap<String, Integer> orderno;
     private HashMap<String, Integer> employerID;
     private PurchaseRequestDetail requestdetail;
     private PurchaseInvoice purchaseInvoice;
-    private PurchaseInvoiceDetail orderdetail;
+    private PurchaseInvoiceDetail invoicedetail;
 
     /**
      * Creates new form Purchase Request Input
@@ -54,7 +57,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
         this.recordId = recordId;
         initComponents();
         loadingData();
-        refreshTable();
+
     }
 
     /**
@@ -78,7 +81,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
         taDescription = new javax.swing.JTextArea();
         dtDate = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
-        requestno = new HashMap();
+        orderno = new HashMap();
         employerID = new HashMap();
         cbOrderNo = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
@@ -223,6 +226,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
 
         tfDiscountValue.setFont(getFont());
         tfDiscountValue.setPreferredSize(new java.awt.Dimension(100, 30));
+        TextComponentUtils.setNumericTextOnly(tfDiscountValue);
 
         jLabel10.setFont(getFont());
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -234,12 +238,30 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
 
         tfTaxPercent.setFont(getFont());
         tfTaxPercent.setPreferredSize(new java.awt.Dimension(100, 30));
+        tfTaxPercent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfTaxPercentActionPerformed(evt);
+            }
+        });
+        tfTaxPercent.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfTaxPercentKeyReleased(evt);
+            }
+        });
+        TextComponentUtils.setNumericTextOnly(tfTaxPercent);
 
         tfTaxValue.setFont(getFont());
         tfTaxValue.setPreferredSize(new java.awt.Dimension(100, 30));
+        TextComponentUtils.setNumericTextOnly(tfTaxValue);
 
         tfDiscPercent.setFont(getFont());
         tfDiscPercent.setPreferredSize(new java.awt.Dimension(100, 30));
+        TextComponentUtils.setNumericTextOnly(tfDiscPercent);
+        tfDiscPercent.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tfDiscPercentKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -274,7 +296,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
                                     .addComponent(tfTaxValue, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(tfSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(573, 573, 573))
+                        .addGap(565, 565, 565))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
@@ -333,8 +355,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
                                         .addComponent(jLabel7))
                                     .addComponent(tfSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfTaxValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(tfTaxPercent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -343,7 +364,8 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(tfDiscPercent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(tfDiscountValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel10))))))
+                                            .addComponent(jLabel10)))
+                                    .addComponent(tfTaxValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbOrderNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,14 +374,15 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
                             .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbOrderNo, dtDate, tfNo, tfSubTotal, tfSupplierName, tfTotal});
 
     }// </editor-fold>//GEN-END:initComponents
+
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         saveData();
@@ -376,11 +399,11 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
     }//GEN-LAST:event_tbPurchaseInvoiceKeyPressed
 
     private void cbOrderNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbOrderNoActionPerformed
-        if(requestno.get(cbOrderNo.getSelectedItem()) == null ){
-            this.prRecordId = 0;
+        if (orderno.get(cbOrderNo.getSelectedItem()) == null) {
+            this.orRecordId = 0;
+        } else {
+            this.orRecordId = orderno.get(cbOrderNo.getSelectedItem());
         }
-        else
-        this.prRecordId = requestno.get(cbOrderNo.getSelectedItem());
         refreshTable();
         count();
     }//GEN-LAST:event_cbOrderNoActionPerformed
@@ -388,6 +411,26 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
     private void cbOrderNoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbOrderNoItemStateChanged
         refreshTable();
     }//GEN-LAST:event_cbOrderNoItemStateChanged
+    
+    private void tfTaxPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTaxPercentActionPerformed
+        
+    }//GEN-LAST:event_tfTaxPercentActionPerformed
+
+    private void tfTaxPercentKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfTaxPercentKeyReleased
+        if(tfSubTotal != null){
+            double tax =Double.parseDouble(tfSubTotal.getText()) * (Double.parseDouble(tfTaxPercent.getText())/100);
+            tfTaxValue.setText(Double.toString(tax));
+            counttax();
+        }
+    }//GEN-LAST:event_tfTaxPercentKeyReleased
+
+    private void tfDiscPercentKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfDiscPercentKeyReleased
+        if(tfSubTotal != null){
+            double disc =Double.parseDouble(tfSubTotal.getText()) * (Double.parseDouble(tfDiscPercent.getText())/100);
+            tfDiscountValue.setText(Double.toString(disc));
+            counttax();
+        }
+    }//GEN-LAST:event_tfDiscPercentKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -454,7 +497,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
                     if (tbPurchaseInvoice.getValueAt(i, 0) != null) {
                         invoiceDetail.setPurchaseInvoiceRecordId((Integer) tbPurchaseInvoice.getValueAt(i, 0));
                     }
-                    invoiceDetail.setPurchaseInvoiceRecordId(recordId);
+                    invoiceDetail.setRecordId(Integer.parseInt(tbPurchaseInvoice.getValueAt(i, 0).toString()));
                     invoiceDetail.setDescription(tbPurchaseInvoice.getValueAt(i, 1).toString());
                     invoiceDetail.setPrice(Double.parseDouble(tbPurchaseInvoice.getValueAt(i, 2).toString()));
                     invoiceDetail.setQty(Double.parseDouble(tbPurchaseInvoice.getValueAt(i, 3).toString()));
@@ -477,20 +520,30 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
         }
         purchaseInvoice.setNo(tfNo.getText());
         purchaseInvoice.setDate(dtDate.getDate());
-        purchaseInvoice.setPurchaseOrderRecordId(requestno.get(cbOrderNo.getSelectedItem()));
+        purchaseInvoice.setPurchaseOrderRecordId(orderno.get(cbOrderNo.getSelectedItem()));
         purchaseInvoice.setNote(taDescription.getText());
-//        Invoicedetail.setPurchaseInvoiceRecordId(Integer.parseInt(cbrequestno.getSelectedItem().toString()));
-        purchaseInvoice.setTotal(Double.parseDouble(tfSubTotal.getText()));
-        purchaseInvoice.setNote(taDescription.getText());
+        purchaseInvoice.setTaxPercent(Double.parseDouble(tfTaxPercent.getText()));
+        purchaseInvoice.setTaxValue(Double.parseDouble(tfTaxValue.getText()));
+        purchaseInvoice.setDiscPercent(Double.parseDouble(tfDiscPercent.getText()));
+        purchaseInvoice.setDiscValue(Double.parseDouble(tfDiscountValue.getText()));
+        purchaseInvoice.setTotal(Double.parseDouble(tfTotal.getText()));
+        purchaseInvoice.setSupplierName(tfSupplierName.getText());
+        purchaseInvoice.setSubTotal(Double.parseDouble(tfSubTotal.getText()));
     }
 
     public void objectToForm() {
         if (purchaseInvoice != null) {
             tfNo.setText(purchaseInvoice.getNo());
             dtDate.setDate(purchaseInvoice.getDate());
-            cbOrderNo.setSelectedItem(Support.getKeyFromValue(requestno, purchaseInvoice.getPurchaseOrderRecordId()));
-            tfSubTotal.setText(purchaseInvoice.getTotal().toString());
+            cbOrderNo.setSelectedItem(Support.getKeyFromValue(orderno, purchaseInvoice.getPurchaseOrderRecordId()));
+            tfSubTotal.setText(purchaseInvoice.getSubTotal().toString());
             taDescription.setText(purchaseInvoice.getNote());
+            tfSupplierName.setText(purchaseInvoice.getSupplierName());
+            tfDiscPercent.setText(purchaseInvoice.getDiscPercent().toString());
+            tfDiscountValue.setText(purchaseInvoice.getDiscValue().toString());
+            tfTaxPercent.setText(purchaseInvoice.getTaxPercent().toString());
+            tfTaxValue.setText(purchaseInvoice.getTaxValue().toString());
+            tfTotal.setText(purchaseInvoice.getTotal().toString());
 
         }
     }
@@ -501,16 +554,17 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
         if (tbPurchaseInvoice.getSelectedRow() >= 0) {
             switch (tcl.getColumn()) {
                 case 2: {
-                    int a;
+                    Double a;
                     if (tbPurchaseInvoice.getModel().getValueAt(row, 3) == null) {
-                        a = 0;
+                        a = 0.00;
                     } else {
-                        a = Integer.parseInt(tbPurchaseInvoice.getModel().getValueAt(row, 3).toString());
+                        a = Double.parseDouble(tbPurchaseInvoice.getModel().getValueAt(row, 3).toString());
                     }
                     Double b = (Double) tcl.getNewValue();
                     Double subtotal = a * b;
                     tbPurchaseInvoice.setValueAt(subtotal, row, 4);
                     count();
+                    counttax();
                     break;
                 }
                 case 3: {
@@ -524,6 +578,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
                     double subtotal = a * b;
                     tbPurchaseInvoice.setValueAt(subtotal, row, 4);
                     count();
+                    counttax();
                     break;
                 }
                 default:
@@ -560,11 +615,20 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
     }
 
     public void refreshTable() {
-        List<PurchaseRequestDetail> list = AppUtil.getService().getListRequestDetailById(prRecordId);
+        List<PurchaseOrderDetail> list = AppUtil.getService().getListOrderDetailById(orRecordId);
         DefaultTableModel dtm = (DefaultTableModel) tbPurchaseInvoice.getModel();
         dtm.setRowCount(0);
-        for (PurchaseRequestDetail rd : list) {
-            dtm.addRow(new Object[]{rd.getRecordId(), rd.getDescription(), rd.getEstPrice(), rd.getQty(), rd.getSubtotal()});
+        for (PurchaseOrderDetail rd : list) {
+            dtm.addRow(new Object[]{rd.getRecordId(), rd.getDescription(), rd.getPrice(), rd.getQty(), rd.getSubtotal()});
+        }
+    }
+
+    public void refreshTable2() {
+        List<PurchaseInvoiceDetail> list = AppUtil.getService().getListInvoiceDetailById(recordId);
+        DefaultTableModel tm = (DefaultTableModel) tbPurchaseInvoice.getModel();
+        tm.setRowCount(0);
+        for (PurchaseInvoiceDetail id : list) {
+            tm.addRow(new Object[]{id.getRecordId(), id.getDescription(), id.getPrice(), id.getQty(), id.getSubtotal()});
         }
     }
 
@@ -581,15 +645,32 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
         }
     }
 
+    public void counttax() {
+        Double Total = 0.00;
+        Double Tax;
+        Double Discount;
+        Tax = Double.parseDouble(tfTaxValue.getText());
+        System.out.println(Tax);
+        Discount = Double.parseDouble(tfDiscountValue.getText());
+        System.out.println(Discount);
+        for (int i = 0; i <= tbPurchaseInvoice.getRowCount() - 1; i++) {
+
+            Total = Total + Double.parseDouble(tbPurchaseInvoice.getModel().getValueAt(i, 4).toString());
+
+        }
+        Total = Total - Discount + Tax;
+        tfTotal.setText(Total.toString());
+    }
+
     public void loadingData() {
         cbOrderNo.removeAllItems();
         AutoCompletion.enable(cbOrderNo);
         addRow();
-        
-        List<PurchaseRequest> requestlist = AppUtil.getService().getRequest();
-        for (PurchaseRequest request : requestlist) {
-            requestno.put(request.getNo(), request.getRecordId());
-            cbOrderNo.addItem(request.getNo());
+
+        List<PurchaseOrder> orderlist = AppUtil.getService().getOrder();
+        for (PurchaseOrder Order : orderlist) {
+            orderno.put(Order.getNo(), Order.getRecordId());
+            cbOrderNo.addItem(Order.getNo());
         }
         List<Employer> employerlist = AppUtil.getService().getEmployersNotDeleted();
         for (Employer employe : employerlist) {
@@ -601,10 +682,20 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
             tfSubTotal.setText("0");
             taDescription.setText("");
             dtDate.setDate(new Date());
+            tfSupplierName.setText("");
+            tfTaxPercent.setText("0");
+            tfTaxValue.setText("0");
+            tfDiscPercent.setText("0");
+            tfDiscountValue.setText("0");
+            tfTotal.setText("0");
         } else if (option.equals("EDIT")) {
             purchaseInvoice = AppUtil.getService().getInvoiceById(recordId);
             objectToForm();
-            refreshTable();
+            cbOrderNoActionPerformed(null);
+            cbOrderNoItemStateChanged(null);
+            cbOrderNo.setEditable(false);
+            cbOrderNo.setEnabled(false);
+            refreshTable2();
         }
     }
 

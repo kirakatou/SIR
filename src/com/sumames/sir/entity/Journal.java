@@ -24,8 +24,8 @@ import javax.persistence.TemporalType;
  * @author Asus
  */
 @Entity
-@Table(name = "rent", catalog = "sir", schema = "")
-public class Rent implements Serializable {
+@Table(name = "journal", catalog = "sir", schema = "")
+public class Journal implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,25 +33,22 @@ public class Rent implements Serializable {
     @Basic(optional = false)
     @Column(name = "record_id")
     private Integer recordId;
-    @Basic(optional = false)
-    @Column(name = "customer_profiles_record_id")
-    private int customerProfilesRecordId;
     @Column(name = "no")
     private String no;
     @Column(name = "date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+    @Column(name = "transaction_from")
+    private Integer transactionFrom;
+    @Column(name = "transaction_record_id")
+    private Integer transactionRecordId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "subtotal")
-    private Double subtotal;
-    @Column(name = "discount")
-    private Double discount;
-    @Column(name = "total")
-    private Double total;
-    @Column(name = "returned")
-    private Boolean returned;
-    @Column(name = "description")
-    private String description;
+    @Column(name = "debet_base")
+    private Double debetBase;
+    @Column(name = "credit_base")
+    private Double creditBase;
+    @Column(name = "note")
+    private String note;
     @Column(name = "void_status")
     private Boolean voidStatus;
     @Column(name = "void_reason")
@@ -82,23 +79,15 @@ public class Rent implements Serializable {
     @Column(name = "delete_by_user_record_id")
     private Integer deleteByUserRecordId;
 
-    public Rent() {
+    public Journal() {
     }
-    
+
     public Integer getRecordId() {
         return recordId;
     }
 
     public void setRecordId(Integer recordId) {
         this.recordId = recordId;
-    }
-
-    public int getCustomerProfilesRecordId() {
-        return customerProfilesRecordId;
-    }
-
-    public void setCustomerProfilesRecordId(int customerProfilesRecordId) {
-        this.customerProfilesRecordId = customerProfilesRecordId;
     }
 
     public String getNo() {
@@ -117,44 +106,44 @@ public class Rent implements Serializable {
         this.date = date;
     }
 
-    public Double getSubtotal() {
-        return subtotal;
+    public Integer getTransactionFrom() {
+        return transactionFrom;
     }
 
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
+    public void setTransactionFrom(Integer transactionFrom) {
+        this.transactionFrom = transactionFrom;
     }
 
-    public Double getDiscount() {
-        return discount;
+    public Integer getTransactionRecordId() {
+        return transactionRecordId;
     }
 
-    public void setDiscount(Double discount) {
-        this.discount = discount;
+    public void setTransactionRecordId(Integer transactionRecordId) {
+        this.transactionRecordId = transactionRecordId;
     }
 
-    public Double getTotal() {
-        return total;
+    public Double getDebetBase() {
+        return debetBase;
     }
 
-    public void setTotal(Double total) {
-        this.total = total;
+    public void setDebetBase(Double debetBase) {
+        this.debetBase = debetBase;
     }
 
-    public Boolean getReturned() {
-        return returned;
+    public Double getCreditBase() {
+        return creditBase;
     }
 
-    public void setReturned(Boolean returned) {
-        this.returned = returned;
+    public void setCreditBase(Double creditBase) {
+        this.creditBase = creditBase;
     }
 
-    public String getDescription() {
-        return description;
+    public String getNote() {
+        return note;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public Boolean getVoidStatus() {

@@ -6,9 +6,7 @@
 package com.sumames.sir.ui.purchase;
 
 import com.sumames.sir.Main;
-import com.sumames.sir.entity.Employer;
 import com.sumames.sir.helper.AppUtil;
-import com.sumames.sir.ui.MainFrame;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.entity.PurchaseOrder;
 import com.sumames.sir.entity.PurchaseRequest;

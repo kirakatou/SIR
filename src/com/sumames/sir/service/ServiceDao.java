@@ -1,9 +1,13 @@
 package com.sumames.sir.service;
 
+import com.sumames.sir.entity.AccountChart;
+import com.sumames.sir.entity.AccountGroup;
 import com.sumames.sir.entity.Car;
 import com.sumames.sir.entity.Customer;
 import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.Garage;
+import com.sumames.sir.entity.Journal;
+import com.sumames.sir.entity.Ledger;
 import com.sumames.sir.entity.Login;
 import com.sumames.sir.entity.LoginAccess;
 import com.sumames.sir.entity.PurchaseInvoice;
@@ -16,6 +20,8 @@ import com.sumames.sir.entity.PurchaseRequest;
 import com.sumames.sir.entity.PurchaseRequestDetail;
 import com.sumames.sir.entity.Rent;
 import com.sumames.sir.entity.RentDetail;
+import com.sumames.sir.entity.RentInvoice;
+import com.sumames.sir.entity.RentInvoice2;
 import java.util.Date;
 import java.util.List;
 
@@ -76,7 +82,13 @@ public interface ServiceDao {
     public List<RentDetail> getRentDetails();
 
     public List<RentDetail> getListRentById(int id);
-
+    
+    public List<RentInvoice> getRentInvoices();
+    
+    public List<RentInvoice> getListRentInvoiceById(int id);
+    
+    public List<RentInvoice2> getListRentInvoice2ById(int id);
+    
     public PurchaseRequest getPurchaseRequestById(Integer id);
 
     public List<PurchaseRequest> getListRequestById(int id);
@@ -120,4 +132,36 @@ public interface ServiceDao {
     public PurchasePaymentInvoice getPaymentInvoiceById(Integer id);
 
     public List<PurchasePaymentInvoice> getPaymentInvoices();
+    
+    public AccountGroup getAccountGroupById(Integer id);
+
+    public List<AccountGroup> getAccountGroups();
+
+    public AccountChart getAccountChartById(Integer id);
+
+    public List<AccountChart> getAccountCharts();
+    
+    public String getRentLast();
+
+    public String getJournalLast();
+    
+    public Journal getJournalById(Integer id);
+    
+    public Journal getJournalByTransactionId(Integer from, Integer id);
+    
+    public Double getJournalDebit(Integer id);
+    
+    public Double getJournalCredit(Integer id);
+    
+    public boolean deleteJournalDetail(Integer id);
+
+    public List<Journal> getJournals();
+    
+    public List<PurchasePaymentInvoice> getListPaymentInvoiceById(Integer id);
+    
+    public List<PurchaseInvoice> getListPurchaseInvoiceById(Integer id);
+    
+    public List<PurchaseInvoiceDetail> getListInvoiceDetailById(Integer id);
+    
+    public List<Ledger> getLedgerByAccId(Date start, Date end, Integer id);
 }

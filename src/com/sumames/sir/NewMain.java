@@ -6,6 +6,8 @@
 package com.sumames.sir;
 
 import com.sumames.sir.entity.Customer;
+import com.sumames.sir.entity.RentInvoice;
+import com.sumames.sir.entity.RentInvoice2;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.Support;
 import java.util.List;
@@ -20,8 +22,7 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        List<Customer> list = AppUtil.getService().getCustomers();
-        System.out.println(Support.AutoNumber(list));
+        
     }
     
 }
