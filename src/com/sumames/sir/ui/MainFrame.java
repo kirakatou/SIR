@@ -229,6 +229,11 @@ public class MainFrame extends javax.swing.JFrame {
         jButton6.setFont(btLogin2.getFont());
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/Login/ExitButton.png"))); // NOI18N
         jButton6.setContentAreaFilled(false);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 4;
@@ -740,6 +745,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         new Support().NewTab(Main.getFrame().getTab(), new ReportMenu(), "Report Menu");
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     public JTabbedPane getTab() {
         return tab;

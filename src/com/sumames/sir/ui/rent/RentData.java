@@ -44,7 +44,7 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author My pc
  */
 public class RentData extends javax.swing.JPanel {
-    
+
     private String option;
     private int recordId;
     private Rent rent;
@@ -394,7 +394,7 @@ public class RentData extends javax.swing.JPanel {
                         Car car = AppUtil.getService().getCarById(carID.get(tcl.getNewValue().toString()));
                         tbRent.setValueAt(car.getPlateNumber(), row, 2);
                         tbRent.setValueAt(car.getPrice(), row, 3);
-                        
+
                         if (tbRent.getModel().getValueAt(row, 4) != null) {
                             int a = Integer.parseInt(tbRent.getModel().getValueAt(row, 4).toString());
                             tbRent.setValueAt(car.getPrice() * a, row, 5);
@@ -409,7 +409,7 @@ public class RentData extends javax.swing.JPanel {
                         Car car = AppUtil.getService().getCarById(carPlateID.get(tcl.getNewValue().toString()));
                         tbRent.setValueAt(car.getName(), row, 1);
                         tbRent.setValueAt(car.getPrice(), row, 3);
-                        
+
                         if (tbRent.getModel().getValueAt(row, 4) != null) {
                             int a = Integer.parseInt(tbRent.getModel().getValueAt(row, 4).toString());
                             tbRent.setValueAt(car.getPrice() * a, row, 5);
@@ -448,13 +448,13 @@ public class RentData extends javax.swing.JPanel {
                 default:
                     break;
             }
-            
+
         }
     }
-    
+
     private AbstractAction saveAction() {
         AbstractAction save = new AbstractAction() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
 //                JOptionPane.showMessageDialog(RentData.this.tbRent, "Action Triggered.");
@@ -469,7 +469,7 @@ public class RentData extends javax.swing.JPanel {
         };
         return save;
     }
-    
+
 
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         saveData();
@@ -556,13 +556,13 @@ public class RentData extends javax.swing.JPanel {
         if (model != null) {
             model.addRow(new Object[]{});
         }
-        
+
     }
-    
+
     public void loadingData() {
         cbCarName.removeAllItems();
         cbCustomerName.removeAllItems();
-        
+
         AutoCompletion.enable(cbCarName);
         AutoCompletion.enable(cbCarPlate);
         AutoCompletion.enable(cbCustomerName);
@@ -599,7 +599,7 @@ public class RentData extends javax.swing.JPanel {
             refreshTable();
         }
     }
-    
+
     public void refreshTable() {
         List<RentDetail> list = AppUtil.getService().getListRentById(recordId);
         DefaultTableModel dtm = (DefaultTableModel) tbRent.getModel();
@@ -609,11 +609,11 @@ public class RentData extends javax.swing.JPanel {
             dtm.addRow(new Object[]{rd.getRecordId(), car.getName(), car.getPlateNumber(), rd.getPrice(), rd.getPeriod(), rd.getSubtotal()});
         }
     }
-    
+
     public void count() {
         if (tbRent.getRowCount() > 0) {
             Double subtotal = 0.00;
-            
+
             for (int i = 0; i <= tbRent.getRowCount() - 1; i++) {
                 System.out.println("Value = " + tbRent.getModel().getValueAt(i, 5));
                 subtotal = subtotal + Double.parseDouble(tbRent.getModel().getValueAt(i, 5).toString());
@@ -627,7 +627,6 @@ public class RentData extends javax.swing.JPanel {
         }
     }
 
-    
     public void saveData() {
         if (option.equals("NEW")) {
             formToObject();
@@ -640,7 +639,7 @@ public class RentData extends javax.swing.JPanel {
                     RentDetail rentDetail = new RentDetail();
                     rentDetail.setRentRecordId(rent.getRecordId());
                     car += tbRent.getValueAt(i, 2).toString();
-                    if(i != (tbRent.getRowCount() - 1)){
+                    if (i != (tbRent.getRowCount() - 1)) {
                         car += ", ";
                     }
                     rentDetail.setCarRecordId(carPlateID.get(tbRent.getValueAt(i, 2).toString()));
@@ -658,7 +657,7 @@ public class RentData extends javax.swing.JPanel {
                 jurnal.setTransactionRecordId(recordId);
                 jurnal.setCreateDatetime(new Date());
                 jurnal.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
-                if(AppUtil.getService().save(jurnal)){
+                if (AppUtil.getService().save(jurnal)) {
                     JournalDetail jd = new JournalDetail();
                     jd.setJournalRecordId(jurnal.getRecordId());
                     jd.setAccountChartRecordId(10);
@@ -686,12 +685,14 @@ public class RentData extends javax.swing.JPanel {
             formToObject();
             rent.setRecordId(recordId);
             if (AppUtil.getService().save(rent)) {
+                String car = "";
                 for (int i = 0; i < tbRent.getRowCount(); i++) {
                     RentDetail rentDetail = new RentDetail();
-                    if(tbRent.getValueAt(i, 0) != null){
-                        rentDetail.setRecordId((Integer) tbRent.getValueAt(i, 0));
-                    }
                     rentDetail.setRentRecordId(rent.getRecordId());
+                    car += tbRent.getValueAt(i, 2).toString();
+                    if (i != (tbRent.getRowCount() - 1)) {
+                        car += ", ";
+                    }
                     rentDetail.setCarRecordId(carPlateID.get(tbRent.getValueAt(i, 2).toString()));
                     rentDetail.setPrice(Double.parseDouble(tbRent.getValueAt(i, 3).toString()));
                     rentDetail.setPeriod(Integer.parseInt(tbRent.getValueAt(i, 4).toString()));
@@ -701,41 +702,44 @@ public class RentData extends javax.swing.JPanel {
                     AppUtil.getService().save(rentDetail);
                 }
                 Journal jurnal = AppUtil.getService().getJournalByTransactionId(0, recordId);
-                if(AppUtil.getService().deleteJournalDetail(jurnal.getRecordId())){
+                if (AppUtil.getService().deleteJournalDetail(jurnal.getRecordId())) {
                     JournalDetail jd = new JournalDetail();
                     jd.setJournalRecordId(jurnal.getRecordId());
-                    jd.setAccountChartRecordId(10);
+                    jd.setAccountChartRecordId(2);
                     jd.setDebetTransaction(Double.parseDouble(tfTotal.getText()));
+                    jd.setRelation(cbCustomerName.getSelectedItem().toString());
                     jd.setCreditTransaction(0D);
                     AppUtil.getService().save(jd);
                     JournalDetail jd2 = new JournalDetail();
                     jd2.setJournalRecordId(jurnal.getRecordId());
-                    jd2.setAccountChartRecordId(33);
+                    jd2.setAccountChartRecordId(10);
                     jd2.setDebetTransaction(0D);
+                    jd2.setRelation("");
                     jd2.setCreditTransaction(Double.parseDouble(tfTotal.getText()));
                     AppUtil.getService().save(jd2);
                     jurnal.setDebetBase(jd.getDebetTransaction());
                     jurnal.setCreditBase(jd2.getCreditTransaction());
                     AppUtil.getService().save(jurnal);
-                    if(chReturn.isSelected()){
+                    if (chReturn.isSelected()) {
                         JournalDetail jd3 = new JournalDetail();
                         jd3.setJournalRecordId(jurnal.getRecordId());
-                        jd3.setAccountChartRecordId(2);
+                        jd3.setAccountChartRecordId(10);
                         jd3.setDebetTransaction(Double.parseDouble(tfTotal.getText()));
                         jd3.setCreditTransaction(0D);
+                        jd3.setRelation("");
                         AppUtil.getService().save(jd3);
                         JournalDetail jd4 = new JournalDetail();
                         jd4.setJournalRecordId(jurnal.getRecordId());
-                        jd4.setAccountChartRecordId(10);
+                        jd4.setAccountChartRecordId(59);
                         jd4.setDebetTransaction(0D);
                         jd4.setCreditTransaction(Double.parseDouble(tfTotal.getText()));
+                        jd4.setRelation(car);
                         AppUtil.getService().save(jd4);
                         jurnal.setDebetBase(AppUtil.getService().getJournalDebit(jurnal.getRecordId()));
                         jurnal.setCreditBase(AppUtil.getService().getJournalCredit(jurnal.getRecordId()));
                         AppUtil.getService().save(jurnal);
                     }
                 }
-                
                 msg("Save Done!");
                 Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
             } else {
@@ -743,7 +747,7 @@ public class RentData extends javax.swing.JPanel {
             }
         }
     }
-    
+
     public void formToObject() {
         if (rent == null) {
             rent = new Rent();
@@ -756,9 +760,9 @@ public class RentData extends javax.swing.JPanel {
         rent.setDescription(tfDesc.getText());
         rent.setDate(date.getDate());
         rent.setReturned(chReturn.isSelected());
-        
+
     }
-    
+
     public void objectToForm() {
         if (rent != null) {
             tfNo.setText(rent.getNo());
@@ -771,7 +775,7 @@ public class RentData extends javax.swing.JPanel {
             chReturn.setSelected(rent.getReturned());
         }
     }
-    
+
     private void msg(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }

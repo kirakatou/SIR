@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -56,8 +54,8 @@ public class PurchaseInvoice implements Serializable {
     private Double discValue;
     @Column(name = "total")
     private Double total;
-    @Column(name = "journal_record_id")
-    private Integer journalRecordId;
+    @Column(name = "cash")
+    private Boolean cash;
     @Column(name = "note")
     private String note;
     @Column(name = "void_status")
@@ -181,12 +179,12 @@ public class PurchaseInvoice implements Serializable {
         this.total = total;
     }
 
-    public Integer getJournalRecordId() {
-        return journalRecordId;
+    public Boolean getCash() {
+        return cash;
     }
 
-    public void setJournalRecordId(Integer journalRecordId) {
-        this.journalRecordId = journalRecordId;
+    public void setCash(Boolean cash) {
+        this.cash = cash;
     }
 
     public String getNote() {

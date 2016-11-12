@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,8 +23,6 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "purchase_invoice_detail", catalog = "sir", schema = "")
-@NamedQueries({
-    @NamedQuery(name = "PurchaseInvoiceDetail.findAll", query = "SELECT p FROM PurchaseInvoiceDetail p")})
 public class PurchaseInvoiceDetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -78,15 +74,6 @@ public class PurchaseInvoiceDetail implements Serializable {
     private Integer deleteByUserRecordId;
 
     public PurchaseInvoiceDetail() {
-    }
-
-    public PurchaseInvoiceDetail(Integer recordId) {
-        this.recordId = recordId;
-    }
-
-    public PurchaseInvoiceDetail(Integer recordId, int purchaseInvoiceRecordId) {
-        this.recordId = recordId;
-        this.purchaseInvoiceRecordId = purchaseInvoiceRecordId;
     }
 
     public Integer getRecordId() {
@@ -233,29 +220,6 @@ public class PurchaseInvoiceDetail implements Serializable {
         this.deleteByUserRecordId = deleteByUserRecordId;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (recordId != null ? recordId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PurchaseInvoiceDetail)) {
-            return false;
-        }
-        PurchaseInvoiceDetail other = (PurchaseInvoiceDetail) object;
-        if ((this.recordId == null && other.recordId != null) || (this.recordId != null && !this.recordId.equals(other.recordId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.sumames.sir.entity.PurchaseInvoiceDetail[ recordId=" + recordId + " ]";
-    }
+    
     
 }

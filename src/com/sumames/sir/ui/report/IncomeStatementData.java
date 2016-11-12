@@ -21,14 +21,14 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author My pc
  */
-public class LedgerList extends javax.swing.JPanel {
+public class IncomeStatementData extends javax.swing.JPanel {
 
     private List<Ledger> Ledgers;
     private HashMap<String, Integer> accId;
     /**
      * Creates new form Journal
      */
-    public LedgerList() {
+    public IncomeStatementData() {
         initComponents();
         refreshCombobox();
         refreshTable();
@@ -50,7 +50,7 @@ public class LedgerList extends javax.swing.JPanel {
         dtStart = new com.toedter.calendar.JDateChooser();
         dtEnd = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
-        btChoose = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 153, 0));
         setOpaque(false);
@@ -83,16 +83,6 @@ public class LedgerList extends javax.swing.JPanel {
         });
 
         cbAcc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbAcc.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbAccItemStateChanged(evt);
-            }
-        });
-        cbAcc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbAccActionPerformed(evt);
-            }
-        });
 
         dtStart.setOpaque(false);
         dtStart.setPreferredSize(new java.awt.Dimension(91, 25));
@@ -115,21 +105,13 @@ public class LedgerList extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("TO");
 
-        btChoose.setForeground(new java.awt.Color(255, 255, 255));
-        btChoose.setText("...");
-        btChoose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        btChoose.setContentAreaFilled(false);
-        btChoose.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btChooseMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btChooseMouseExited(evt);
-            }
-        });
-        btChoose.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("...");
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btChooseActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -152,7 +134,7 @@ public class LedgerList extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cbAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btChoose, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -170,7 +152,7 @@ public class LedgerList extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbAcc, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btChoose))
+                            .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dtStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,7 +162,7 @@ public class LedgerList extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btChoose, cbAcc});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbAcc, jButton1});
 
     }// </editor-fold>//GEN-END:initComponents
 
@@ -199,12 +181,9 @@ public class LedgerList extends javax.swing.JPanel {
         }    
     }//GEN-LAST:event_tbLedgerMouseClicked
 
-    private void btChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btChooseActionPerformed
-        AccountChart c = new AccLookupDialog().getAccountChart();
-        if (c != null) {
-            cbAcc.setSelectedItem(c.getAccountNo() + " - " + c.getAccountName());
-        }
-    }//GEN-LAST:event_btChooseActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void dtStartPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dtStartPropertyChange
         refreshTable();
@@ -214,31 +193,13 @@ public class LedgerList extends javax.swing.JPanel {
         refreshTable();
     }//GEN-LAST:event_dtEndPropertyChange
 
-    private void cbAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAccActionPerformed
-        
-    }//GEN-LAST:event_cbAccActionPerformed
-
-    private void cbAccItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbAccItemStateChanged
-        if(cbAcc.getSelectedItem() != null){
-            refreshTable();
-        }
-    }//GEN-LAST:event_cbAccItemStateChanged
-
-    private void btChooseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btChooseMouseEntered
-        btChoose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(247, 90, 43), 2));
-    }//GEN-LAST:event_btChooseMouseEntered
-
-    private void btChooseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btChooseMouseExited
-        btChoose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 1));
-    }//GEN-LAST:event_btChooseMouseExited
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btChoose;
     private javax.swing.JButton btRefresh;
     private javax.swing.JComboBox<String> cbAcc;
     private com.toedter.calendar.JDateChooser dtEnd;
     private com.toedter.calendar.JDateChooser dtStart;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbLedger;

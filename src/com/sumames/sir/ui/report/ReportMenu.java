@@ -1,8 +1,6 @@
 package com.sumames.sir.ui.report;
 
-import com.sumames.sir.ui.purchase.*;
 import com.sumames.sir.Main;
-import com.sumames.sir.ui.MainFrame;
 import com.sumames.sir.helper.Support;
 
 /*
@@ -37,7 +35,6 @@ public class ReportMenu extends javax.swing.JPanel {
         btChart = new javax.swing.JButton();
         btJournal = new javax.swing.JButton();
         btLedger = new javax.swing.JButton();
-        btSpending = new javax.swing.JButton();
         btIncome = new javax.swing.JButton();
 
         setOpaque(false);
@@ -115,24 +112,6 @@ public class ReportMenu extends javax.swing.JPanel {
         });
         add(btLedger);
 
-        btSpending.setText("Spending");
-        btSpending.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        btSpending.setContentAreaFilled(false);
-        btSpending.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btSpendingMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btSpendingMouseExited(evt);
-            }
-        });
-        btSpending.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSpendingActionPerformed(evt);
-            }
-        });
-        add(btSpending);
-
         btIncome.setText("Income Statement");
         btIncome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         btIncome.setContentAreaFilled(false);
@@ -200,18 +179,6 @@ public class ReportMenu extends javax.swing.JPanel {
         new Support().NewTab(Main.getFrame().getTab(), new JournalList(), "Journal List");
     }//GEN-LAST:event_btJournalActionPerformed
 
-    private void btSpendingMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSpendingMouseEntered
-        btSpending.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(247, 90, 43), 4));
-    }//GEN-LAST:event_btSpendingMouseEntered
-
-    private void btSpendingMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSpendingMouseExited
-        btSpending.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-    }//GEN-LAST:event_btSpendingMouseExited
-
-    private void btSpendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSpendingActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSpendingActionPerformed
-
     private void btIncomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btIncomeMouseEntered
         btIncome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(247, 90, 43), 4));
     }//GEN-LAST:event_btIncomeMouseEntered
@@ -231,6 +198,5 @@ public class ReportMenu extends javax.swing.JPanel {
     private javax.swing.JButton btIncome;
     private javax.swing.JButton btJournal;
     private javax.swing.JButton btLedger;
-    private javax.swing.JButton btSpending;
     // End of variables declaration//GEN-END:variables
 }

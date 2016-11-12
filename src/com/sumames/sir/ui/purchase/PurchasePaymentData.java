@@ -56,7 +56,7 @@ public class PurchasePaymentData extends javax.swing.JPanel {
         initComponents();
         loadingData();
         addRowAfter();
-        
+
     }
 
     /**
@@ -301,24 +301,24 @@ public class PurchasePaymentData extends javax.swing.JPanel {
     }//GEN-LAST:event_btSaveActionPerformed
 
     private void cbInvoiceNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbInvoiceNoActionPerformed
-        if(invoiceno.get(cbInvoiceNo.getSelectedItem()) == null ){
+        if (invoiceno.get(cbInvoiceNo.getSelectedItem()) == null) {
             this.prRecordId = 0;
+        } else {
+            this.prRecordId = invoiceno.get(cbInvoiceNo.getSelectedItem());
+            System.out.println(prRecordId);
         }
-        else{
-        this.prRecordId = invoiceno.get(cbInvoiceNo.getSelectedItem());
-            System.out.println(prRecordId);}
         getTotal();
     }//GEN-LAST:event_cbInvoiceNoActionPerformed
 
     private void cbInvoiceNoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbInvoiceNoItemStateChanged
-       if(invoiceno.get(cbInvoiceNo.getSelectedItem()) == null ){
+        if (invoiceno.get(cbInvoiceNo.getSelectedItem()) == null) {
             this.prRecordId = 0;
+        } else {
+            this.prRecordId = invoiceno.get(cbInvoiceNo.getSelectedItem());
+            getTotal();
         }
-       else{
-        this.prRecordId = invoiceno.get(cbInvoiceNo.getSelectedItem());
-       }
-        getTotal();
-       
+
+
     }//GEN-LAST:event_cbInvoiceNoItemStateChanged
 
     private void tbPurchasePaymentKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbPurchasePaymentKeyPressed
@@ -363,10 +363,10 @@ public class PurchasePaymentData extends javax.swing.JPanel {
                     PaymentDetail.setPurchasePaymentRecordId(purchasePayment.getRecordId());
                     PaymentDetail.setPayableValue(Double.parseDouble(tbPurchasePayment.getValueAt(i, 1).toString()));
                     PaymentDetail.setCashTransaction(Double.parseDouble(tbPurchasePayment.getValueAt(i, 2).toString()));
-                   PaymentDetail.setBankTransaction(Double.parseDouble(tbPurchasePayment.getValueAt(i, 3).toString()));
-                   PaymentDetail.setGiroTransaction(Double.parseDouble(tbPurchasePayment.getValueAt(i, 4).toString()));
-                   PaymentDetail.setTotalPayment(Double.parseDouble(tbPurchasePayment.getValueAt(i, 5).toString()));
-                   PaymentDetail.setNote(tbPurchasePayment.getValueAt(i,6).toString());
+                    PaymentDetail.setBankTransaction(Double.parseDouble(tbPurchasePayment.getValueAt(i, 3).toString()));
+                    PaymentDetail.setGiroTransaction(Double.parseDouble(tbPurchasePayment.getValueAt(i, 4).toString()));
+                    PaymentDetail.setTotalPayment(Double.parseDouble(tbPurchasePayment.getValueAt(i, 5).toString()));
+                    PaymentDetail.setNote(tbPurchasePayment.getValueAt(i, 6).toString());
                     PaymentDetail.setCreateDatetime(new Date());
                     PaymentDetail.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
                     AppUtil.getService().save(PaymentDetail);
@@ -387,13 +387,13 @@ public class PurchasePaymentData extends javax.swing.JPanel {
                     if (tbPurchasePayment.getValueAt(i, 0) != null) {
                         PaymentDetail.setPurchasePaymentRecordId((Integer) tbPurchasePayment.getValueAt(i, 0));
                     }
-                  PaymentDetail.setRecordId(Integer.parseInt(tbPurchasePayment.getValueAt(i,0).toString()));
-                   PaymentDetail.setPayableValue(Double.parseDouble(tbPurchasePayment.getValueAt(i, 1).toString()));
+                    PaymentDetail.setRecordId(Integer.parseInt(tbPurchasePayment.getValueAt(i, 0).toString()));
+                    PaymentDetail.setPayableValue(Double.parseDouble(tbPurchasePayment.getValueAt(i, 1).toString()));
                     PaymentDetail.setCashTransaction(Double.parseDouble(tbPurchasePayment.getValueAt(i, 2).toString()));
-                   PaymentDetail.setBankTransaction(Double.parseDouble(tbPurchasePayment.getValueAt(i, 3).toString()));
-                   PaymentDetail.setGiroTransaction(Double.parseDouble(tbPurchasePayment.getValueAt(i, 4).toString()));
-                   PaymentDetail.setTotalPayment(Double.parseDouble(tbPurchasePayment.getValueAt(i, 5).toString()));
-                    PaymentDetail.setNote(tbPurchasePayment.getValueAt(i,6).toString());
+                    PaymentDetail.setBankTransaction(Double.parseDouble(tbPurchasePayment.getValueAt(i, 3).toString()));
+                    PaymentDetail.setGiroTransaction(Double.parseDouble(tbPurchasePayment.getValueAt(i, 4).toString()));
+                    PaymentDetail.setTotalPayment(Double.parseDouble(tbPurchasePayment.getValueAt(i, 5).toString()));
+                    PaymentDetail.setNote(tbPurchasePayment.getValueAt(i, 6).toString());
                     PaymentDetail.setCreateDatetime(new Date());
                     PaymentDetail.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
                     AppUtil.getService().save(PaymentDetail);
@@ -412,11 +412,11 @@ public class PurchasePaymentData extends javax.swing.JPanel {
         }
         purchasePayment.setNo(tfNo.getText());
         purchasePayment.setDate(dtDate.getDate());
-       purchasePayment.setVoucherRecordId(invoiceno.get(cbInvoiceNo.getSelectedItem()));
-       purchasePayment.setNote(taDescription.getText());
-       purchasePayment.setTotalPaymentBase(Double.parseDouble(tfTotal.getText()));
+        purchasePayment.setVoucherRecordId(invoiceno.get(cbInvoiceNo.getSelectedItem()));
+        purchasePayment.setNote(taDescription.getText());
+        purchasePayment.setTotalPaymentBase(Double.parseDouble(tfTotal.getText()));
         purchasePayment.setSupplierName(tfSupplierName.getText());
-        
+
     }
 
     public void objectToForm() {
@@ -430,13 +430,15 @@ public class PurchasePaymentData extends javax.swing.JPanel {
 
         }
     }
-public void getTotal(){
-   List<PurchaseInvoice> invoicelist = AppUtil.getService().getListPurchaseInvoiceById(prRecordId);
+
+    public void getTotal() {
+        List<PurchaseInvoice> invoicelist = AppUtil.getService().getListPurchaseInvoiceById(prRecordId);
         for (PurchaseInvoice invoice : invoicelist) {
             invoiceno.put(invoice.getNo(), invoice.getRecordId());
             tfTotal.setText(invoice.getTotal().toString());
         }
-}
+    }
+
     private void abstractActionPerformed(java.awt.event.ActionEvent evt) {
         TableCellListener tcl = (TableCellListener) evt.getSource();
         int row = tbPurchasePayment.getSelectedRow();
@@ -447,18 +449,20 @@ public void getTotal(){
                     Double a = 0.00;
                     Double b = 0.00;
                     Double c = 0.00;
-                 
+
                     if (tbPurchasePayment.getModel().getValueAt(row, 2) != null) {
-                       a = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 2).toString());
-                    }else{
-                        
-                    }if(tbPurchasePayment.getModel().getValueAt(row, 3) != null){
-                       b = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 3).toString());
-                    }else{
-                    }if(tbPurchasePayment.getModel().getValueAt(row, 4) != null)  {
-                         c = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 4).toString());
-                    }else {
-                         
+                        a = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 2).toString());
+                    } else {
+
+                    }
+                    if (tbPurchasePayment.getModel().getValueAt(row, 3) != null) {
+                        b = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 3).toString());
+                    } else {
+                    }
+                    if (tbPurchasePayment.getModel().getValueAt(row, 4) != null) {
+                        c = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 4).toString());
+                    } else {
+
                     }
                     Double d = (Double) tcl.getNewValue();
                     Total = a + b + c + d;
@@ -469,20 +473,22 @@ public void getTotal(){
                     Double a = 0.00;
                     Double b = 0.00;
                     Double c = 0.00;
-                 
+
                     if (tbPurchasePayment.getModel().getValueAt(row, 3) != null) {
-                   a = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 3).toString());
-                    }else{} if(tbPurchasePayment.getModel().getValueAt(row, 4) != null){
-                    b = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 4).toString());
-                    }else{} if(tbPurchasePayment.getModel().getValueAt(row, 1) != null)  {
-                     c = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 1).toString());
-                    }else {
-                       
-                       
-                        
+                        a = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 3).toString());
+                    } else {
+                    }
+                    if (tbPurchasePayment.getModel().getValueAt(row, 4) != null) {
+                        b = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 4).toString());
+                    } else {
+                    }
+                    if (tbPurchasePayment.getModel().getValueAt(row, 1) != null) {
+                        c = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 1).toString());
+                    } else {
+
                     }
                     Double d = (Double) tcl.getNewValue();
-                     Total = a + b + c + d;
+                    Total = a + b + c + d;
                     tbPurchasePayment.setValueAt(Total, row, 5);
                     break;
                 }
@@ -490,20 +496,22 @@ public void getTotal(){
                     Double a = 0.00;
                     Double b = 0.00;
                     Double c = 0.00;
-                 
+
                     if (tbPurchasePayment.getModel().getValueAt(row, 4) != null) {
                         a = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 4).toString());
-                    }else{} if(tbPurchasePayment.getModel().getValueAt(row, 1) != null){
-                      b = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 1).toString());
-                    }else{} if(tbPurchasePayment.getModel().getValueAt(row, 2) != null)  {
-                       c = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 2).toString());
-                    }else {
-                      
-                        
-                        
+                    } else {
+                    }
+                    if (tbPurchasePayment.getModel().getValueAt(row, 1) != null) {
+                        b = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 1).toString());
+                    } else {
+                    }
+                    if (tbPurchasePayment.getModel().getValueAt(row, 2) != null) {
+                        c = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 2).toString());
+                    } else {
+
                     }
                     Double d = (Double) tcl.getNewValue();
-                     Total = a + b + c + d;
+                    Total = a + b + c + d;
                     tbPurchasePayment.setValueAt(Total, row, 5);
                     break;
                 }
@@ -511,17 +519,19 @@ public void getTotal(){
                     Double a = 0.00;
                     Double b = 0.00;
                     Double c = 0.00;
-                 
+
                     if (tbPurchasePayment.getModel().getValueAt(row, 1) != null) {
-                         a = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 1).toString());
-                    }else{} if(tbPurchasePayment.getModel().getValueAt(row, 2) != null){
+                        a = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 1).toString());
+                    } else {
+                    }
+                    if (tbPurchasePayment.getModel().getValueAt(row, 2) != null) {
                         b = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 2).toString());
-                    }else{} if(tbPurchasePayment.getModel().getValueAt(row, 3) != null)  {
-                       c = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 3).toString());
-                    }else {
-                      
-                        
-                        
+                    } else {
+                    }
+                    if (tbPurchasePayment.getModel().getValueAt(row, 3) != null) {
+                        c = Double.parseDouble(tbPurchasePayment.getModel().getValueAt(row, 3).toString());
+                    } else {
+
                     }
                     Double d = (Double) tcl.getNewValue();
                     Total = a + b + c + d;
@@ -560,8 +570,9 @@ public void getTotal(){
         }
 
     }
-    private void addRowAfter(){
-         DefaultTableModel model = (DefaultTableModel) tbPurchasePayment.getModel();
+
+    private void addRowAfter() {
+        DefaultTableModel model = (DefaultTableModel) tbPurchasePayment.getModel();
         if (model == null) {
             model.addRow(new Object[]{});
         }
@@ -573,20 +584,15 @@ public void getTotal(){
         DefaultTableModel dtm = (DefaultTableModel) tbPurchasePayment.getModel();
         dtm.setRowCount(0);
         for (PurchasePaymentInvoice rd : list) {
-            dtm.addRow(new Object[]{rd.getRecordId(), rd.getPayableValue(), rd.getCashTransaction(), rd.getBankTransaction(), rd.getGiroTransaction(), rd.getTotalPayment(),rd.getNote()});
+            dtm.addRow(new Object[]{rd.getRecordId(), rd.getPayableValue(), rd.getCashTransaction(), rd.getBankTransaction(), rd.getGiroTransaction(), rd.getTotalPayment(), rd.getNote()});
         }
     }
-    
-    
-
-  
-    
 
     public void loadingData() {
         cbInvoiceNo.removeAllItems();
         AutoCompletion.enable(cbInvoiceNo);
         addRow();
-        
+
         List<PurchaseInvoice> invoicelist = AppUtil.getService().getInvoices();
         for (PurchaseInvoice invoice : invoicelist) {
             invoiceno.put(invoice.getNo(), invoice.getRecordId());

@@ -31,8 +31,8 @@
     
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
-            <value>file:application.properties</value>
-            <!--classpath:application.properties-->
+            <!--<value>file:application.properties</value>-->
+            <value>classpath:application.properties</value>
         </property>
     </bean>
             

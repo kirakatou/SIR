@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,8 +23,6 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "purchase_payment", catalog = "sir", schema = "")
-@NamedQueries({
-    @NamedQuery(name = "PurchasePayment.findAll", query = "SELECT p FROM PurchasePayment p")})
 public class PurchasePayment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,14 +53,8 @@ public class PurchasePayment implements Serializable {
     private Double totalGiroBase;
     @Column(name = "total_payment_base")
     private Double totalPaymentBase;
-    @Column(name = "journal_record_id")
-    private Integer journalRecordId;
     @Column(name = "note")
     private String note;
-    @Column(name = "record_version")
-    private Integer recordVersion;
-    @Column(name = "default_status")
-    private Boolean defaultStatus;
     @Column(name = "void_status")
     private Boolean voidStatus;
     @Column(name = "void_reason")
@@ -96,10 +86,6 @@ public class PurchasePayment implements Serializable {
     private Integer deleteByUserRecordId;
 
     public PurchasePayment() {
-    }
-
-    public PurchasePayment(Integer recordId) {
-        this.recordId = recordId;
     }
 
     public Integer getRecordId() {
@@ -190,36 +176,12 @@ public class PurchasePayment implements Serializable {
         this.totalPaymentBase = totalPaymentBase;
     }
 
-    public Integer getJournalRecordId() {
-        return journalRecordId;
-    }
-
-    public void setJournalRecordId(Integer journalRecordId) {
-        this.journalRecordId = journalRecordId;
-    }
-
     public String getNote() {
         return note;
     }
 
     public void setNote(String note) {
         this.note = note;
-    }
-
-    public Integer getRecordVersion() {
-        return recordVersion;
-    }
-
-    public void setRecordVersion(Integer recordVersion) {
-        this.recordVersion = recordVersion;
-    }
-
-    public Boolean getDefaultStatus() {
-        return defaultStatus;
-    }
-
-    public void setDefaultStatus(Boolean defaultStatus) {
-        this.defaultStatus = defaultStatus;
     }
 
     public Boolean getVoidStatus() {
@@ -318,29 +280,6 @@ public class PurchasePayment implements Serializable {
         this.deleteByUserRecordId = deleteByUserRecordId;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (recordId != null ? recordId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PurchasePayment)) {
-            return false;
-        }
-        PurchasePayment other = (PurchasePayment) object;
-        if ((this.recordId == null && other.recordId != null) || (this.recordId != null && !this.recordId.equals(other.recordId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.sumames.sir.entity.PurchasePayment[ recordId=" + recordId + " ]";
-    }
+    
     
 }
