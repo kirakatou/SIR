@@ -61,7 +61,7 @@ DROP TABLE IF EXISTS `account_group`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `account_group` (
   `record_id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `account_group_name` tinyint(4) DEFAULT NULL,
+  `account_group_name` int(10) unsigned DEFAULT NULL,
   `account_group_sub_name` varchar(50) DEFAULT NULL,
   `note` varchar(200) DEFAULT NULL,
   `void_status` tinyint(1) DEFAULT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE `customer` (
   `delete_datetime` datetime DEFAULT NULL,
   `delete_by_user_Record_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`record_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,7 +166,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,'C0001','Sutandi','Jln. Berjaya No.8y','061-4143650','sutandii@icloud.com','Medan','1998-02-06',0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'C0002','Mario','Jln. mana aja','0812391248','mario.yaputra@gmail.com','Medan','1997-10-19',1,0,NULL,NULL,NULL,NULL,NULL,NULL,'2016-10-23 23:40:06',2,NULL,NULL,NULL,NULL),(3,'C0003','Sony','Jln. itu lho','061239831','sony.winarto@gmail.com','Medan','2016-10-11',0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-10-24 00:09:39',2),(4,'C0004','Jono','Jln. apa adanay','0810231298','jono@gmail.com','Kisaran','2016-10-12',0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'C0005','Jimmy','Jln. malik','0821387412','24jimmy@gmail.com','Medan','2016-10-12',0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-10-24 00:08:15',2);
+INSERT INTO `customer` VALUES (8,'C002','Kenjiro','Jln. Jepang','0924198','kenjiro@gmail.com','Medan','2016-11-08',0,NULL,NULL,NULL,NULL,NULL,'2016-11-08 23:34:25',2,NULL,NULL,NULL,NULL,NULL,NULL),(7,'C001','Sutandi','Jln. Berjaya','08291490214','sutandii@icloud.com','Medan','2016-11-08',0,NULL,NULL,NULL,NULL,NULL,'2016-11-08 23:34:01',2,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,6 +267,7 @@ CREATE TABLE `journal` (
   `transaction_record_id` int(10) unsigned zerofill DEFAULT NULL,
   `debet_base` double(23,6) DEFAULT NULL,
   `credit_base` double(23,6) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
   `note` varchar(1000) DEFAULT NULL,
   `void_status` tinyint(1) DEFAULT NULL,
   `void_reason` varchar(200) DEFAULT NULL,
@@ -281,7 +282,7 @@ CREATE TABLE `journal` (
   `delete_datetime` datetime DEFAULT NULL,
   `delete_by_user_record_id` int(10) unsigned zerofill DEFAULT NULL,
   PRIMARY KEY (`record_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=908 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=915 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,6 +291,7 @@ CREATE TABLE `journal` (
 
 LOCK TABLES `journal` WRITE;
 /*!40000 ALTER TABLE `journal` DISABLE KEYS */;
+INSERT INTO `journal` VALUES (0000000908,'J.1116.001','2016-11-07 00:28:03',0,0000000008,3600000.000000,3600000.000000,NULL,NULL,NULL,NULL,NULL,NULL,'2016-11-07 00:28:03',0000000002,NULL,NULL,NULL,NULL,NULL,NULL),(0000000909,'J.1116.002','2016-11-07 00:33:35',0,0000000009,4000000.000000,4000000.000000,NULL,NULL,NULL,NULL,NULL,NULL,'2016-11-07 00:33:35',0000000002,NULL,NULL,NULL,NULL,NULL,NULL),(0000000910,'J.1116.002','2016-11-14 18:59:07',0,0000000010,800000.000000,800000.000000,NULL,NULL,NULL,NULL,NULL,NULL,'2016-11-14 18:59:07',0000000002,NULL,NULL,NULL,NULL,NULL,NULL),(0000000911,'J.1116.003','2016-11-14 19:08:21',0,0000000011,400000.000000,400000.000000,NULL,NULL,NULL,NULL,NULL,NULL,'2016-11-14 19:08:21',0000000002,NULL,NULL,NULL,NULL,NULL,NULL),(0000000912,'J.1116.004','2016-11-14 19:30:36',1,0000000000,50000.000000,50000.000000,NULL,NULL,NULL,NULL,NULL,NULL,'2016-11-14 19:30:36',0000000002,NULL,NULL,NULL,NULL,NULL,NULL),(0000000913,'J.1116.005','2016-11-14 19:41:15',1,0000000002,1300000.000000,1300000.000000,NULL,NULL,NULL,NULL,NULL,NULL,'2016-11-14 19:41:15',0000000002,NULL,NULL,NULL,NULL,NULL,NULL),(0000000914,'J.1116.006','2016-11-20 01:55:33',0,0000000001,1980000.000000,1980000.000000,NULL,NULL,NULL,NULL,NULL,NULL,'2016-11-20 01:55:33',0000000002,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `journal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,6 +306,7 @@ CREATE TABLE `journal_detail` (
   `record_id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `journal_record_id` int(10) unsigned zerofill NOT NULL,
   `account_chart_record_id` int(10) unsigned zerofill DEFAULT NULL,
+  `relation` varchar(45) DEFAULT NULL,
   `debet_transaction` double(23,6) DEFAULT NULL,
   `credit_transaction` double(23,6) DEFAULT NULL,
   `note` varchar(1000) DEFAULT NULL,
@@ -319,8 +322,8 @@ CREATE TABLE `journal_detail` (
   `authorize_by_user_record_id` int(10) unsigned zerofill DEFAULT NULL,
   `delete_datetime` datetime DEFAULT NULL,
   `delete_by_user_record_id` int(10) unsigned zerofill DEFAULT NULL,
-  PRIMARY KEY (`record_id`,`journal_record_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=2891 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`record_id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=2938 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -329,8 +332,31 @@ CREATE TABLE `journal_detail` (
 
 LOCK TABLES `journal_detail` WRITE;
 /*!40000 ALTER TABLE `journal_detail` DISABLE KEYS */;
+INSERT INTO `journal_detail` VALUES (0000002913,0000000908,0000000033,' ',0.000000,1800000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002909,0000000909,0000000010,' ',0.000000,2000000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002908,0000000909,0000000002,' ',2000000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002907,0000000909,0000000033,' ',0.000000,2000000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002906,0000000909,0000000010,' ',2000000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002912,0000000908,0000000010,' ',1800000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002914,0000000908,0000000002,' ',1800000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002915,0000000908,0000000010,' ',0.000000,1800000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002919,0000000910,0000000010,'',0.000000,400000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002918,0000000910,0000000002,'Sutandi',400000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002920,0000000910,0000000010,'',400000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002921,0000000910,0000000059,'B 21 G',0.000000,400000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002925,0000000911,0000000010,'',0.000000,200000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002924,0000000911,0000000002,'Kenjiro',200000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002926,0000000911,0000000010,'',200000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002927,0000000911,0000000059,'BK 9231 OI',0.000000,200000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002928,0000000912,0000000028,'P.0616.001',50000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002929,0000000912,0000000037,' Stanley',0.000000,50000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002932,0000000913,0000000116,'P.0616.002',650000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002933,0000000913,0000000037,'James',0.000000,650000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002934,0000000913,0000000037,'',650000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002935,0000000913,0000000002,'P.0616.002',0.000000,650000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002936,0000000914,0000000010,'Sutandi',1980000.000000,0.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(0000002937,0000000914,0000000033,'B 21 G',0.000000,1980000.000000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `journal_detail` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `ledger`
+--
+
+DROP TABLE IF EXISTS `ledger`;
+/*!50001 DROP VIEW IF EXISTS `ledger`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `ledger` (
+  `record_id` int(10) unsigned zerofill,
+  `detail_record_id` int(10) unsigned zerofill,
+  `no` varchar(50),
+  `date` datetime,
+  `account_record_id` int(10) unsigned zerofill,
+  `account_no` varchar(20),
+  `account_name` varchar(200),
+  `relation` varchar(45),
+  `debet_transaction` double(23,6),
+  `credit_transaction` double(23,6)
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `login`
@@ -470,7 +496,7 @@ CREATE TABLE `purchase_invoice` (
   `disc_percent` double(23,6) DEFAULT NULL,
   `disc_value` double(23,6) DEFAULT NULL,
   `total` double(23,6) DEFAULT '0.000000',
-  `journal_record_id` int(10) unsigned zerofill DEFAULT NULL,
+  `cash` tinyint(1) DEFAULT NULL,
   `note` varchar(1000) DEFAULT NULL,
   `void_status` tinyint(1) DEFAULT NULL,
   `void_reason` varchar(200) DEFAULT NULL,
@@ -485,7 +511,7 @@ CREATE TABLE `purchase_invoice` (
   `delete_datetime` datetime DEFAULT NULL,
   `delete_by_user_record_id` int(10) unsigned zerofill DEFAULT NULL,
   PRIMARY KEY (`record_id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -494,6 +520,7 @@ CREATE TABLE `purchase_invoice` (
 
 LOCK TABLES `purchase_invoice` WRITE;
 /*!40000 ALTER TABLE `purchase_invoice` DISABLE KEYS */;
+INSERT INTO `purchase_invoice` VALUES (0000000001,0000007464,'P.0616.001','2016-11-14',' Stanley',50000.000000,10.000000,5000.000000,0.000000,0.000000,55000.000000,1,'	',NULL,NULL,NULL,NULL,'2016-11-14 19:30:36',0000000002,NULL,NULL,NULL,NULL,'2016-11-14 19:38:01',0000000002),(0000000002,0000007464,'P.0616.002','2016-11-14','James',50000.000000,0.000000,0.000000,0.000000,0.000000,650000.000000,1,'',NULL,NULL,NULL,NULL,'2016-11-14 19:41:15',0000000002,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `purchase_invoice` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -524,7 +551,7 @@ CREATE TABLE `purchase_invoice_detail` (
   `delete_datetime` datetime DEFAULT NULL,
   `delete_by_user_record_id` int(10) unsigned zerofill DEFAULT NULL,
   PRIMARY KEY (`record_id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -533,6 +560,7 @@ CREATE TABLE `purchase_invoice_detail` (
 
 LOCK TABLES `purchase_invoice_detail` WRITE;
 /*!40000 ALTER TABLE `purchase_invoice_detail` DISABLE KEYS */;
+INSERT INTO `purchase_invoice_detail` VALUES (0000000001,0000000001,'Mouse',50000.000000,1.000000,50000.000000,NULL,NULL,NULL,NULL,'2016-11-14 19:36:05',0000000002,NULL,NULL,NULL,NULL,NULL,NULL),(0000000002,0000000002,'Mouse',50000.000000,13.000000,650000.000000,NULL,NULL,NULL,NULL,'2016-11-14 19:47:11',0000000002,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `purchase_invoice_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -637,10 +665,7 @@ CREATE TABLE `purchase_payment` (
   `total_bank_base` double(23,6) DEFAULT NULL,
   `total_giro_base` double(23,6) DEFAULT NULL,
   `total_payment_base` double(23,6) DEFAULT NULL,
-  `journal_record_id` int(10) unsigned zerofill DEFAULT NULL,
   `note` varchar(1000) DEFAULT NULL,
-  `record_version` int(10) unsigned DEFAULT NULL,
-  `default_status` tinyint(1) DEFAULT NULL,
   `void_status` tinyint(1) DEFAULT NULL,
   `void_reason` varchar(200) DEFAULT NULL,
   `void_datetime` datetime DEFAULT NULL,
@@ -801,7 +826,7 @@ DROP TABLE IF EXISTS `rent`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rent` (
-  `record_id` int(10) unsigned NOT NULL,
+  `record_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `customer_profiles_record_id` int(10) unsigned NOT NULL,
   `no` varchar(40) DEFAULT NULL,
   `date` date DEFAULT NULL,
@@ -823,7 +848,7 @@ CREATE TABLE `rent` (
   `delete_datetime` datetime DEFAULT NULL,
   `delete_by_user_record_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`record_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -832,7 +857,7 @@ CREATE TABLE `rent` (
 
 LOCK TABLES `rent` WRITE;
 /*!40000 ALTER TABLE `rent` DISABLE KEYS */;
-INSERT INTO `rent` VALUES (7,1,'R0001','2016-10-28',3600000.000000,0.000000,3600000.000000,1,'',NULL,NULL,NULL,NULL,'2016-10-28 12:16:58',2,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `rent` VALUES (1,7,'R.1116.001','2016-11-20',2000000.000000,20000.000000,1980000.000000,0,'',NULL,NULL,NULL,NULL,'2016-11-20 01:55:33',2,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `rent` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -863,7 +888,7 @@ CREATE TABLE `rent_detail` (
   `delete_datetime` datetime DEFAULT NULL,
   `delete_by_user_Record_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`record_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -872,9 +897,67 @@ CREATE TABLE `rent_detail` (
 
 LOCK TABLES `rent_detail` WRITE;
 /*!40000 ALTER TABLE `rent_detail` DISABLE KEYS */;
-INSERT INTO `rent_detail` VALUES (1,7,2,90000.000000,40,3600000.000000,NULL,NULL,NULL,NULL,'2016-10-31 11:39:05',2,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `rent_detail` VALUES (1,7,2,90000.000000,40,3600000.000000,NULL,NULL,NULL,NULL,'2016-11-06 23:32:38',2,NULL,NULL,NULL,NULL,NULL,NULL),(2,7,4,100000.000000,5,500000.000000,NULL,NULL,NULL,NULL,'2016-11-06 23:32:38',2,NULL,NULL,NULL,NULL,NULL,NULL),(3,8,2,90000.000000,20,1800000.000000,NULL,NULL,NULL,NULL,'2016-11-07 01:57:09',2,NULL,NULL,NULL,NULL,NULL,NULL),(4,9,4,100000.000000,20,2000000.000000,NULL,NULL,NULL,NULL,'2016-11-07 01:56:27',2,NULL,NULL,NULL,NULL,NULL,NULL),(5,10,1,200000.000000,2,400000.000000,NULL,NULL,NULL,NULL,'2016-11-14 18:59:07',2,NULL,NULL,NULL,NULL,NULL,NULL),(6,10,1,200000.000000,2,400000.000000,NULL,NULL,NULL,NULL,'2016-11-14 19:00:44',2,NULL,NULL,NULL,NULL,NULL,NULL),(7,11,4,100000.000000,2,200000.000000,NULL,NULL,NULL,NULL,'2016-11-14 19:08:21',2,NULL,NULL,NULL,NULL,NULL,NULL),(8,11,4,100000.000000,2,200000.000000,NULL,NULL,NULL,NULL,'2016-11-14 19:09:54',2,NULL,NULL,NULL,NULL,NULL,NULL),(9,1,1,200000.000000,10,2000000.000000,NULL,NULL,NULL,NULL,'2016-11-20 01:55:33',2,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `rent_detail` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary table structure for view `rent_invoice`
+--
+
+DROP TABLE IF EXISTS `rent_invoice`;
+/*!50001 DROP VIEW IF EXISTS `rent_invoice`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `rent_invoice` (
+  `record_id` int(10) unsigned,
+  `rent_record_id` int(10) unsigned,
+  `car_record_id` int(10) unsigned,
+  `car_name` varchar(50),
+  `car_plate` varchar(50),
+  `price` double(23,6),
+  `period` int(10) unsigned,
+  `subtotal` double(23,6) unsigned
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `ledger`
+--
+
+/*!50001 DROP TABLE IF EXISTS `ledger`*/;
+/*!50001 DROP VIEW IF EXISTS `ledger`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `ledger` AS select `journal`.`record_id` AS `record_id`,`journal_detail`.`record_id` AS `detail_record_id`,`journal`.`no` AS `no`,`journal`.`date` AS `date`,`account_chart`.`record_id` AS `account_record_id`,`account_chart`.`account_no` AS `account_no`,`account_chart`.`account_name` AS `account_name`,`journal_detail`.`relation` AS `relation`,`journal_detail`.`debet_transaction` AS `debet_transaction`,`journal_detail`.`credit_transaction` AS `credit_transaction` from ((`journal_detail` left join `journal` on((`journal`.`record_id` = `journal_detail`.`journal_record_id`))) left join `account_chart` on((`account_chart`.`record_id` = `journal_detail`.`account_chart_record_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `rent_invoice`
+--
+
+/*!50001 DROP TABLE IF EXISTS `rent_invoice`*/;
+/*!50001 DROP VIEW IF EXISTS `rent_invoice`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `rent_invoice` AS select `rent_detail`.`record_id` AS `record_id`,`rent_detail`.`rent_record_id` AS `rent_record_id`,`rent_detail`.`car_record_id` AS `car_record_id`,`car`.`name` AS `car_name`,`car`.`plate_number` AS `car_plate`,`rent_detail`.`price` AS `price`,`rent_detail`.`period` AS `period`,`rent_detail`.`subtotal` AS `subtotal` from (`rent_detail` left join `car` on((`car`.`record_id` = `rent_detail`.`car_record_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -885,4 +968,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-05 11:41:12
+-- Dump completed on 2016-11-20  2:01:32
