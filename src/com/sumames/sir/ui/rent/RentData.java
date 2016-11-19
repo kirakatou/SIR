@@ -257,7 +257,7 @@ public class RentData extends javax.swing.JPanel {
         chReturn.setText("Returned");
         chReturn.setOpaque(false);
 
-        btPrint.setText("Print");
+        btPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/10-07.png"))); // NOI18N
         btPrint.setBorderPainted(false);
         btPrint.setContentAreaFilled(false);
         btPrint.setPreferredSize(new java.awt.Dimension(65, 23));
@@ -509,7 +509,7 @@ public class RentData extends javax.swing.JPanel {
             param.put("INVOICENO", tfNo.getText());
             param.put("DESCRIPTION", tfDesc.getText());
             param.put("TOTAL", tfTotal.getText());
-            JasperPrint jasperPrint = JasperFillManager.fillReport("SirInvoice.jasper", param, beanColDataSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport("src/com/sumames/sir/resources/report/SirInvoice.jasper", param, beanColDataSource);
             JasperViewer.viewReport(jasperPrint, false);
 
             // to directly popup save file

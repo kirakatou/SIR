@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-11-06T23:35:17 -->
+<!-- 2016-11-14T12:37:17 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SirInvoice" pageWidth="595" pageHeight="510" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="com.jaspersoft.studio.unit." value="cm"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
@@ -12,6 +11,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="cm"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="cm"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="cm"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
@@ -280,8 +280,8 @@
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="131">
+	<summary>
+		<band height="121">
 			<textField>
 				<reportElement x="417" y="0" width="138" height="20" uuid="d5488dbb-6adb-4553-9ff2-eeb8b9507476"/>
 				<box>
@@ -296,7 +296,7 @@
 				<textFieldExpression><![CDATA[$P{TOTAL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="30" width="260" height="101" uuid="4d4ba196-2cf4-4573-9ca9-9d06d83b96b3"/>
+				<reportElement x="0" y="30" width="260" height="91" uuid="4d4ba196-2cf4-4573-9ca9-9d06d83b96b3"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Dashed"/>
 					<leftPen lineWidth="1.0" lineStyle="Dashed"/>
@@ -306,5 +306,5 @@
 				<textFieldExpression><![CDATA[$P{DESCRIPTION}]]></textFieldExpression>
 			</textField>
 		</band>
-	</columnFooter>
+	</summary>
 </jasperReport>

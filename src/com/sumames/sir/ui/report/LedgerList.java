@@ -191,7 +191,7 @@ public class LedgerList extends javax.swing.JPanel {
     private void tbLedgerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbLedgerMouseClicked
         if (evt.getClickCount() == 2) {
             if (tbLedger.getSelectedRow() >= 0) {
-                JournalData cd = new JournalData("EDIT", Integer.valueOf(tbLedger.getValueAt(tbLedger.getSelectedRow(), 0).toString()));
+                JournalData cd = new JournalData(Integer.valueOf(tbLedger.getValueAt(tbLedger.getSelectedRow(), 0).toString()));
                 new Support().NewTab(Main.getFrame().getTab(), cd, "Account Chart Data - " + tbLedger.getValueAt(tbLedger.getSelectedRow(), 1).toString());
             }else {
                 msg("No Data is Selected");

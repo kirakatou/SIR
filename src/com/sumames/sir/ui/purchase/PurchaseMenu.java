@@ -76,7 +76,7 @@ public class PurchaseMenu extends javax.swing.JPanel {
         });
         add(btOrder);
 
-        btInvoice.setText("Invoice");
+        btInvoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/purchase/3-08.png"))); // NOI18N
         btInvoice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         btInvoice.setContentAreaFilled(false);
         btInvoice.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -94,7 +94,7 @@ public class PurchaseMenu extends javax.swing.JPanel {
         });
         add(btInvoice);
 
-        btPayment.setText("Payment");
+        btPayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/purchase/4-08.png"))); // NOI18N
         btPayment.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         btPayment.setContentAreaFilled(false);
         btPayment.addMouseListener(new java.awt.event.MouseAdapter() {

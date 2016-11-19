@@ -308,7 +308,7 @@ public class RentList extends javax.swing.JPanel {
     private class RentTableModel extends AbstractTableModel {
 
         private List<Rent> listRents;
-        private final String[] tableHeaders = {"Record Id", "No", "Name", "Address", "Telephone", "Email", "Gender", "Point"};
+        private final String[] tableHeaders = {"Record Id", "No", "Date", "Customer No", "Customer Name", "Subtotal", "Discount", "Total"};
 
         public RentTableModel(List<Rent> listRents) {
             this.listRents = listRents;

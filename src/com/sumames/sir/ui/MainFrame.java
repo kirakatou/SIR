@@ -698,7 +698,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
 
         } else if (login != null) {
-            if (tfUsername.getText() != null || tfPasswordLogin.getText() != null && tfPasswordLogin.getText().equals(login.getPassword())) {
+            if (tfUsername.getText() != null && tfPasswordLogin.getText() != null && tfPasswordLogin.getText().equals(login.getPassword())) {
                 card.show(getContentPane(), "card2");
                 username.setText(tfUsername.getText());
                 tfUsername.setText("");

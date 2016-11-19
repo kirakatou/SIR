@@ -7,6 +7,7 @@ import com.sumames.sir.entity.Customer;
 import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.Garage;
 import com.sumames.sir.entity.Journal;
+import com.sumames.sir.entity.JournalDetail;
 import com.sumames.sir.entity.Ledger;
 import com.sumames.sir.entity.Login;
 import com.sumames.sir.entity.LoginAccess;
@@ -40,7 +41,7 @@ public interface ServiceDao {
     public List<Customer> getCustomers();
 
     public List<Customer> getCustomersNotDeleted();
-
+  
     public Car getCarById(Integer id);
 
     public List<Car> getListCarById(int id);
@@ -92,8 +93,14 @@ public interface ServiceDao {
     public PurchaseRequest getPurchaseRequestById(Integer id);
 
     public List<PurchaseRequest> getListRequestById(int id);
+    
+    public List<PurchaseRequest> getRequestAgreed();
 
     public List<PurchaseRequest> getRequest();
+    
+    public List<PurchaseRequest> getRequestNotDeleted();
+    
+    public List<PurchaseOrder> getOrdersNotDeleted();
 
     public PurchaseRequestDetail getPurchaseRequestDetailById(Integer id);
 
@@ -118,6 +125,8 @@ public interface ServiceDao {
     public List<PurchaseInvoice> getInvoices();
 
     public List<PurchaseInvoice> getInvoices(Date start, Date end);
+    
+    public List<PurchaseInvoice> getInvoicesNotDeleted();
 
     public PurchaseInvoiceDetail getInvoiceDetailById(Integer id);
 
@@ -126,6 +135,8 @@ public interface ServiceDao {
     public PurchasePayment getPaymentById(Integer id);
 
     public List<PurchasePayment> getPayments();
+    
+    public List<PurchasePayment> getPaymentsNotDeleted();
 
     public List<PurchasePayment> getPayments(Date start, Date end);
 
@@ -142,6 +153,18 @@ public interface ServiceDao {
     public List<AccountChart> getAccountCharts();
     
     public String getRentLast();
+    
+    public String getEmployerLast();
+    
+    public String getCustomerLast();
+    
+    public String getPurchaseRequestLast();
+    
+    public String getPurchaseOrderLast();
+    
+    public String getPurchaseInvoiceLast();
+    
+    public String getPurchasePaymentLast();
 
     public String getJournalLast();
     
@@ -154,6 +177,8 @@ public interface ServiceDao {
     public Double getJournalCredit(Integer id);
     
     public boolean deleteJournalDetail(Integer id);
+    
+    public List<JournalDetail> getJournalDetailbyJournalId(Integer id);
 
     public List<Journal> getJournals();
     

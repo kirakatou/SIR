@@ -14,7 +14,8 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
-
+import javax.swing.table.TableColumnModel;
+import com.sumames.sir.ui.renderer.DoubleCellRenderer;
 /**
  *
  * @author My pc
@@ -258,8 +259,11 @@ public class PurchasePaymentList extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void refreshTable() {
-        payments = AppUtil.getService().getPayments();
+        payments = AppUtil.getService().getPaymentsNotDeleted();
         tbPayment.setModel(new CustomerTableModel(payments));
+        TableColumnModel m = tbPayment.getColumnModel();
+        DoubleCellRenderer dcr = new DoubleCellRenderer();
+        m.getColumn(4).setCellRenderer(dcr);
         tbPayment.getColumnModel().getColumn(0).setMinWidth(0);
         tbPayment.getColumnModel().getColumn(0).setMaxWidth(0);
     }
@@ -267,7 +271,7 @@ public class PurchasePaymentList extends javax.swing.JPanel {
     private class CustomerTableModel extends AbstractTableModel {
 
         private List<PurchasePayment> listPayment;
-        private final String[] tableHeaders = {"Record Id", "Paymentno","invoiceNo", "date", "SupplierName", "total", "note"};
+        private final String[] tableHeaders = {"Record Id", "Payment No","Date", "SupplierName", "Total", "Note"};
 
         public CustomerTableModel(List<PurchasePayment> listPayment) {
             this.listPayment = listPayment;
@@ -278,7 +282,7 @@ public class PurchasePaymentList extends javax.swing.JPanel {
         }
 
         public int getColumnCount() {
-            return 7;
+            return 6;
         }
 
         @Override
@@ -294,14 +298,12 @@ public class PurchasePaymentList extends javax.swing.JPanel {
                 case 1:
                     return p.getNo();
                 case 2:
-                    return p.getVoucherRecordId();
-                case 3:
                      return p.getDate();
-                case 4:
+                case 3:
                     return p.getSupplierName();
-                case 5:
+                case 4:
                     return p.getTotalPaymentBase();
-                case 6:
+                case 5:
                     return p.getNote();
                 default:
                     return "";

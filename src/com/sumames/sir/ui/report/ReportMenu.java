@@ -40,7 +40,7 @@ public class ReportMenu extends javax.swing.JPanel {
         setOpaque(false);
         setLayout(new java.awt.GridLayout(2, 0));
 
-        btGroup.setText("Account Group");
+        btGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/report/1-08.png"))); // NOI18N
         btGroup.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         btGroup.setContentAreaFilled(false);
         btGroup.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -58,7 +58,7 @@ public class ReportMenu extends javax.swing.JPanel {
         });
         add(btGroup);
 
-        btChart.setText("Account Chart");
+        btChart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/report/2-08.png"))); // NOI18N
         btChart.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         btChart.setContentAreaFilled(false);
         btChart.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -76,7 +76,7 @@ public class ReportMenu extends javax.swing.JPanel {
         });
         add(btChart);
 
-        btJournal.setText("Journal");
+        btJournal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/report/3-08.png"))); // NOI18N
         btJournal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         btJournal.setContentAreaFilled(false);
         btJournal.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -94,7 +94,7 @@ public class ReportMenu extends javax.swing.JPanel {
         });
         add(btJournal);
 
-        btLedger.setText("Ledger");
+        btLedger.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/report/4-08.png"))); // NOI18N
         btLedger.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         btLedger.setContentAreaFilled(false);
         btLedger.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -112,7 +112,7 @@ public class ReportMenu extends javax.swing.JPanel {
         });
         add(btLedger);
 
-        btIncome.setText("Income Statement");
+        btIncome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/report/5-08.png"))); // NOI18N
         btIncome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         btIncome.setContentAreaFilled(false);
         btIncome.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -188,7 +188,7 @@ public class ReportMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_btIncomeMouseExited
 
     private void btIncomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIncomeActionPerformed
-        // TODO add your handling code here:
+        new Support().NewTab(Main.getFrame().getTab(), new IncomeStatementData(), "Income Statement");
     }//GEN-LAST:event_btIncomeActionPerformed
 
 

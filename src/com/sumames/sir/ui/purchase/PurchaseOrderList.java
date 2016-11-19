@@ -11,10 +11,12 @@ import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.entity.PurchaseOrder;
 import com.sumames.sir.entity.PurchaseRequest;
 import com.sumames.sir.helper.Support;
+import com.sumames.sir.ui.renderer.DoubleCellRenderer;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -234,8 +236,11 @@ public class PurchaseOrderList extends javax.swing.JPanel {
     private javax.swing.JTable tbpurchaseorder;
     // End of variables declaration//GEN-END:variables
     private void refreshTable() {
-        purchaseorder = AppUtil.getService().getOrder();
+        purchaseorder = AppUtil.getService().getOrdersNotDeleted();
         tbpurchaseorder.setModel(new PurchaseOrderList.CustomerTableModel(purchaseorder));
+        TableColumnModel m = tbpurchaseorder.getColumnModel();
+        DoubleCellRenderer dcr = new DoubleCellRenderer();
+        m.getColumn(4).setCellRenderer(dcr);
         tbpurchaseorder.getColumnModel().getColumn(0).setMinWidth(0);
         tbpurchaseorder.getColumnModel().getColumn(0).setMaxWidth(0);
     }
@@ -243,7 +248,7 @@ public class PurchaseOrderList extends javax.swing.JPanel {
     private class CustomerTableModel extends AbstractTableModel {
 
         private List<PurchaseOrder> listorder;
-        private final String[] tableHeaders = {"Record Id", "no", "date", "request_record_id", "total", "note"};
+        private final String[] tableHeaders = {"Record Id", "No", "Date", "Request No", "Total", "Note"};
 
         public CustomerTableModel(List<PurchaseOrder> listorder) {
             this.listorder = listorder;

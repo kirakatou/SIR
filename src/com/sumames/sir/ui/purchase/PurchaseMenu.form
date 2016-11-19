@@ -64,7 +64,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btInvoice">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Invoice"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/com/sumames/sir/resources/image/purchase/3-08.png"/>
+        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder thickness="2">
@@ -82,7 +84,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btPayment">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Payment"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/com/sumames/sir/resources/image/purchase/4-08.png"/>
+        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder thickness="2">

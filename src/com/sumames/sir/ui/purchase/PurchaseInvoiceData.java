@@ -11,6 +11,7 @@ import com.sumames.sir.entity.PurchaseRequestDetail;
 import com.sumames.sir.entity.Employer;
 import com.sumames.sir.entity.Journal;
 import com.sumames.sir.entity.JournalDetail;
+
 import com.sumames.sir.entity.PurchaseInvoice;
 import com.sumames.sir.entity.PurchaseInvoiceDetail;
 import com.sumames.sir.entity.PurchaseOrder;
@@ -19,6 +20,7 @@ import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.AutoCompletion;
 import com.sumames.sir.helper.Support;
 import com.sumames.sir.helper.TextComponentUtils;
+import com.sumames.sir.ui.renderer.DoubleCellRenderer;
 import com.sumames.sir.ui.renderer.TableCellListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -28,9 +30,12 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -59,6 +64,11 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
         this.recordId = recordId;
         initComponents();
         loadingData();
+        count();
+        counttax();
+        nullifyTableValue();
+        cellrenderer();
+        
 
     }
 
@@ -95,7 +105,11 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
         tfDiscountValue = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        tfTaxPercent = new javax.swing.JTextField();
+        NumberFormatter nf = new NumberFormatter();
+        nf.setValueClass(Integer.class);
+        nf.setMinimum(new Integer(0));
+        nf.setMaximum(new Integer(100));
+        tfTaxPercent = new JFormattedTextField(nf);
         tfTaxValue = new javax.swing.JTextField();
         tfDiscPercent = new javax.swing.JTextField();
         chCash = new javax.swing.JCheckBox();
@@ -166,6 +180,9 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
         tbPurchaseInvoice.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tbPurchaseInvoiceKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tbPurchaseInvoiceKeyReleased(evt);
             }
         });
         jScrollPane2.setViewportView(tbPurchaseInvoice);
@@ -321,7 +338,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
                         .addGap(201, 201, 201)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -414,6 +431,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
         }
         refreshTable();
         count();
+      
     }//GEN-LAST:event_cbOrderNoActionPerformed
 
     private void cbOrderNoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbOrderNoItemStateChanged
@@ -439,6 +457,10 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
             counttax();
         }
     }//GEN-LAST:event_tfDiscPercentKeyReleased
+
+    private void tbPurchaseInvoiceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbPurchaseInvoiceKeyReleased
+
+    }//GEN-LAST:event_tbPurchaseInvoiceKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -469,7 +491,15 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
     private javax.swing.JTextField tfTaxValue;
     private javax.swing.JTextField tfTotal;
     // End of variables declaration//GEN-END:variables
-   private void saveData() {
+   private void nullifyTableValue(){
+       for (int i = 0; i < tbPurchaseInvoice.getRowCount(); i++){
+        tbPurchaseInvoice.setValueAt(0, i, 2);
+        tbPurchaseInvoice.setValueAt(0, i, 4);
+           
+       }
+   }
+    
+    private void saveData() {
 
         if (option.equals("NEW")) {
             formToObject();
@@ -493,13 +523,13 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
                 // 0 = Rent
                 // 1 = Purchase Invoice
                 jurnal.setTransactionFrom(1);
-                jurnal.setTransactionRecordId(recordId);
+                jurnal.setTransactionRecordId(purchaseInvoice.getRecordId());
                 jurnal.setCreateDatetime(new Date());
                 jurnal.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
                 if (AppUtil.getService().save(jurnal)) {
                     JournalDetail jd = new JournalDetail();
                     jd.setJournalRecordId(jurnal.getRecordId());
-                    jd.setAccountChartRecordId(28);
+                    jd.setAccountChartRecordId(116);
                     jd.setRelation(tfNo.getText());
                     jd.setDebetTransaction(Double.parseDouble(tfTotal.getText()));
                     jd.setCreditTransaction(0D);
@@ -541,18 +571,18 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
                     invoiceDetail.setCreateByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
                     AppUtil.getService().save(invoiceDetail);
                 }
-                Journal jurnal = AppUtil.getService().getJournalByTransactionId(0, recordId);
+                Journal jurnal = AppUtil.getService().getJournalByTransactionId(1, recordId);
                 if (AppUtil.getService().deleteJournalDetail(jurnal.getRecordId())) {
                     JournalDetail jd = new JournalDetail();
                     jd.setJournalRecordId(jurnal.getRecordId());
-                    jd.setAccountChartRecordId(28);
+                    jd.setAccountChartRecordId(37);
                     jd.setRelation(tfNo.getText());
                     jd.setDebetTransaction(Double.parseDouble(tfTotal.getText()));
                     jd.setCreditTransaction(0D);
                     AppUtil.getService().save(jd);
                     JournalDetail jd2 = new JournalDetail();
                     jd2.setJournalRecordId(jurnal.getRecordId());
-                    jd2.setAccountChartRecordId(37);
+                    jd2.setAccountChartRecordId(02);
                     jd2.setRelation(tfSupplierName.getText());
                     jd2.setDebetTransaction(0D);
                     jd2.setCreditTransaction(Double.parseDouble(tfTotal.getText()));
@@ -560,26 +590,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
                     jurnal.setDebetBase(jd.getDebetTransaction());
                     jurnal.setCreditBase(jd2.getCreditTransaction());
                     AppUtil.getService().save(jurnal);
-                    if (chCash.isSelected()) {
-                        JournalDetail jd3 = new JournalDetail();
-                        jd3.setJournalRecordId(jurnal.getRecordId());
-                        jd3.setAccountChartRecordId(37);
-                        jd3.setDebetTransaction(Double.parseDouble(tfTotal.getText()));
-                        jd3.setCreditTransaction(0D);
-                        jd3.setRelation("");
-                        AppUtil.getService().save(jd3);
-                        JournalDetail jd4 = new JournalDetail();
-                        jd4.setJournalRecordId(jurnal.getRecordId());
-                        jd4.setAccountChartRecordId(2);
-                        jd4.setDebetTransaction(0D);
-                        jd4.setCreditTransaction(Double.parseDouble(tfTotal.getText()));
-                        jd4.setRelation(tfNo.getText());
-                        AppUtil.getService().save(jd4);
-                        jurnal.setDebetBase(AppUtil.getService().getJournalDebit(jurnal.getRecordId()));
-                        jurnal.setCreditBase(AppUtil.getService().getJournalCredit(jurnal.getRecordId()));
-                        AppUtil.getService().save(jurnal);
-                    }
-                }
+                
                 msg("Save Done!");
                 Main.getFrame().getTab().removeTabAt(Main.getFrame().getTab().getSelectedIndex());
             } else {
@@ -587,7 +598,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
             }
         }
     }
-
+   }
     public void formToObject() {
         if (purchaseInvoice == null) {
             purchaseInvoice = new PurchaseInvoice();
@@ -743,7 +754,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
         AutoCompletion.enable(cbOrderNo);
         addRow();
 
-        List<PurchaseOrder> orderlist = AppUtil.getService().getOrder();
+        List<PurchaseOrder> orderlist = AppUtil.getService().getOrdersNotDeleted();
         for (PurchaseOrder Order : orderlist) {
             orderno.put(Order.getNo(), Order.getRecordId());
             cbOrderNo.addItem(Order.getNo());
@@ -754,7 +765,7 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
 
         }
         if (option.equals("NEW")) {
-            tfNo.setText("");
+            tfNo.setText(Support.AutoNumber(AppUtil.getService().getPurchaseInvoiceLast(), "PI", Boolean.TRUE));
             tfSubTotal.setText("0");
             taDescription.setText("");
             dtDate.setDate(new Date());
@@ -774,7 +785,12 @@ public class PurchaseInvoiceData extends javax.swing.JPanel {
             refreshTable2();
         }
     }
-
+ public void cellrenderer(){
+        TableColumnModel m = tbPurchaseInvoice.getColumnModel();
+        DoubleCellRenderer dcr = new DoubleCellRenderer();
+        m.getColumn(2).setCellRenderer(dcr);
+          m.getColumn(4).setCellRenderer(dcr);
+    }
     private void msg(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }

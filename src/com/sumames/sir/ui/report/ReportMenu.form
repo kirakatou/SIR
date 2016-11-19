@@ -24,7 +24,9 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btGroup">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Account Group"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/com/sumames/sir/resources/image/report/1-08.png"/>
+        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder thickness="2">
@@ -42,7 +44,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btChart">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Account Chart"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/com/sumames/sir/resources/image/report/2-08.png"/>
+        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder thickness="2">
@@ -60,7 +64,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btJournal">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Journal"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/com/sumames/sir/resources/image/report/3-08.png"/>
+        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder thickness="2">
@@ -78,7 +84,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btLedger">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ledger"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/com/sumames/sir/resources/image/report/4-08.png"/>
+        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder thickness="2">
@@ -96,7 +104,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btIncome">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Income Statement"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/com/sumames/sir/resources/image/report/5-08.png"/>
+        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder thickness="2">

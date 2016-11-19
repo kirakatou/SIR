@@ -11,10 +11,12 @@ import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.helper.Support;
 import com.sumames.sir.entity.PurchaseRequest;
+import com.sumames.sir.ui.renderer.DoubleCellRenderer;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -257,8 +259,11 @@ PurchaseRequestData rd = new PurchaseRequestData("EDIT", Integer.valueOf(tbreque
     // End of variables declaration//GEN-END:variables
 
     private void refreshTable() {
-        requestes = AppUtil.getService().getRequest();
+        requestes = AppUtil.getService().getRequestNotDeleted();
         tbrequest.setModel(new CustomerTableModel(requestes));
+      TableColumnModel m = tbrequest.getColumnModel();
+        DoubleCellRenderer dcr = new DoubleCellRenderer();
+        m.getColumn(5).setCellRenderer(dcr);
         tbrequest.getColumnModel().getColumn(0).setMinWidth(0);
         tbrequest.getColumnModel().getColumn(0).setMaxWidth(0);
     }
@@ -266,7 +271,7 @@ PurchaseRequestData rd = new PurchaseRequestData("EDIT", Integer.valueOf(tbreque
     private class CustomerTableModel extends AbstractTableModel {
 
         private List<PurchaseRequest> listRequest;
-        private final String[] tableHeaders = {"Record Id", "no", "date", "department", "request_by_record_id", "total", "date_needed", "note"};
+        private final String[] tableHeaders = {"Record Id", "No", "Date", "Department", "Request By", "Total", "Date Needed", "Note"};
 
         public CustomerTableModel(List<PurchaseRequest> listRequest) {
             this.listRequest = listRequest;

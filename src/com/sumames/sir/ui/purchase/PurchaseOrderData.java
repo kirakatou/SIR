@@ -14,6 +14,7 @@ import com.sumames.sir.entity.PurchaseOrderDetail;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.AutoCompletion;
 import com.sumames.sir.helper.Support;
+import com.sumames.sir.ui.renderer.DoubleCellRenderer;
 import com.sumames.sir.ui.renderer.TableCellListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -26,6 +27,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -52,6 +54,7 @@ public class PurchaseOrderData extends javax.swing.JPanel {
         this.recordId = recordId;
         initComponents();
         loadingData();
+        count();
        
     }
 
@@ -71,8 +74,6 @@ public class PurchaseOrderData extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbPurchaseOrder = new javax.swing.JTable();
-        btAdd = new javax.swing.JButton();
-        btEdit = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         taDescription = new javax.swing.JTextArea();
@@ -151,30 +152,15 @@ public class PurchaseOrderData extends javax.swing.JPanel {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tbPurchaseOrderKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tbPurchaseOrderKeyReleased(evt);
+            }
         });
         jScrollPane2.setViewportView(tbPurchaseOrder);
         if (tbPurchaseOrder.getColumnModel().getColumnCount() > 0) {
             tbPurchaseOrder.getColumnModel().getColumn(0).setMinWidth(0);
             tbPurchaseOrder.getColumnModel().getColumn(0).setMaxWidth(0);
         }
-
-        btAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/2-01.png"))); // NOI18N
-        btAdd.setBorder(null);
-        btAdd.setContentAreaFilled(false);
-        btAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAddActionPerformed(evt);
-            }
-        });
-
-        btEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/3-01.png"))); // NOI18N
-        btEdit.setBorder(null);
-        btEdit.setContentAreaFilled(false);
-        btEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btEditActionPerformed(evt);
-            }
-        });
 
         btDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
         btDelete.setBorder(null);
@@ -244,13 +230,9 @@ public class PurchaseOrderData extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(187, 187, 187)
+                        .addGap(353, 353, 353)
                         .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btDelete)))
                 .addContainerGap())
         );
@@ -269,10 +251,6 @@ public class PurchaseOrderData extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)))
-                    .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btAdd)
-                    .addComponent(btEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -289,7 +267,10 @@ public class PurchaseOrderData extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbrequestno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))))
+                            .addComponent(jLabel2)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
                 .addContainerGap())
@@ -299,10 +280,6 @@ public class PurchaseOrderData extends javax.swing.JPanel {
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         saveData();
     }//GEN-LAST:event_btSaveActionPerformed
-
-    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btAddActionPerformed
 
     private void tbPurchaseOrderKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbPurchaseOrderKeyPressed
         if (evt.getID() == KeyEvent.KEY_PRESSED) {
@@ -322,21 +299,20 @@ public class PurchaseOrderData extends javax.swing.JPanel {
         this.prRecordId = requestno.get(cbrequestno.getSelectedItem());
         refreshTable();
         count();
+        cellrenderer();
     }//GEN-LAST:event_cbrequestnoActionPerformed
 
     private void cbrequestnoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbrequestnoItemStateChanged
         refreshTable();
     }//GEN-LAST:event_cbrequestnoItemStateChanged
 
-    private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btEditActionPerformed
+    private void tbPurchaseOrderKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbPurchaseOrderKeyReleased
+
+    }//GEN-LAST:event_tbPurchaseOrderKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAdd;
     private javax.swing.JButton btDelete;
-    private javax.swing.JButton btEdit;
     private javax.swing.JButton btSave;
     private javax.swing.JComboBox<String> cbrequestno;
     private com.toedter.calendar.JDateChooser date;
@@ -352,7 +328,16 @@ public class PurchaseOrderData extends javax.swing.JPanel {
     private javax.swing.JTextField tfNo;
     private javax.swing.JTextField tfTotal;
     // End of variables declaration//GEN-END:variables
-   private void saveData() {
+   private void nullifyTableValue(){
+       for (int i = 0; i < tbPurchaseOrder.getRowCount(); i++){
+        tbPurchaseOrder.setValueAt("0", i, 2);
+        tbPurchaseOrder.setValueAt("0", i, 4);
+           
+       }
+   }
+    
+    
+    private void saveData() {
 
         if (option.equals("NEW")) {
             formToObject();
@@ -363,6 +348,7 @@ public class PurchaseOrderData extends javax.swing.JPanel {
                     PurchaseOrderDetail orderdetail = new PurchaseOrderDetail();
                     orderdetail.setPurchaseOrderRecordId(purchaseorder.getRecordId());
                     System.out.println(tbPurchaseOrder.getValueAt(i, 2).toString());
+                   
 
                     orderdetail.setDescription(tbPurchaseOrder.getValueAt(i, 1).toString());
                     orderdetail.setPrice(Double.parseDouble(tbPurchaseOrder.getValueAt(i, 2).toString()));
@@ -532,7 +518,7 @@ public class PurchaseOrderData extends javax.swing.JPanel {
         AutoCompletion.enable(cbrequestno);
         addRow();
         
-        List<PurchaseRequest> requestlist = AppUtil.getService().getRequest();
+        List<PurchaseRequest> requestlist = AppUtil.getService().getRequestAgreed();
         for (PurchaseRequest request : requestlist) {
             requestno.put(request.getNo(), request.getRecordId());
             cbrequestno.addItem(request.getNo());
@@ -543,7 +529,7 @@ public class PurchaseOrderData extends javax.swing.JPanel {
 
         }
         if (option.equals("NEW")) {
-            tfNo.setText("");
+            tfNo.setText(Support.AutoNumber(AppUtil.getService().getPurchaseOrderLast(), "PO", Boolean.TRUE));
             tfTotal.setText("0");
             taDescription.setText("");
             date.setDate(new Date());
@@ -558,7 +544,12 @@ public class PurchaseOrderData extends javax.swing.JPanel {
             
         }
     }
-
+ public void cellrenderer(){
+        TableColumnModel m = tbPurchaseOrder.getColumnModel();
+        DoubleCellRenderer dcr = new DoubleCellRenderer();
+        m.getColumn(2).setCellRenderer(dcr);
+          m.getColumn(4).setCellRenderer(dcr);
+    }
     private void msg(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }

@@ -150,11 +150,11 @@ public class PurchaseRequest implements Serializable {
         this.dateNeeded = dateNeeded;
     }
 
-    public Boolean getAgreedByTopManagement() {
+    public Boolean getAgreed() {
         return agreedByTopManagement;
     }
 
-    public void setAgreedByTopManagement(Boolean agreedByTopManagement) {
+    public void setAgreed(Boolean agreedByTopManagement) {
         this.agreedByTopManagement = agreedByTopManagement;
     }
 

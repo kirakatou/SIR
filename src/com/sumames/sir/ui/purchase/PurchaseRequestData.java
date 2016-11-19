@@ -12,6 +12,7 @@ import com.sumames.sir.entity.Employer;
 import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.helper.AutoCompletion;
 import com.sumames.sir.helper.Support;
+import com.sumames.sir.ui.renderer.DoubleCellRenderer;
 import com.sumames.sir.ui.renderer.TableCellListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -24,6 +25,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -49,6 +51,8 @@ public class PurchaseRequestData extends javax.swing.JPanel {
         System.out.println(recordId);
         initComponents();
         loadingData();
+        nullifyTableValue();
+        cellrenderer();
     }
 
     /**
@@ -74,7 +78,7 @@ public class PurchaseRequestData extends javax.swing.JPanel {
         cbrequestbyid = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         cbrequestbyname = new javax.swing.JComboBox<>();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        cbagree = new javax.swing.JCheckBox();
         cbdepartment = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         DateNeeded = new com.toedter.calendar.JDateChooser();
@@ -124,7 +128,7 @@ public class PurchaseRequestData extends javax.swing.JPanel {
                 java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true
+                false, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -149,6 +153,9 @@ public class PurchaseRequestData extends javax.swing.JPanel {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tbPurchaseRequestKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tbPurchaseRequestKeyReleased(evt);
+            }
         });
         jScrollPane2.setViewportView(tbPurchaseRequest);
         if (tbPurchaseRequest.getColumnModel().getColumnCount() > 0) {
@@ -159,6 +166,11 @@ public class PurchaseRequestData extends javax.swing.JPanel {
         btDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
         btDelete.setBorder(null);
         btDelete.setContentAreaFilled(false);
+        btDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteActionPerformed(evt);
+            }
+        });
 
         taDescription.setColumns(20);
         taDescription.setRows(5);
@@ -182,14 +194,19 @@ public class PurchaseRequestData extends javax.swing.JPanel {
             }
         });
 
-        jCheckBox1.setFont(getFont());
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("Agreed");
-        jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jCheckBox1.setOpaque(false);
+        cbagree.setFont(getFont());
+        cbagree.setForeground(new java.awt.Color(255, 255, 255));
+        cbagree.setText("Agreed");
+        cbagree.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cbagree.setOpaque(false);
 
         cbdepartment.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Purchase", "Rent", "Accounting" }));
         cbdepartment.setPreferredSize(new java.awt.Dimension(100, 30));
+        cbdepartment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbdepartmentActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(getFont());
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -249,7 +266,7 @@ public class PurchaseRequestData extends javax.swing.JPanel {
                                     .addComponent(tfTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                                     .addComponent(DateNeeded, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox1)))
+                                .addComponent(cbagree)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 350, Short.MAX_VALUE)
                         .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -271,7 +288,7 @@ public class PurchaseRequestData extends javax.swing.JPanel {
                                     .addComponent(tfNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5))
                                 .addComponent(DateNeeded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jCheckBox1))
+                                .addComponent(cbagree))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
@@ -306,7 +323,6 @@ public class PurchaseRequestData extends javax.swing.JPanel {
                             .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(61, 61, 61)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -330,16 +346,44 @@ public class PurchaseRequestData extends javax.swing.JPanel {
         cbrequestbyid.setSelectedIndex(cbrequestbyname.getSelectedIndex());
     }//GEN-LAST:event_cbrequestbynameActionPerformed
 
+    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+  if (tbPurchaseRequest.getSelectedRow() >= 0) {
+            PurchaseRequest purchaserequest = AppUtil.getService().getPurchaseRequestById(Integer.valueOf(tbPurchaseRequest.getValueAt(tbPurchaseRequest.getSelectedRow(), 0).toString()));
+            if (purchaserequest != null) {
+                purchaserequest.setDeleteDatetime(new Date());
+                purchaserequest.setDeleteByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
+                if (AppUtil.getService().save(purchaserequest)) {
+                    msg("Delete Done!");
+                    refreshTable();
+                } else {
+                    msg("Delete Failed!");
+                }
+
+            }
+
+        }
+    }//GEN-LAST:event_btDeleteActionPerformed
+
+    private void tbPurchaseRequestKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbPurchaseRequestKeyReleased
+
+                    
+  
+    }//GEN-LAST:event_tbPurchaseRequestKeyReleased
+
+    private void cbdepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbdepartmentActionPerformed
+
+    }//GEN-LAST:event_cbdepartmentActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateNeeded;
     private com.toedter.calendar.JDateChooser DateRequested;
     private javax.swing.JButton btDelete;
     private javax.swing.JButton btSave;
+    private javax.swing.JCheckBox cbagree;
     private javax.swing.JComboBox<String> cbdepartment;
     private javax.swing.JComboBox<String> cbrequestbyid;
     private javax.swing.JComboBox<String> cbrequestbyname;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -407,7 +451,13 @@ public class PurchaseRequestData extends javax.swing.JPanel {
             }
         }
 }
-
+public void nullifyTableValue(){
+       for (int i = 0; i < tbPurchaseRequest.getRowCount(); i++){
+        tbPurchaseRequest.setValueAt(0.00, i, 2);
+        tbPurchaseRequest.setValueAt(0.00, i, 4);
+           
+       }
+   }
 public void formToObject() {
         if (purchaserequest == null) {
             purchaserequest = new PurchaseRequest();
@@ -418,6 +468,7 @@ public void formToObject() {
         purchaserequest.setDateNeeded(DateNeeded.getDate());
         purchaserequest.setRequestByRecordId(Integer.parseInt(cbrequestbyid.getSelectedItem().toString()));
         purchaserequest.setTotal(Double.parseDouble(tfTotal.getText()));
+        purchaserequest.setAgreed(cbagree.isSelected());
     }
     
     public void objectToForm() {
@@ -428,6 +479,7 @@ public void formToObject() {
             DateNeeded.setDate(purchaserequest.getDateNeeded());
             cbrequestbyname.setSelectedItem(Support.getKeyFromValue(employerID,purchaserequest.getRequestByRecordId()));
             tfTotal.setText(purchaserequest.getTotal().toString());
+            cbagree.setSelected(purchaserequest.getAgreed());
             
         }
     }
@@ -496,7 +548,12 @@ public void formToObject() {
         }
         
     }
-    
+    public void cellrenderer(){
+        TableColumnModel m = tbPurchaseRequest.getColumnModel();
+        DoubleCellRenderer dcr = new DoubleCellRenderer();
+        m.getColumn(2).setCellRenderer(dcr);
+          m.getColumn(4).setCellRenderer(dcr);
+    }
     public void refreshTable() {
         List<PurchaseRequestDetail> list = AppUtil.getService().getListRequestDetailById(recordId);
         DefaultTableModel dtm = (DefaultTableModel) tbPurchaseRequest.getModel();
@@ -532,10 +589,10 @@ public void formToObject() {
             cbrequestbyname.addItem(employe.getName());
         }
          if (option.equals("NEW")) {
-            tfNo.setText("");
+            tfNo.setText(Support.AutoNumber(AppUtil.getService().getPurchaseRequestLast(), "PR", Boolean.TRUE));
             tfTotal.setText("0");
             taDescription.setText("");
-            tfTotal.setText("0");
+            
             DateNeeded.setDate(new Date());
             DateRequested.setDate(new Date());
             addRow();

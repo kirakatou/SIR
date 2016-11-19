@@ -43,9 +43,7 @@ public class JournalList extends javax.swing.JPanel {
         tbJournal = new javax.swing.JTable();
         tfSearch = new javax.swing.JTextField();
         btRefresh = new javax.swing.JButton();
-        btAdd = new javax.swing.JButton();
         btEdit = new javax.swing.JButton();
-        btDelete = new javax.swing.JButton();
         btSearch = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 153, 0));
@@ -80,30 +78,12 @@ public class JournalList extends javax.swing.JPanel {
             }
         });
 
-        btAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/2-01.png"))); // NOI18N
-        btAdd.setBorder(null);
-        btAdd.setContentAreaFilled(false);
-        btAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAddActionPerformed(evt);
-            }
-        });
-
-        btEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/3-01.png"))); // NOI18N
+        btEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/7-01.png"))); // NOI18N
         btEdit.setBorder(null);
         btEdit.setContentAreaFilled(false);
         btEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btEditActionPerformed(evt);
-            }
-        });
-
-        btDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/sumames/sir/resources/image/buttons/4-01.png"))); // NOI18N
-        btDelete.setBorder(null);
-        btDelete.setContentAreaFilled(false);
-        btDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDeleteActionPerformed(evt);
             }
         });
 
@@ -126,11 +106,7 @@ public class JournalList extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btDelete)))
+                        .addComponent(btEdit)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -143,9 +119,7 @@ public class JournalList extends javax.swing.JPanel {
                         .addComponent(tfSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btSearch)
                     .addComponent(btRefresh)
-                    .addComponent(btEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btDelete)
-                    .addComponent(btAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                 .addContainerGap())
@@ -156,54 +130,28 @@ public class JournalList extends javax.swing.JPanel {
         refreshTable();
     }//GEN-LAST:event_btRefreshActionPerformed
 
-    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
-        JournalData cd = new JournalData("NEW", 0);
-        new Support().NewTab(Main.getFrame().getTab(), cd, "Account Chart Data - New");
-
-    }//GEN-LAST:event_btAddActionPerformed
-
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed
         if (tbJournal.getSelectedRow() >= 0) {
-            JournalData cd = new JournalData("EDIT", Integer.valueOf(tbJournal.getValueAt(tbJournal.getSelectedRow(), 0).toString()));
+            JournalData cd = new JournalData(Integer.valueOf(tbJournal.getValueAt(tbJournal.getSelectedRow(), 0).toString()));
             new Support().NewTab(Main.getFrame().getTab(), cd, "Account Chart Data - " + tbJournal.getValueAt(tbJournal.getSelectedRow(), 1).toString());
-        }else {
+        } else {
             msg("No Data is Selected");
         }
     }//GEN-LAST:event_btEditActionPerformed
 
-    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
-        if (tbJournal.getSelectedRow() >= 0) {
-            Journal Journal = AppUtil.getService().getJournalById(Integer.valueOf(tbJournal.getValueAt(tbJournal.getSelectedRow(), 0).toString()));
-            if (Journal != null) {
-                Journal.setDeleteDatetime(new Date());
-                Journal.setDeleteByUserRecordId(Main.getFrame().getLogin().getEmployeeRecordId());
-                if (AppUtil.getService().save(Journal)) {
-                    msg("Delete Done!");
-                    refreshTable();
-                } else {
-                    msg("Delete Failed!");
-                }
-
-            }
-
-        }
-    }//GEN-LAST:event_btDeleteActionPerformed
-
     private void tbJournalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbJournalMouseClicked
         if (evt.getClickCount() == 2) {
             if (tbJournal.getSelectedRow() >= 0) {
-                JournalData cd = new JournalData("EDIT", Integer.valueOf(tbJournal.getValueAt(tbJournal.getSelectedRow(), 0).toString()));
+                JournalData cd = new JournalData(Integer.valueOf(tbJournal.getValueAt(tbJournal.getSelectedRow(), 0).toString()));
                 new Support().NewTab(Main.getFrame().getTab(), cd, "Account Chart Data - " + tbJournal.getValueAt(tbJournal.getSelectedRow(), 1).toString());
-            }else {
+            } else {
                 msg("No Data is Selected");
             }
-        }    
+        }
     }//GEN-LAST:event_tbJournalMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btAdd;
-    private javax.swing.JButton btDelete;
     private javax.swing.JButton btEdit;
     private javax.swing.JButton btRefresh;
     private javax.swing.JButton btSearch;
@@ -212,10 +160,10 @@ public class JournalList extends javax.swing.JPanel {
     private javax.swing.JTextField tfSearch;
     // End of variables declaration//GEN-END:variables
     private void refreshTable() {
-            Journals = AppUtil.getService().getJournals();
-            tbJournal.setModel(new JournalTableModel(Journals));
-            tbJournal.getColumnModel().getColumn(0).setMinWidth(0);
-            tbJournal.getColumnModel().getColumn(0).setMaxWidth(0);
+        Journals = AppUtil.getService().getJournals();
+        tbJournal.setModel(new JournalTableModel(Journals));
+        tbJournal.getColumnModel().getColumn(0).setMinWidth(0);
+        tbJournal.getColumnModel().getColumn(0).setMaxWidth(0);
 
     }
 

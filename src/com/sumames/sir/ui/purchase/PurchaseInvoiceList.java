@@ -10,10 +10,12 @@ import com.sumames.sir.helper.AppUtil;
 import com.sumames.sir.ui.renderer.ComboBoxRenderer;
 import com.sumames.sir.helper.Support;
 import com.sumames.sir.entity.PurchaseInvoice;
+import com.sumames.sir.ui.renderer.DoubleCellRenderer;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -258,8 +260,14 @@ public class PurchaseInvoiceList extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void refreshTable() {
-        invoices = AppUtil.getService().getInvoices();
+        invoices = AppUtil.getService().getInvoicesNotDeleted();
         tbInvoice.setModel(new CustomerTableModel(invoices));
+        TableColumnModel m = tbInvoice.getColumnModel();
+        DoubleCellRenderer dcr = new DoubleCellRenderer();
+        m.getColumn(4).setCellRenderer(dcr);
+        m.getColumn(6).setCellRenderer(dcr); 
+        m.getColumn(8).setCellRenderer(dcr); 
+        m.getColumn(9).setCellRenderer(dcr); 
         tbInvoice.getColumnModel().getColumn(0).setMinWidth(0);
         tbInvoice.getColumnModel().getColumn(0).setMaxWidth(0);
     }
@@ -267,12 +275,12 @@ public class PurchaseInvoiceList extends javax.swing.JPanel {
     private class CustomerTableModel extends AbstractTableModel {
 
         private List<PurchaseInvoice> listInvoice;
-        private final String[] tableHeaders = {"Record Id", "no", "date", "Supplier", "SubTotal", "TaxPercent", "TaxValue", "DiscPercent","DiscValue","Total","Note"};
+        private final String[] tableHeaders = {"Record Id", "No", "Date", "Supplier", "SubTotal", "TaxPercent", "TaxValue", "DiscPercent","DiscValue","Total","Note"};
 
         public CustomerTableModel(List<PurchaseInvoice> listInvoice) {
             this.listInvoice = listInvoice;
         }
-
+ 
         public int getRowCount() {
             return listInvoice.size();
         }

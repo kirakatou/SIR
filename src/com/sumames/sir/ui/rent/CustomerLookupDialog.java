@@ -81,7 +81,7 @@ public class CustomerLookupDialog extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID Barang", "Nama Barang", "Harga"
+                "No", "Nama", "Alamat"
             }
         ));
         jScrollPane1.setViewportView(tblCustomer);
